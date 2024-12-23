@@ -1,0 +1,21 @@
+.toast {
+	position: fixed;
+	right: 0;
+	left: 0;
+	margin: 48px auto;
+	max-width: 272px;
+	display: block;
+	text-align: center;
+	border-radius: 8px;
+	color: #fff;
+	padding: 16px;
+	box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+	&_success {
+		background-color: #28A745;
+	}
+
+	&_error {
+		background-color: #DC3545;
+	}
+}
