@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import Login from '../page';
+import Login from '../../login/page';
 
 // Mock do useRouter
 jest.mock('next/navigation', () => ({
@@ -13,7 +13,7 @@ jest.mock('../../../../.env', () => ({
   ...jest.requireActual('../../../../.env')
 }));
 
-describe('Login component', () => {
+describe('Login page', () => {
   afterEach(() => {
     jest.clearAllMocks();
     localStorage.clear();
