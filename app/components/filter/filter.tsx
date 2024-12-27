@@ -16,9 +16,15 @@ export default function Filter({ setMonth, setYear, currentMonth, currentYear }:
       <h1 className='content_card__title'>filtro</h1>
       <div className={styles.filter_content}>
         <p>mês</p>
-        <select name="month" id="month" onChange={({ target }) => setMonth(target.value)}>
+        <select 
+          name="month" 
+          id="month" 
+          data-testid="month-select" 
+          defaultValue={currentMonth} 
+          onChange={({ target }) => setMonth(target.value)}
+        >
           {months.map((month) => (
-            <option key={month} value={month} selected={currentMonth === month}>
+            <option key={month} value={month}>
               {month === "Marco" ? "Março" : month}
             </option>
           ))}
@@ -27,9 +33,15 @@ export default function Filter({ setMonth, setYear, currentMonth, currentYear }:
 
       <div className={styles.filter_content}>
         <p>ano</p>
-        <select name="year" id="year" onChange={({ target }) => setYear(target.value)}>
+        <select 
+          name="year" 
+          id="year" 
+          defaultValue={currentYear}
+          data-testid="year-select" 
+          onChange={({ target }) => setYear(target.value)}
+        >
           {years.map((year) => (
-            <option key={year} value={year} selected={currentYear === year.toString()}>
+            <option key={year} value={year}>
               {year}
             </option>
           ))}
