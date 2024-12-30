@@ -1,14 +1,37 @@
 import './styles/globals.scss';
+
 import { Montserrat } from 'next/font/google'
+import { Navigation } from './components/navigation/navigation';
+import { Providers } from './providers';
  
-// If loading a variable font, you don't need to specify the font weight
 const montserrat = Montserrat({ subsets: ['latin'] })
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
+  const links = [
+    {
+      name: "Ínicio",
+      href:"/"
+    },
+    {
+      name: "Inserir gasto",
+      href:"/new-expense"
+    },
+    {
+      name: "Cadastrar opção",
+      href:"/new-option"
+    },
+    {
+      name: "Configurações",
+      href:"/config"
+    },
+  ]
+
   return (
     <html lang="en">
       <body className={montserrat.className}>
-        {children}
+        <Navigation navLinks={links} />
+
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
