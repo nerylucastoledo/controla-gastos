@@ -9,7 +9,7 @@ import styles from "../styles/login.module.scss"
 
 import wallet from "../images/wallet.png";
 import walletRetina from "../images/wallet-retina.png";
-import Toast from "../components/toast/toast";
+import Toast from "../components/toast/Toast";
 
 interface User {
   name: string,

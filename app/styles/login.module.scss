@@ -74,20 +74,6 @@
 						order: 0;
 					}
 
-					input {
-						background-color: transparent;
-						border: unset;
-						border-bottom: 1px solid #fff;
-						width: 100%;
-						padding: 16px 0;
-						color: #fff;
-						order: 1;
-
-						&:focus-visible {
-							outline: unset;
-						}
-					}
-
 					input + label, input:focus-visible + label {
 						margin-bottom: 0;
 						color: #fff;

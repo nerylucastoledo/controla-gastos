@@ -9,7 +9,8 @@ import styles from "../styles/login.module.scss"
 
 import wallet from "../images/wallet.png";
 import walletRetina from "../images/wallet-retina.png";
-import Toast from "../components/toast/toast";
+import Toast from "../components/toast/Toast";
+import { useUser } from "../context/user";
 
 interface Data {
   message: string,
@@ -24,6 +25,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
+  const { setUsername, setSalary }  = useUser()
   const common = { alt: 'wallet', width: 216, height: 288, loading: "eager" };
   
   const handleToast = (error: boolean, message: string) => {
@@ -49,7 +51,9 @@ export default function Login() {
 
       handleToast(true, message)
       localStorage.setItem("username", username)
+      setUsername(username);
       localStorage.setItem("salary", salary)
+      setSalary( salary)
       router.replace("/");
       
     } catch (error: unknown) {
@@ -89,7 +93,7 @@ export default function Login() {
                 onChange={({ target }) => setEmail(target.value)}
               />
 
-              <label htmlFor="email">Email</label>
+              <label htmlFor="email" data-testid="email-label">Email</label>
             </div>
             <div>
               <input 
@@ -97,11 +101,12 @@ export default function Login() {
                 name="password" 
                 id="password"
                 placeholder=""
+                role="password"
                 required
                 value={password}
                 onChange={({ target }) => setPassword(target.value)}
               />
-              <label htmlFor="password">Senha</label>
+              <label htmlFor="password" data-testid="password-label">Senha</label>
             </div>
 
             <input type="submit" value="Acessar" className="button button__primary"/>
