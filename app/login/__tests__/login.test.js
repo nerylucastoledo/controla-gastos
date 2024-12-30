@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import Login from '../../login/page';
+import { Providers } from '../../providers';
 
 // Mock do useRouter
 jest.mock('next/navigation', () => ({
@@ -20,7 +21,7 @@ describe('Login page', () => {
   });
 
   it('renders texts and images', () => {
-    render(<Login />);
+    render(<Providers><Login /></Providers>);
 
     const textTop = screen.getByText("Entre e visualize como foi seus gastos nos meses anteriores, como está no mês atual e como ficará nos próximos meses.")
     const textTopForm = screen.getByText("Acessar sua conta")
@@ -34,7 +35,7 @@ describe('Login page', () => {
   });
 
   it('renders login form correctly', () => {
-    render(<Login />);
+    render(<Providers><Login /></Providers>);
 
     const emailLabel = screen.getByTestId("email-label");
     const emailInput = screen.getByRole('textbox', { name: "Email" })
@@ -52,7 +53,7 @@ describe('Login page', () => {
   });
 
   it('updates email and password fields', () => {
-    render(<Login />);
+    render(<Providers><Login /></Providers>);
 
     const emailInput = screen.getByRole('textbox', { name: "Email" })
     const passwordInput = screen.getByRole('password', { name: "Senha" })
@@ -79,7 +80,7 @@ describe('Login page', () => {
     const router = { replace: jest.fn() };
     jest.spyOn(require('next/navigation'), 'useRouter').mockImplementation(() => router);
 
-    render(<Login />);
+    render(<Providers><Login /></Providers>);
 
     const emailInput = screen.getByRole('textbox', { name: "Email" })
     const passwordInput = screen.getByRole('password', { name: "Senha" })
@@ -106,7 +107,7 @@ describe('Login page', () => {
       })
     );
     
-    render(<Login />);
+    render(<Providers><Login /></Providers>);
 
     const emailInput = screen.getByRole('textbox', { name: "Email" })
     const passwordInput = screen.getByRole('password', { name: "Senha" })
@@ -129,7 +130,7 @@ describe('Login page', () => {
       })
     );
 
-    render(<Login />);
+    render(<Providers><Login /></Providers>);
     
     fireEvent.change(screen.getByRole('textbox', { name: "Email" }), { target: { value: 'test@example.com' } });
     fireEvent.change(screen.getByLabelText(/senha/i), { target: { value: 'password123' } });

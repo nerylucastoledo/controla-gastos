@@ -5,7 +5,7 @@ import styles from "../../styles/loading.module.scss"
 
 export const Loading = () => {
   return (
-    <div className={styles.loading}>
+    <div className={styles.loading} data-testid="loading">
       <AiOutlineLoading3Quarters color='#fff' size={48} width={48} height={48} />
     </div>
   )
