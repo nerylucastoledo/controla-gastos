@@ -1,9 +1,8 @@
-import '@testing-library/jest-dom'; // Add this line at the top of your test file
+import '@testing-library/jest-dom';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Resume from '../resume'; // Adjust the import path based on your structure
+import Resume from '../resume';
 import { useUser } from '../../../context/user';
-import { parseCurrencyString } from '../../../utils/index';
 
 // Mock the useUser hook
 jest.mock('../../../context/user', () => ({
