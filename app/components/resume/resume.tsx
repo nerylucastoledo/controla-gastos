@@ -4,7 +4,7 @@ import styles from "../../styles/resume.module.scss"
 import { Data } from '@/app/utils/types';
 import { useUser } from '@/app/context/user';
 import { formatToCurrencyBRL, parseCurrencyString } from '@/app/utils';
-import { Loading } from '../loading/loading';
+import Loading from '../loading/loading';
 
 export default function Resume({ loading, data }: { loading: boolean, data: Data[] }) {
   const { salary }  = useUser()

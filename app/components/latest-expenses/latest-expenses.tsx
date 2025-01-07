@@ -1,7 +1,7 @@
 import React from 'react';
 
 import styles from "../../styles/latestExpenses.module.scss"
-import { Loading } from '../loading/loading';
+import Loading from '../loading/loading';
 import { Data } from '@/app/utils/types';
 import Icon from '../icon/icons';
 

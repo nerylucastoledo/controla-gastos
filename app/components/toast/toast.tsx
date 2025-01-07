@@ -8,9 +8,16 @@ interface Params {
 }
 
 export default function Toast({ success, message }: Params) {
+
+	if (!message) return;
+	
   return (
-    <div className={`${styles.toast} ${success ? styles.toast_success : styles.toast_error }`}>
-		<p>{message}</p>
-	</div>
+		<>
+			{message && (
+				<div className={`${styles.toast} ${success ? styles.toast_success : styles.toast_error }`}>
+					<p>{message}</p>
+				</div>
+			)}
+		</>
   )
 }

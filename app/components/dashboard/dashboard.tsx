@@ -4,7 +4,7 @@ import React from 'react';
 
 import styles from "../../styles/dashboard.module.scss"
 import useSWR from 'swr';
-import { Loading } from '../loading/loading';
+import Loading from '../loading/loading';
 import ChartExpensesMonthly from '../chart/ChartExpensesMonthly';
 import ChartExpensesCategorys from '../chart/ChartExpensesCategorys';
 import { Data } from '@/app/utils/types';
