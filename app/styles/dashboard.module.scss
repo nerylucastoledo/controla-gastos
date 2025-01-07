@@ -1,0 +1,22 @@
+.dashboard {
+  flex: 2;
+
+	&_container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		flex: 1;
+
+		&_top {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 16px;
+
+			> div {
+				margin: 0 auto;
+			}
+		}
+	}
+}

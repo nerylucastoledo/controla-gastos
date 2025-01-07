@@ -60,10 +60,24 @@ input {
 	background-color: #1C1C1C;
 	flex: 1;
 	flex-grow: 1;
-	min-width: 360px;
+	min-width: 320px;
 
 	&__title {
 		font-size: 24px;
 		color: #fff;
 	}
+}
+
+.wrapper-chart {
+	height: 272px;
+	width: 272px;
+}
+
+.empty {
+	color: #fff;
+	display: flex;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	padding: 24px 0;
 }
