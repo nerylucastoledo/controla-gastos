@@ -1,3 +1,5 @@
+import { ENUM_CATEGORYS } from "../components/icon/icons";
+
 export const months = [
 	"Janeiro",
 	"Fevereiro",
@@ -23,6 +25,10 @@ export const years = [
 	2027,
 	2028,
 ]
+
+export const ENUM_CATEGORYS_DISPLAY = Object.fromEntries(
+  Object.entries(ENUM_CATEGORYS).map(([key, value]) => [value, key])
+);
 
 export const parseCurrencyString = (currencyString: string) => {
 	let numberString = currencyString.replace("R$", "").trim(); // Remove the currency symbol (e.g., "R$") and trim whitespace
