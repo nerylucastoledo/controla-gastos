@@ -1,7 +1,8 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
-import { months, years } from "../../utils/index"
 import styles from "../../styles/filter.module.scss"
+
+import { months, years } from "../../utils/index"
 
 interface Params {
   setMonth: Dispatch<SetStateAction<string>>;
@@ -14,8 +15,9 @@ export default function Filter({ setMonth, setYear, currentMonth, currentYear }:
   return (
     <div className="content_card">
       <h1 className='content_card__title'>filtro</h1>
+    
       <div className={styles.filter_content}>
-        <p>mês</p>
+        <label htmlFor='month'>mês</label>
         <select 
           name="month" 
           id="month" 
@@ -32,7 +34,7 @@ export default function Filter({ setMonth, setYear, currentMonth, currentYear }:
       </div>
 
       <div className={styles.filter_content}>
-        <p>ano</p>
+        <label htmlFor='month'>ano</label>
         <select 
           name="year" 
           id="year" 

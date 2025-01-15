@@ -20,8 +20,13 @@ interface Params {
   dataByMonth: Data[]
 }
 
+const fetcher = (url: string) => 
+  fetch(url, {
+    method: 'GET',
+    credentials: 'include',
+  }).then((res) => res.json());
+
 export default function Dashboard({ dataByMonth, username, year }: Params) {
-  const fetcher = (url: string) => fetch(url).then((res) => res.json());
   const { data, isLoading } = useSWR<DataByYear[]>(`http://localhost:4000/api/expenses/year/${username}/${year}`, fetcher)
 
   const existingData = data?.length && dataByMonth?.length
@@ -37,7 +42,7 @@ export default function Dashboard({ dataByMonth, username, year }: Params) {
           <>
             {!existingData ? (
               <div className='empty'>
-                <p>Nada para mostrar no momento :)</p>
+                <p>você não cadastrou nenhum gasto até o momento</p>
               </div>
             ) : (
               <>

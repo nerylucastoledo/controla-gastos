@@ -7,3 +7,16 @@ export interface Data {
   item: string,
   card: string,
 }
+
+export interface CardData {
+  id: string,
+  name: string,
+  color: string,
+  username: string,
+}
+
+
+export interface Expenses {
+  expenses: Data[] | []
+  cards: CardData[] | []
+}
