@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 import React from 'react'
 import { IoFastFoodOutline } from 'react-icons/io5'
 
-import styles from "../../styles/header.module.scss"
+import styles from "../../styles/components/header.module.scss"
 
 interface Params {
 	name: string;

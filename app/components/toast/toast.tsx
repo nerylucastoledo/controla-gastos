@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from "../../styles/toast.module.scss"
+import styles from "../../styles/components/toast.module.scss"
 
 interface Params {
 	success: boolean;

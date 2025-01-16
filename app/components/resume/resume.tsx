@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from "../../styles/resume.module.scss"
+import styles from "../../styles/components/resume.module.scss"
 
 import { formatToCurrencyBRL, parseCurrencyString } from '@/app/utils';
 import { Data } from '@/app/utils/types';

@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from "next/link";
 import { useRouter } from 'next/navigation';
 
-import styles from "../styles/login.module.scss"
+import styles from "../styles/pages/login.module.scss"
 
 import wallet from "../images/wallet.png";
 import walletRetina from "../images/wallet-retina.png";
@@ -31,7 +31,6 @@ export default function Login() {
   const handleToast = (error: boolean, message: string) => {
     setToastCustom({ error, message })
     setShowToast(true)
-    setTimeout(() => setShowToast(false), 3000);
   }
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -41,19 +40,21 @@ export default function Login() {
       const response = await fetch("http://localhost:4000/api/login", {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ email, password })
       });
 
       const { username, salary, message }: Data = await response.json();
+
       if (!response.ok) {
         throw new Error(message);
       }
 
-      handleToast(true, message)
       localStorage.setItem("username", username)
-      setUsername(username);
       localStorage.setItem("salary", salary)
+      setUsername(username);
       setSalary( salary)
+      handleToast(true, message)
       router.replace("/");
       
     } catch (error: unknown) {

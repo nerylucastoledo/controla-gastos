@@ -1,9 +1,8 @@
 import React from 'react';
 
-import styles from "../../styles/latestExpenses.module.scss"
+import styles from "../../styles/components/latestExpenses.module.scss"
 
 import Icon from '../icon/icons';
-
 import { Data } from '@/app/utils/types';
 
 export default function LatestExpenses({ data }: { data: Data[] }) {

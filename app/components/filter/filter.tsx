@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
-import styles from "../../styles/filter.module.scss"
+import styles from "../../styles/components/filter.module.scss"
 
 import { months, years } from "../../utils/index"
 

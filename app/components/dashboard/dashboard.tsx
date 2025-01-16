@@ -1,9 +1,10 @@
 "use client"
 
 import React from 'react';
-
-import styles from "../../styles/dashboard.module.scss"
 import useSWR from 'swr';
+
+import styles from "../../styles/components/dashboard.module.scss"
+
 import Loading from '../loading/loading';
 import ChartExpensesMonthly from '../chart/ChartExpensesMonthly';
 import ChartExpensesCategorys from '../chart/ChartExpensesCategorys';

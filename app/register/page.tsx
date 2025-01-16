@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image'
 import Link from "next/link";
 
-import styles from "../styles/login.module.scss"
+import styles from "../styles/pages/login.module.scss"
 
 import wallet from "../images/wallet.png";
 import walletRetina from "../images/wallet-retina.png";
