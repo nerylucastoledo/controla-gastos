@@ -1,5 +1,5 @@
 .card {
-	&_container {
+	.container {
 		display: flex;
 		flex-direction: column;
 		gap: 16px;
@@ -8,7 +8,7 @@
 		-ms-overflow-style: none;
     scrollbar-width: none;
 
-		&__item {
+		.item {
 			background-color: unset;
 			border: unset;
 
