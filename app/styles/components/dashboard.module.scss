@@ -1,13 +1,13 @@
 .dashboard {
   flex: 2;
 
-	&_container {
+	.container {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		flex: 1;
 
-		&_top {
+		.chart {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;

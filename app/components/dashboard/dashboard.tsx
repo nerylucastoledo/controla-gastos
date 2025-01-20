@@ -34,9 +34,9 @@ export default function Dashboard({ dataByMonth, username, year }: Params) {
 
   return (
     <div className={`content_card ${styles.dashboard}`}>
-      <h1 className='content_card__title'>dashboard</h1>
+      <h1 className='content_card__title'>gráficos</h1>
 
-      <div className={`${styles.dashboard_container}`}>
+      <div className={`${styles.container}`}>
         {isLoading ? (
           <Loading />
         ) : (
@@ -47,7 +47,7 @@ export default function Dashboard({ dataByMonth, username, year }: Params) {
               </div>
             ) : (
               <>
-                <div className={`${styles.dashboard_container_top}`}>
+                <div className={`${styles.chart}`}>
                   <div className="wrapper-chart">
                     <ChartExpensesMonthly data={data} />
                   </div>

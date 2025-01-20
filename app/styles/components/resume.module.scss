@@ -6,28 +6,28 @@
 	flex-direction: column;
 	flex: 1;
 
-	&_title {
+	.title {
 		color: #fff;
 		margin-bottom: 12px;
 	}
 
-	&_value {
+	.value {
 		font-weight: bold;
 
-		&__salary {
+		&.salary {
 			color: #90CAF9;
 		}
 
-		&__negative {
+		&.negative {
 			color: #EF9A9A;
 		}
 
-		&__remaining {
+		&.remaining {
 			color: #A5D6A7;
 		}
 	}
 
-	&__account_payable {
+	.account_payable {
 		display: flex;
 		justify-content: center;
 		gap: 24px;

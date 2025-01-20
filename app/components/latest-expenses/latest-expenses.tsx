@@ -1,11 +1,13 @@
 import React from 'react';
 
-import styles from "../../styles/components/latestExpenses.module.scss"
+import styles from "../../styles/components/latest-expenses.module.scss"
 
 import Icon from '../icon/icons';
 import { Data } from '@/app/utils/types';
 
 export default function LatestExpenses({ data }: { data: Data[] }) {
+  if (!data || !data.length) return;
+  
   const latestExpenses = data.slice(-10).reverse();
 
   return (
@@ -19,17 +21,18 @@ export default function LatestExpenses({ data }: { data: Data[] }) {
           <div className={styles.latest_expenses}>
             <ul>
               {latestExpenses.map((expense, index) => (
-                <li key={`${expense.item}-${index}`} className={styles.latest_expenses__item}>
-                  <div className={styles.latest_expenses__item_name}>
-                    <div className={styles.latest_expenses__item_name_icon}>
+                <li key={`${expense.item}-${index}`} className={styles.item}>
+                  <div className={styles.item_name}>
+                    <div className={styles.item_icon}>
                       <Icon name={expense.category} />
                     </div>
+
                     <div>
                       <p>{expense.item}</p>
                       <p><b>Pessoa: </b>{expense.people}</p>
                     </div>
                   </div>
-                  <p className={styles.latest_expenses__item_value}>{expense.value}</p>
+                  <p className={styles.item_value}>{expense.value}</p>
                 </li>
               ))}
             </ul>
