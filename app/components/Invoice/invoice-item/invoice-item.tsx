@@ -27,8 +27,8 @@ export const InvoiceItem = ({ data, openModal }: Params) => {
           <div>
             <p>{invoice.item}</p>
             <div>
-              <button onClick={() => openModal(invoice, 'edit')}><FaEdit size={16} color='red' /></button>
-              <button onClick={() => openModal(invoice, 'delete')}><MdDeleteForever size={16} color='#000080' /></button>
+              <button onClick={() => openModal(invoice, 'edit')} data-testid="edit-button"><FaEdit size={16} color='red' /></button>
+              <button onClick={() => openModal(invoice, 'delete')} data-testid="delete-button"><MdDeleteForever size={16} color='#000080' /></button>
             </div>
           </div>
           <p>{invoice.value}</p>

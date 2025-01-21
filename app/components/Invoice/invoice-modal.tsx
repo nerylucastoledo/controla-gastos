@@ -12,7 +12,8 @@ import { Input } from '../input/input';
 import Modal from '@/app/components/modal/modal';
 import Loading from '@/app/components/loading/loading';
 
-import { fetcher, formatToCurrencyBRL } from '@/app/utils';
+import { fetcher, fetcherPost, formatCurrency, formatToCurrencyBRL } from '@/app/utils';
+import Toast from '../toast/toast';
 
 interface Params {
   username: string;
@@ -35,33 +36,33 @@ interface Invoice {
   totalInvoice: number
 }
 
-export default function InvoiceModal({ username, date, card, backgroundColor, onDismiss }: Params) {
+export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss }: Params) => {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
-  const [item, setItem] = useState("")
-  const [value, setValue] = useState("")
   const [name, setName] = useState<string>("");
+  const [itemUpdate, setItemUpdate] = useState<InvoiceItemType>({ _id: "", category: "", item: "", value: ""})
+  const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
+  const [showToast, setShowToast] = useState(false);
 
-  const { data, error, isLoading } = useSWR<Invoice[]>(`http://localhost:4000/api/expenses/${username}/${date}/${card}`, fetcher)
+  const { data, error, isLoading, mutate } = useSWR<Invoice[]>(`http://localhost:4000/api/expenses/${username}/${date}/${card}`, fetcher)
 
   useEffect(() => {
-    if (data && data.length > 0) {
-      setName(data[0].name);
-    }
+    if (!data) return;
+    setName(data[0].name);
   }, [data]);
   
   if (!data || error) {
-    return (
-      <p>Ocorreu um erro</p>
-    )
+    return null;
   }
 
-  const dataByName = data.filter((item) => item.name === name)
-  const cardName = card.replace("%20", " ")
+  const handleToast = (error: boolean, message: string) => {
+    setToastCustom({ error, message })
+    setShowToast(true)
+    setTimeout(() => setShowToast(false), 2000);
+  }
 
   const openModal = (card: InvoiceItemType, modal: "edit" | "delete") => {
-    setItem(card.item)
-    setValue(card.value)
+    setItemUpdate({ _id: card._id, category: card.category, item: card.item, value: card.value })
 
     if (modal === "edit") {
       setIsModalEditOpen(true)
@@ -75,17 +76,51 @@ export default function InvoiceModal({ username, date, card, backgroundColor, on
     setIsModalDeleteOpen(false)
   };
 
-  const submit = () => {
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (isModalEditOpen) {
+      try {
+        const response = await fetcherPost<InvoiceItemType, { message: string }>(
+          "http://localhost:4000/api/expenses", 
+          "PUT", 
+          itemUpdate
+        );
+        handleToast(true, response.message)
+        closeModal();
+        mutate(); 
+      } catch (err) {
+        handleToast(false, (err as Error).message);
+      }
+    } else {
+      try {
+        const response = await fetcherPost<InvoiceItemType, { message: string }>(
+          `http://localhost:4000/api/expenses/${itemUpdate._id}`, 
+          "DELETE", 
+        );
+        handleToast(true, response.message)
+        closeModal();
+        mutate(); 
+      } catch (err) {
+        handleToast(false, (err as Error).message);
+      }
+    }
   }
+
+  const invocieByName = data.filter((item) => item.name === name)
+  const cardName = card.replace("%20", " ")
 
   return (
     <>
+      {showToast && (
+        <Toast success={toastCustom.error} message={toastCustom.message} />
+      )}
       <Modal background={backgroundColor} onCustomDismiss={onDismiss}>
         {isLoading ? (
           <Loading />
         ) : (
           <>
-            {data.length && dataByName.length && (
+            {data.length && invocieByName.length && (
               <div className={styles.invoice}>
                 <div className={styles.title}>
                   {cardName}
@@ -102,15 +137,17 @@ export default function InvoiceModal({ username, date, card, backgroundColor, on
                       />
                     ))}
                   </div>
+
                   <div className={styles.item}>
-                    <InvoiceItem 
-                      data={dataByName[0].invoices} 
+                    <InvoiceItem
+                      data={invocieByName[0].invoices} 
                       openModal={openModal}
                     />
                   </div>
                 </div>
+                
                 <p className={styles.total}>
-                  Total: {formatToCurrencyBRL(dataByName[0].totalInvoice)}
+                  Total: {formatToCurrencyBRL(invocieByName[0].totalInvoice)}
                 </p>
               </div>
             )}
@@ -125,25 +162,29 @@ export default function InvoiceModal({ username, date, card, backgroundColor, on
           onCustomDismiss={closeModal}
         >
           <h2>Atualizar o gasto</h2>
-          <form onSubmit={submit}>
+
+          <form onSubmit={handleSubmit}>
             <Input
               label="Item"
               type="text" 
-              required
               name="item"
-              value={item}
-              onChange={({ target }) => setItem(target.value)}
+              data-testid="item"
+              required
+              value={itemUpdate.item}
+              onChange={({ target }) => setItemUpdate(prev => ({ ...prev, item: target.value }))}
             />
+
             <Input
               label="Valor (R$)"
               type="text" 
+              name="value"
+              data-testid="value"
               required
-              name="valor"
-              value={value}
-              onChange={({ target }) => setValue(target.value)}
+              value={itemUpdate.value}
+              onChange={({ currentTarget }) => setItemUpdate(prev => ({ ...prev, value: formatCurrency(currentTarget.value) }))}
             />
 
-            <input type="submit" value="Atualizar" className="button button__primary"/>
+            <input type="submit" value="Atualizar" className="button button__primary" data-testid="submit-edit" />
           </form>
         </Modal>
       )}
@@ -155,8 +196,11 @@ export default function InvoiceModal({ username, date, card, backgroundColor, on
           onCustomDismiss={closeModal}
         >
           <h2>Deletar o gasto</h2>
-          <p>Após deletar não será possível recuperar <br></br> tem certeza que quer deletar a(o) <b>{item}</b>?</p>
-          <button id='delete' className={`button button__primary ${stylesModal.button}`}>Deletar</button>
+          
+          <p data-testid="text-remove">Após deletar não será possível recuperar <br></br> tem certeza que quer deletar a(o) <b>{itemUpdate.item}</b>?</p>
+          <button onClick={handleSubmit} id='delete' className={`button button__primary ${stylesModal.button}`} data-testid="submit-delete">
+            Deletar
+          </button>
         </Modal>
       )}
     </>

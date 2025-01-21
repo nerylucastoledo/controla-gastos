@@ -5,7 +5,7 @@ import styles from "../../styles/components/card.module.scss"
 import { CardItem } from './card-item';
 import { CardData, Data } from '@/app/utils/types';
 import { formatToCurrencyBRL, parseCurrencyString } from '@/app/utils';
-import InvoiceModal from '../Invoice/invoice-modal';
+import { InvoiceModal } from '../Invoice/invoice-modal';
 
 interface Props {
   username: string,
