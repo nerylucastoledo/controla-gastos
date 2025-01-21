@@ -6,7 +6,7 @@ import { Providers } from './providers';
  
 const montserrat = Montserrat({ subsets: ['latin'] })
 
-export default function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
+export default function RootLayout({ children, modal }: { children: React.ReactNode, modal: React.ReactNode }) {
   const links = [
     {
       name: "Ínicio",
@@ -31,7 +31,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={montserrat.className}>
         <Navigation navLinks={links} />
 
-        <Providers>{children}</Providers>
+        <Providers>
+          { children }
+          { modal }
+        </Providers>
       </body>
     </html>
   );

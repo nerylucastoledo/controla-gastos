@@ -1,16 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
 import Image from 'next/image'
 import Link from "next/link";
-import { useRouter } from 'next/navigation';
 
 import styles from "../styles/pages/login.module.scss"
 
+import Toast from "../components/toast/toast";
+import { Input } from "../components/input/input";
+
+import { useUser } from "../context/user";
+
 import wallet from "../images/wallet.png";
 import walletRetina from "../images/wallet-retina.png";
-import Toast from "../components/toast/toast";
-import { useUser } from "../context/user";
 
 interface Data {
   message: string,
@@ -83,32 +86,25 @@ export default function Login() {
           <p className={styles.container_user__form_subtitle}>Insira sua conta</p>
 
           <form onSubmit={submit}>
-            <div>
-              <input 
-                type="email" 
-                name="email" 
-                id="email"
-                placeholder=""
-                required
-                value={email}
-                onChange={({ target }) => setEmail(target.value)}
-              />
+            <Input
+              label="Email"
+              type="email" 
+              placeholder=""
+              required
+              name="email"
+              value={email}
+              onChange={({ target }) => setEmail(target.value)}
+            />
 
-              <label htmlFor="email" data-testid="email-label">Email</label>
-            </div>
-            <div>
-              <input 
-                type="password" 
-                name="password" 
-                id="password"
-                placeholder=""
-                role="password"
-                required
-                value={password}
-                onChange={({ target }) => setPassword(target.value)}
-              />
-              <label htmlFor="password" data-testid="password-label">Senha</label>
-            </div>
+            <Input
+              label="Senha"
+              type="password" 
+              placeholder=""
+              required
+              name="password"
+              value={password}
+              onChange={({ target }) => setPassword(target.value)}
+            />
 
             <input type="submit" value="Acessar" className="button button__primary"/>
           </form>

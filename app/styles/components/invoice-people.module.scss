@@ -1,0 +1,12 @@
+.container {
+	padding: 12px;
+	border-radius: 12px;
+	color: #535353;
+	background-color: #fff;
+	cursor: pointer;
+
+	&.active {
+		background-color: #535353 !important;
+		color: #fff !important;
+	}
+}
