@@ -31,11 +31,11 @@ export const ENUM_CATEGORYS_DISPLAY = Object.fromEntries(
 );
 
 export const parseCurrencyString = (currencyString: string) => {
-	let numberString = currencyString.replace("R$", "").trim(); // Remove the currency symbol (e.g., "R$") and trim whitespace
-	numberString = numberString.replace(/\./g, ""); // // Remove thousand separators (.)
-	numberString = numberString.replace(",", "."); // // Replace the decimal separator (,) with a dot (.)
+	let numberString = currencyString.replace("R$", "").trim();
+	numberString = numberString.replace(/\./g, "");
+	numberString = numberString.replace(",", ".");
 	
-	return parseFloat(numberString); // Convert the cleaned string to a float
+	return parseFloat(numberString);
 }
 
 export const formatToCurrencyBRL = (amount: number) => {
@@ -47,3 +47,9 @@ export const formatToCurrencyBRL = (amount: number) => {
 		maximumFractionDigits: 2
 	});
 }
+
+export const fetcher = (url: string) => 
+	fetch(url, {
+	  method: 'GET',
+	  credentials: 'include',
+	}).then((res) => res.json());
