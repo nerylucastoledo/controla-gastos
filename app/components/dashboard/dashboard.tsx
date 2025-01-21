@@ -5,7 +5,7 @@ import useSWR from 'swr';
 
 import styles from "../../styles/components/dashboard.module.scss"
 
-import Loading from '../loading/loading';
+import Loading from '../loading/loading-icon';
 import ChartExpensesMonthly from '../chart/ChartExpensesMonthly';
 import ChartExpensesCategorys from '../chart/ChartExpensesCategorys';
 import { Data } from '@/app/utils/types';

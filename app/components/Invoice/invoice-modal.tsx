@@ -10,7 +10,7 @@ import { InvoicePeople } from './invoice-people/invoice-people';
 import { InvoiceItem } from './invoice-item/invoice-item';
 import { Input } from '../input/input';
 import Modal from '@/app/components/modal/modal';
-import Loading from '@/app/components/loading/loading';
+import Loading from '@/app/components/loading/loading-icon';
 
 import { fetcher, fetcherPost, formatCurrency, formatToCurrencyBRL } from '@/app/utils';
 import Toast from '../toast/toast';
