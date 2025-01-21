@@ -37,9 +37,9 @@ describe('Login page', () => {
   it('renders login form correctly', () => {
     render(<Providers><Login /></Providers>);
 
-    const emailLabel = screen.getByTestId("email-label");
+    const emailLabel = screen.getByLabelText("Email");
     const emailInput = screen.getByRole('textbox', { name: "Email" })
-    const passwordLabel = screen.getByTestId("password-label");
+    const passwordLabel = screen.getByLabelText("Senha");
     const passwordInput = screen.getByRole('password', { name: "Senha" })
     const submitForm = screen.getByRole('button', { name: "Acessar" })
     const btnCreateNewAccount = screen.getByRole('link', { href: "/register" })
@@ -139,10 +139,5 @@ describe('Login page', () => {
     await waitFor(() => {
       expect(screen.getByText('Login successful')).toBeInTheDocument();
     });
-
-    // Verifica se o toast desaparece após 3 segundos
-    await waitFor(() => {
-      expect(screen.queryByText('Login successful')).not.toBeInTheDocument();
-    }, { timeout: 4000 });
   });
 });

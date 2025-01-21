@@ -68,14 +68,18 @@ describe('Resume Component', () => {
     (useUser).mockReturnValue({ salary: mockSalary });
   });
 
-  it('renders loading state', () => {
-    render(<Resume loading={true} data={[]} />);
-    const loading = screen.getByTestId('loading');
-    expect(loading).toBeInTheDocument();
+  test('renders null when data is undefined', () => {
+    const { container } = render(<Resume salary={mockSalary} data={undefined} />);
+    expect(container.firstChild).toBeNull();
+  });
+
+  test('renders null when data is null', () => {
+    const { container } = render(<Resume salary={mockSalary} data={null} />);
+    expect(container.firstChild).toBeNull();
   });
 
   test('renders financial summary correctly', () => {
-    render(<Resume loading={false} data={mockData} />);
+    render(<Resume salary={mockSalary} data={mockData} />);
     
     expect(screen.getByText('resumo financeiro')).toBeInTheDocument();
     expect(screen.getByText('salário')).toBeInTheDocument();

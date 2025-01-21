@@ -6,7 +6,7 @@ import Icon from '../icon/icons';
 import { Data } from '@/app/utils/types';
 
 export default function LatestExpenses({ data }: { data: Data[] }) {
-  if (!data || !data.length) return;
+  if (!data) return;
   
   const latestExpenses = data.slice(-10).reverse();
 

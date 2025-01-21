@@ -68,20 +68,24 @@ describe('Latest Expenses Component', () => {
     (useUser).mockReturnValue({ salary: mockSalary });
   });
 
-  it('renders loading state', () => {
-    render(<LatestExpenses loading={true} data={[]} />);
-    const loading = screen.getByTestId('loading');
-    expect(loading).toBeInTheDocument();
+  test('renders null when data is undefined', () => {
+    const { container } = render(<LatestExpenses data={undefined} />);
+    expect(container.firstChild).toBeNull();
+  });
+
+  test('renders null when data is null', () => {
+    const { container } = render(<LatestExpenses data={null} />);
+    expect(container.firstChild).toBeNull();
   });
 
   it('renders empty state', () => {
-    render(<LatestExpenses loading={false} data={[]} />);
-    const emptyText = screen.getByText('Nada para mostrar no momento :)');
+    render(<LatestExpenses data={[]} />);
+    const emptyText = screen.getByText('nenhum gasto cadastrado esse mês');
     expect(emptyText).toBeInTheDocument();
   });
 
   it('renders latest expenses', () => {
-    render(<LatestExpenses loading={false} data={mockData} />);
+    render(<LatestExpenses data={mockData} />);
 
     expect(screen.getByText('últimos gastos')).toBeInTheDocument();
 

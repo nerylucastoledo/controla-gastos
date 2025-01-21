@@ -6,8 +6,8 @@ import { formatToCurrencyBRL, parseCurrencyString } from '@/app/utils';
 import { Data } from '@/app/utils/types';
 
 export default function Resume({ salary, data }: { salary: string, data: Data[] }) {
-  if (!data || !data.length) return;
-  
+  if (!data) return null;
+
   const getAllExpenses = data.filter(expense =>  expense.people === "Eu")
   const totalAccount = getAllExpenses.reduce((a, b) => a + parseCurrencyString(b.value), 0)
   const remaining = parseCurrencyString(salary) - totalAccount;

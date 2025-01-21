@@ -102,6 +102,7 @@ export default function Login() {
               placeholder=""
               required
               name="password"
+              role="password"
               value={password}
               onChange={({ target }) => setPassword(target.value)}
             />

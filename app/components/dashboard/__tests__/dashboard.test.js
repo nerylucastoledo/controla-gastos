@@ -84,7 +84,7 @@ describe('Dashboard Component', () => {
     });
 
     render(<Dashboard dataByMonth={[]} username="testeusername" year="2025" />);
-    expect(screen.getByText(/Nada para mostrar no momento/i)).toBeInTheDocument();
+    expect(screen.getByText(/você não cadastrou nenhum gasto até o momento/i)).toBeInTheDocument();
   });
 
   it('renders charts when data is available', () => {
@@ -95,7 +95,7 @@ describe('Dashboard Component', () => {
   
     const { container } = render(<Dashboard dataByMonth={mockDataByMonth} username="testeusername" year="2025" />);
     
-    expect(screen.getByText(/dashboard/i)).toBeInTheDocument();
+    expect(screen.getByText(/gráficos/i)).toBeInTheDocument();
   
     const wrapperCharts = container.querySelectorAll('.wrapper-chart');
     expect(wrapperCharts).toHaveLength(2); 
