@@ -11,33 +11,20 @@ import LatestExpenses from "./components/latest-expenses/latest-expenses";
 import Card from "./components/card/card";
 import Dashboard from "./components/dashboard/dashboard";
 
-import { months } from "./utils/index";
+import { fetcher, months } from "./utils/index";
 import { Expenses } from "./utils/types";
 import { useUser } from "./context/user";
-import Loading from "./components/loading/loading";
-import ModalInvoice from "./components/modal/modalInvoice";
-
-const fetcher = (url: string) => 
-  fetch(url, {
-    method: 'GET',
-    credentials: 'include',
-  }).then((res) => res.json());
 
 export default function Home() {
   const [month, setMonth] = useState(months[new Date().getMonth()]);
   const [year, setYear] = useState(new Date().getFullYear().toString());
-  const [showModal, setShowModal] = useState(true);
   const { username, salary } = useUser();
-  
+
   const currentDate = `${month}${year}`
   const { data, error, isLoading, mutate } = useSWR<Expenses>(`http://localhost:4000/api/expenses/${username}/${currentDate}`, fetcher)
- 
+
   if (isLoading) {
-    return (
-      <div className={styles.container_home}>
-        <Loading />
-      </div>
-    )
+    return;
   }
 
   if (error || !data) {
@@ -71,9 +58,10 @@ export default function Home() {
         </section>
         <section>
           <Card
+            username={username}
+            date={currentDate}
             data={data.expenses}
             cards={data.cards}
-            setShowModal={setShowModal}
           />
           <Dashboard
             dataByMonth={data.expenses}
@@ -81,12 +69,6 @@ export default function Home() {
             year={year}
           />
         </section>
-
-        {showModal && (
-          <ModalInvoice onClose={setShowModal} title="teste">
-            Hello from the modal!
-          </ModalInvoice>
-        )}
       </div>
     </div>
   );
