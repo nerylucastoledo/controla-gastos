@@ -63,28 +63,6 @@
 				flex: 1;
 				gap: 24px;
 				margin: 48px auto;
-
-				> div {
-					display: flex;
-					flex-direction: column;
-
-					label {
-						display: block;
-						color: #fff;
-						order: 0;
-					}
-
-					input + label, input:focus-visible + label {
-						margin-bottom: 0;
-						color: #fff;
-						transition: 0.3s;
-					}
-
-					input:placeholder-shown + label {
-						margin-bottom: -32px;
-						color: #B0B0B0;
-					}
-				}
 			}
 
 			&_new {
