@@ -21,7 +21,7 @@ export default function Home() {
   const { username, salary } = useUser();
 
   const currentDate = `${month}${year}`
-  const { data, error, isLoading, mutate } = useSWR<Expenses>(`http://localhost:4000/api/expenses/${username}/${currentDate}`, fetcher)
+  const { data, error, isLoading, mutate } = useSWR<Expenses>(`http://localhost:4000/api/expenses/${username}/${currentDate}`, fetcher, { refreshInterval: 1000 })
 
   if (isLoading) {
     return;

@@ -3,6 +3,11 @@ import './styles/globals.scss';
 import { Montserrat } from 'next/font/google'
 import { Navigation } from './components/navigation/navigation';
 import { Providers } from './providers';
+
+import { IoHomeSharp } from "react-icons/io5";
+import { IoIosAddCircle } from "react-icons/io";
+import { IoOptionsSharp } from "react-icons/io5";
+import { PiSealBold } from "react-icons/pi";
  
 const montserrat = Montserrat({ subsets: ['latin'] })
 
@@ -10,19 +15,23 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
   const links = [
     {
       name: "Ínicio",
-      href:"/"
+      href:"/",
+      icon: <IoHomeSharp size={24} />,
     },
     {
       name: "Inserir gasto",
-      href:"/new-expense"
+      href:"/new-expense",
+      icon: <IoIosAddCircle size={24} />
     },
     {
       name: "Cadastrar opção",
-      href:"/new-option"
+      href:"/new-option",
+      icon: <IoOptionsSharp size={24} />
     },
     {
       name: "Configurações",
-      href:"/config"
+      href:"/config",
+      icon: <PiSealBold size={24} />
     },
   ]
 

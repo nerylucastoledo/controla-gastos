@@ -1,5 +1,23 @@
 import { ENUM_CATEGORYS } from "../components/icon/icons";
 
+export const categorys = [
+	"Alimentação",
+	"Doação",
+	"Educação",
+	"Entretenimento",
+	"Imposto",
+	"Investimentos",
+	"Lazer",
+	"Moradia",
+	"Não previsto",
+	"Outros",
+	"Saúde",
+	"Tecnologia",
+	"Transporte",
+	"Vestuário",
+	"Viagens"
+]
+
 export const months = [
 	"Janeiro",
 	"Fevereiro",

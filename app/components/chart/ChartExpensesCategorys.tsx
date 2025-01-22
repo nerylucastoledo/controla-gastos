@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import Chart from "chart.js";
 
 import { Data } from "@/app/utils/types";
-import { parseCurrencyString } from "@/app/utils";
+import { formatToCurrencyBRL, parseCurrencyString } from "@/app/utils";
 
 interface CategoryItem {
   category: string,
@@ -26,12 +26,21 @@ const chartCategorys = (data: CategoryItem[]) => {
       legend: {
         display: false,
       },
+      tooltips: {
+        backgroundColor: "#005B96",
+        callbacks: {
+          label: function(tooltipItem) {
+            const { index } = tooltipItem;
+            return `${data[index].category}: ${formatToCurrencyBRL(data[index].value)}`;
+          },
+        },
+      },
     },
     data: {
-      labels: data.slice(0,5).map((item) => item.category),
+      labels: data.map((item) => item.category),
       datasets: [{
         label: '',
-        data: data.slice(0,5).map((item) => item.value),
+        data: data.map((item) => item.value),
         backgroundColor: [
           'rgb(255, 99, 132)',
           'rgb(54, 162, 235)',
@@ -64,9 +73,9 @@ const groupCategories = (data: Data[]): CategoryItem[] => {
 
 
 export default function ChartExpensesCategorys({ data }: { data: Data[] }) {
-  
   useEffect(() => {
-    const categorys = groupCategories(data)
+    const dataFiltred = data.filter((expense) => parseCurrencyString(expense.value) > 0 && expense.people === "Eu")
+    const categorys = groupCategories(dataFiltred)
     const sortedValue = categorys.sort((a, b) => Number(b.value) - Number(a.value));
     const config = chartCategorys(sortedValue)
 

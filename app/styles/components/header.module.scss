@@ -1,89 +1,98 @@
 .header {
-	padding: 24px;
-	background-color: #005B96;
-	max-height: 112px;
+  padding: 24px;
+  background-color: #1C1C1C;
+  max-height: 112px;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  box-shadow: 0 0.8px 8px 0 rgba(0, 0, 0, 0.0784313725);
 
-	.menu {
-		z-index: 2;
-	
-		&_bar {
-			width: 45px;
-			cursor: pointer;
-	
-			&_item {
-				height: 5px;
-				width: 100%;
-				background-color: #DC052D;
-				display: block;
-				border-radius: 5px;
-				transition: 0.3s ease;
+  nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1280px;
+    margin: 0 auto;
+    gap: 24px;
 
-				&:first-child {
-					transform: translateY(-4px);
-				}
-				
-				&:last-child {
-					transform: translateY(4px);
-				}
-			}
-		}
-	}
+    > a {
+      display: none;
+    }
 
-	nav {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		max-width: 1280px;
-		margin: 0 auto;
-		gap: 24px;
+    ul {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      z-index: 10;
+      width: 100%;
 
-		ul {
-			display: none;
-			flex-direction: column;
-			gap: 24px;
-			position: absolute;
-			right: 24px;
-			top: 116px;
-			z-index: 10;
-			background-color: #005B96;
-			padding: 24px;
-			border-radius: 12px;
-			transform: 0.3s;
+      a {
+        color: #fff;
+        border-bottom: 1px solid transparent;
+        padding-bottom: 8px;
+        margin-bottom: -9px;
 
-			&.active {
-				display: flex;
-			}
+        span {
+          display: none;
+        }
 
-			a {
-				color: #fff;
-				border-bottom: 1px solid transparent;
-				padding-bottom: 8px;
-				margin-bottom: -9px;
-
-				&.active {
-					font-weight: bold;
-					border-bottom: 1px solid #fff;
-				}
-
-				&:hover {
-					border-bottom: 1px solid #fff;
-					transition: 0.2s;
-				}
-			}
-		}
-	}
+        &.active {
+          font-weight: bold;
+          border-bottom: 1px solid #fff;
+        }
+      }
+    }
+  }
 }
 
 @media (min-width: 988px) {
-	.menu {
-		display: none;
-	}
+  .header {
+    background-color: #005B96;
+    position: unset;
 
-	.header nav ul {
-		display: flex;
-		position: unset;
-		flex-direction: row;
-		padding: 0;
-		gap: 16px;
-	}
+    nav {
+      > a {
+        display: block;
+      }
+
+      ul {
+        background-color: #005B96;
+        border-radius: 12px;
+        transform: 0.3s;
+        flex-direction: row;
+        padding: 0;
+        width: max-content;
+
+        a {
+          padding-bottom: unset;
+          margin-bottom: unset;
+
+          svg {
+            display: none;
+          }
+
+          span {
+            color: #fff;
+            display: block;
+            border-bottom: 1px solid transparent;
+            padding-bottom: 8px;
+            margin-bottom: -9px;
+          }
+
+          &.active {
+						span {
+              border-bottom: 1px solid #fff;
+            }
+          }
+
+          &:hover {
+            span {
+              border-bottom: 1px solid #fff;
+              transition: 0.2s;
+            }
+          }
+        }
+      }
+    }
+  }
 }
