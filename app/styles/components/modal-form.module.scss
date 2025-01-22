@@ -40,15 +40,19 @@
 	  width: calc(100% - 32px);
   
 	  > div {
-		padding: 48px 24px;
-		display: flex;
-		align-items: center;
-		border-radius: 12px;
+			padding: 48px 24px;
+			display: flex;
+			align-items: center;
+			border-radius: 12px;
 
-		button {
-			margin-top: -44px;
-			margin-right: -32px;
-		}
+			button {
+				margin-top: -44px;
+				margin-right: -32px;
+			}
+
+			.select {
+				margin-top: 16px;
+			}
 	  }
 	}
 }

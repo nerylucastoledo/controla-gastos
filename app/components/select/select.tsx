@@ -1,16 +1,14 @@
-import React from 'react'
+import React, { FC, SelectHTMLAttributes } from 'react'
 
 import styles from "../../styles/components/select.module.scss"
 
-interface Props {
+interface Props extends SelectHTMLAttributes<HTMLSelectElement> {
 	children: React.ReactNode;
 	label: string;
 	id: string;
-	defaultValue?: string;
-	onChange?: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
-export const Select = ({ children, label, id, ...props }: Props) => {
+export const Select: FC<Props> = ({ children, label, id, ...props }: Props) => {
   return (
     <div className={styles.select_container}>
 			<label htmlFor={id}>{label}</label>

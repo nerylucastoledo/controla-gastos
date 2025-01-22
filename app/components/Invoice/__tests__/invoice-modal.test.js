@@ -251,19 +251,4 @@ describe('InvoiceModal', () => {
     );
     expect(container.firstChild).toBeNull();
   });
-
-  // it('closes modal on dismiss', () => {
-  //   const { getByText } = render(
-  //     <InvoiceModal 
-  //       username="testuser" 
-  //       date="2023-10-10" 
-  //       card="test" 
-  //       backgroundColor="#fff" 
-  //       onDismiss={onDismissMock} 
-  //     />
-  //   );
-
-  //   fireEvent.click(getByText('Fechar'));
-  //   expect(onDismissMock).toHaveBeenCalled();
-  // });
 });

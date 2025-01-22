@@ -12,8 +12,9 @@ import { Input } from '../input/input';
 import Modal from '@/app/components/modal/modal';
 import Loading from '@/app/components/loading/loading-icon';
 
-import { fetcher, fetcherPost, formatCurrency, formatToCurrencyBRL } from '@/app/utils';
+import { categorys, fetcher, fetcherPost, formatCurrency, formatToCurrencyBRL } from '@/app/utils';
 import Toast from '../toast/toast';
+import { Select } from '../select/select';
 
 interface Params {
   username: string;
@@ -61,8 +62,8 @@ export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss 
     setTimeout(() => setShowToast(false), 2000);
   }
 
-  const openModal = (card: InvoiceItemType, modal: "edit" | "delete") => {
-    setItemUpdate({ _id: card._id, category: card.category, item: card.item, value: card.value })
+  const openModal = (invoice: InvoiceItemType, modal: "edit" | "delete") => {
+    setItemUpdate({ _id: invoice._id, category: invoice.category, item: invoice.item, value: invoice.value })
 
     if (modal === "edit") {
       setIsModalEditOpen(true)
@@ -183,6 +184,16 @@ export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss 
               value={itemUpdate.value}
               onChange={({ currentTarget }) => setItemUpdate(prev => ({ ...prev, value: formatCurrency(currentTarget.value) }))}
             />
+
+            <Select 
+              id='category' 
+              label='Categoria' 
+              defaultValue={itemUpdate.category}
+              className={stylesModal.select}
+              onChange={({ currentTarget }) => setItemUpdate(prev => ({ ...prev, category: currentTarget.value }))}
+            >
+              {categorys.map((category) => <option key={category} value={category}>{category}</option>)}
+            </Select>
 
             <input type="submit" value="Atualizar" className="button button__primary" data-testid="submit-edit" />
           </form>
