@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import useSWR from "swr";
 
 import styles from "../../styles/components/invoice.module.scss";
-import stylesModal from "../../styles/components/modal-form.module.scss"
 
 import { InvoicePeople } from './invoice-people/invoice-people';
 import { InvoiceItem } from './invoice-item/invoice-item';
@@ -49,7 +48,7 @@ export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss 
 
   useEffect(() => {
     if (!data) return;
-    setName(data[0].name);
+    setName(data.length ? data[0].name : "Eu");
   }, [data]);
   
   if (!data || error) {
@@ -158,8 +157,8 @@ export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss 
 
       {isModalEditOpen && (
         <Modal
-          background='#0F0F1B'
-          customClass={`modal-form-active ${stylesModal.modal_form}`}
+          background='#1E1E1E'
+          customClass={`modal-form-active modal-form`}
           onCustomDismiss={closeModal}
         >
           <h2>Atualizar o gasto</h2>
@@ -189,7 +188,7 @@ export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss 
               id='category' 
               label='Categoria' 
               defaultValue={itemUpdate.category}
-              className={stylesModal.select}
+              className={"modal-form__select"}
               onChange={({ currentTarget }) => setItemUpdate(prev => ({ ...prev, category: currentTarget.value }))}
             >
               {categorys.map((category) => <option key={category} value={category}>{category}</option>)}
@@ -202,14 +201,14 @@ export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss 
 
       {isModalDeleteOpen && (
         <Modal
-          background='#0F0F1B'
-          customClass={`modal-form-active ${stylesModal.modal_form}`}
+          background='#1E1E1E'
+          customClass={`modal-form-active modal-form`}
           onCustomDismiss={closeModal}
         >
           <h2>Deletar o gasto</h2>
           
           <p data-testid="text-remove">Após deletar não será possível recuperar <br></br> tem certeza que quer deletar a(o) <b>{itemUpdate.item}</b>?</p>
-          <button onClick={handleSubmit} id='delete' className={`button button__primary ${stylesModal.button}`} data-testid="submit-delete">
+          <button onClick={handleSubmit} id='delete' className={`button button__primary button`} data-testid="submit-delete">
             Deletar
           </button>
         </Modal>

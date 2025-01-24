@@ -8,6 +8,73 @@
 
 body {
 	background-color: #121212;
+	margin-bottom: 52px;
+}
+
+// Modal form
+.modal-form {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 1000;
+	
+	h2, p {
+	  text-align: center;
+	  max-width: 400px;
+	}
+	h2 {
+	  color: #FFD700;
+	}
+
+	p {
+		color: #B0B0B0;
+	}
+
+	.button {
+		display: block;
+		margin: 0 auto;
+	}
+
+	form {
+	  display: flex;
+	  flex-direction: column;
+	  gap: 24px;	
+	  background-color: #1b1b1b;
+	  padding: 24px;
+	  width: 100%;
+	  max-width: 600px;
+	  border-radius: 12px;
+	}
+  
+	> div {
+	  border-radius: 12px;
+	  position: fixed;
+	  display: flex;
+	  align-items: center;
+	  justify-content: center;
+	  height: 100%;
+	  max-width: 648px;
+	  width: calc(100% - 32px);
+  
+	  > div {
+			padding: 48px 24px;
+			display: flex;
+			align-items: center;
+			border-radius: 12px;
+
+			button {
+				margin-top: -44px;
+				margin-right: -32px;
+			}
+	  }
+	}
+
+	select {
+		margin-top: 16px;
+	}
 }
 
 .button {
@@ -22,7 +89,7 @@ body {
 	margin: 0 auto;
 
 	&__primary {
-		background: #005B96;
+		background: #007BFF;
 		box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 		color: #fff;
 	}
@@ -33,6 +100,9 @@ input, select {
 	width: 100%;
 	padding: 16px 0;
 	order: 1;
+	background-color: #2A2A2A;
+	border: 1px solid #3E3E3E;
+	color: #FFFFFF;
 
 	&:focus-visible {
 		outline: unset;
@@ -42,32 +112,22 @@ input, select {
 .form-control {
 	display: flex;
 	flex-direction: column;
+	gap: 8px;
 
 	label {
 		display: block;
 		color: #fff;
 		order: 0;
+		color: #FFFFFF;
+		cursor: pointer;
+		width: max-content;
 	}
 
 	input {
-		background-color: transparent;
-		border-bottom: 1px solid #fff;
-		color: #fff;
-	
-		&:focus-visible {
-			outline: unset;
-		}
-	}
-
-	input + label, input:focus-visible + label {
-		margin-bottom: 0;
-		color: #fff;
-		transition: 0.3s;
-	}
-
-	input:placeholder-shown + label {
-		margin-bottom: -32px;
-		color: #B0B0B0;
+		border-radius: 8px;
+		height: 56px;
+		padding: 0 16px;
+		font-size: 16px;
 	}
 }
 
@@ -81,14 +141,14 @@ input, select {
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
-	background-color: #1C1C1C;
+	background-color: #1E1E1E;
 	flex: 1;
 	flex-grow: 1;
 	min-width: 320px;
 
 	&__title {
 		font-size: 24px;
-		color: #fff;
+		color: #FFD700;
 	}
 }
 
@@ -104,4 +164,11 @@ input, select {
 	align-items: center;
 	justify-content: center;
 	padding: 24px 0;
+}
+
+
+@media (min-width: 988px) {
+	body {
+    margin-bottom: 0;
+  }
 }
