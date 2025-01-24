@@ -33,7 +33,7 @@ export const Navigation: React.FC<NavigationProps> = ({ navLinks }) => {
 
 						return (
 							<li key={link.name}>
-								<Link href={link.href} className={isActive ? styles.active : ""}>{link.icon} <span>{link.name}</span></Link>
+								<Link href={link.href} className={isActive ? styles.active : ""} prefetch={true}>{link.icon} <span>{link.name}</span></Link>
 							</li>
 						)
 					})}
