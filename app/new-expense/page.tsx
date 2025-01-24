@@ -14,7 +14,7 @@ import useSWR from "swr";
 import { useUser } from "../context/user";
 import { useState } from "react";
 import Toast from "../components/toast/toast";
-import Loading from "./loading";
+import LoadingNewExpense from "./loading";
 
 interface People {
   _id: string;
@@ -63,6 +63,7 @@ export default function NewExpense() {
   }
 
   const handleToast = (error: boolean, message: string) => {
+    console.log("chamei toast")
     setToastCustom({ error, message })
     setShowToast(true)
     setTimeout(() => setShowToast(false), 2000);
@@ -102,7 +103,7 @@ export default function NewExpense() {
     }
   }
 
-  if (isLoadingPeople && isLoadingCard) return <Loading />;
+  if (isLoadingPeople && isLoadingCard) return <LoadingNewExpense />;
 
   if (peopleError || cardError || !peopleData || !cardData ) {
     return (
@@ -114,6 +115,8 @@ export default function NewExpense() {
       </div>
     )
   }
+
+  console.log(peopleData, cardData)
 
   return (
     <section className={`container ${stylesNewExpense.new_expense}`}>
@@ -166,6 +169,7 @@ export default function NewExpense() {
                 id='people' 
                 label='pessoa' 
                 className={"modal-form__select"}
+                data-testid="people-select" 
                 value={people}
                 onChange={({ target }) => setPeople(target.value)}
                 required
@@ -183,6 +187,7 @@ export default function NewExpense() {
                 id='card' 
                 label='cartão' 
                 className={"modal-form__select"}
+                data-testid="card-select" 
                 value={card}
                 onChange={({ target }) => setCard(target.value)}
                 required
@@ -199,6 +204,7 @@ export default function NewExpense() {
                 id='category' 
                 label='Categoria' 
                 className={"modal-form__select"}
+                data-testid="category-select" 
                 value={category}
                 onChange={({ target }) => setCategory(target.value)}
                 required

@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Loading from '../loading';
+import Loading from '../loading-icon';
 import styles from "../../../styles/loading.module.scss";
 
 describe('Loading Component', () => {

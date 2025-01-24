@@ -2,9 +2,9 @@ import React from 'react';
 
 import styles from "../styles/components/skeleton.module.scss";
 
-const Loading = ({ cardCount = 1, lineCount = 11 }) => {
+const LoadingNewExpense = ({ cardCount = 1, lineCount = 11 }) => {
   return (
-    <div className={`${styles.skeleton} ${styles.skeletonNewExpense}`}>
+    <div data-testid="loading-new-expense" className={`${styles.skeleton} ${styles.skeletonNewExpense}`}>
       <div className={styles.container}>
         {[...Array(cardCount)].map((_, index) => (
           <div className={styles.card} key={index}>
@@ -18,4 +18,4 @@ const Loading = ({ cardCount = 1, lineCount = 11 }) => {
   );
 }
 
-export default Loading;
+export default LoadingNewExpense;
