@@ -11,7 +11,7 @@ import { PiSealBold } from "react-icons/pi";
  
 const montserrat = Montserrat({ subsets: ['latin'] })
 
-export default function RootLayout({ children, modal }: { children: React.ReactNode, modal: React.ReactNode }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   const links = [
     {
       name: "Ínicio",
@@ -42,7 +42,6 @@ export default function RootLayout({ children, modal }: { children: React.ReactN
 
         <Providers>
           { children }
-          { modal }
         </Providers>
       </body>
     </html>
