@@ -21,13 +21,12 @@
       flex-direction: column;
       gap: 24px;
   
-      h1 {
-        color: #FFD700;
+      h1, p {
+        text-align: left;
       }
 
       p {
         margin-top: -16px;
-        color: #B0B0B0;
       }
 
       .date {

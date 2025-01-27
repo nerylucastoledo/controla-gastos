@@ -161,7 +161,7 @@ export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss 
           customClass={`modal-form-active modal-form`}
           onCustomDismiss={closeModal}
         >
-          <h2>Atualizar o gasto</h2>
+          <h2 className='title'>Atualizar o gasto</h2>
 
           <form onSubmit={handleSubmit}>
             <Input
@@ -205,9 +205,9 @@ export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss 
           customClass={`modal-form-active modal-form`}
           onCustomDismiss={closeModal}
         >
-          <h2>Deletar o gasto</h2>
+          <h2 className='title'>Deletar o gasto</h2>
           
-          <p data-testid="text-remove">Após deletar não será possível recuperar <br></br> tem certeza que quer deletar a(o) <b>{itemUpdate.item}</b>?</p>
+          <p className='subtitle' data-testid="text-remove">Após deletar não será possível recuperar <br></br> tem certeza que quer deletar a(o) <b>{itemUpdate.item}</b>?</p>
           <button onClick={handleSubmit} id='delete' className={`button button__primary button`} data-testid="submit-delete">
             Deletar
           </button>

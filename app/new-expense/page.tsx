@@ -63,7 +63,6 @@ export default function NewExpense() {
   }
 
   const handleToast = (error: boolean, message: string) => {
-    console.log("chamei toast")
     setToastCustom({ error, message })
     setShowToast(true)
     setTimeout(() => setShowToast(false), 2000);
@@ -92,7 +91,7 @@ export default function NewExpense() {
         installments
       }
       const response = await fetcherPost<NewExpense, { message: string }>(
-        "http://localhost:4000/api/expensases", 
+        "http://localhost:4000/api/expenses", 
         "POST", 
         body
       );
@@ -116,8 +115,6 @@ export default function NewExpense() {
     )
   }
 
-  console.log(peopleData, cardData)
-
   return (
     <section className={`container ${stylesNewExpense.new_expense}`}>
       {showToast && (
@@ -133,8 +130,8 @@ export default function NewExpense() {
             <p className={"empty"}>Você precisa cadastrar um cartão para continuar</p>
           ) : (
             <>
-              <h1>Cadastre o novo gasto</h1>
-              <p>Assim que você inserir o gasto ele irá aparecer na sua tela inicial e você conseguirá entender para onde ele está indo</p>
+              <h1 className="title">Cadastre o novo gasto</h1>
+              <p className="subtitle">Assim que você inserir o gasto ele irá aparecer na sua tela inicial e você conseguirá entender para onde ele está indo</p>
               <div className={stylesNewExpense.date}>
                 <Select 
                   label={"mês"} 
