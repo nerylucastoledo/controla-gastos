@@ -12,8 +12,12 @@ import Card from "./components/card/card";
 import Dashboard from "./components/dashboard/dashboard";
 
 import { fetcher, months } from "./utils/index";
-import { Expenses } from "./utils/types";
+import { IExpensesByUsernameAndDate } from "./utils/types";
 import { useUser } from "./context/user";
+
+export interface IData {
+  data: IExpensesByUsernameAndDate
+}
 
 export default function Home() {
   const [month, setMonth] = useState(months[new Date().getMonth()]);
@@ -21,7 +25,7 @@ export default function Home() {
   const { username, salary } = useUser();
 
   const currentDate = `${month}${year}`
-  const { data, error, isLoading, mutate } = useSWR<Expenses>(`http://localhost:4000/api/expenses/${username}/${currentDate}`, fetcher, { refreshInterval: 1000 })
+  const { data, error, isLoading, mutate } = useSWR<IData>(`http://localhost:4000/api/expenses/${username}/${currentDate}`, fetcher, { refreshInterval: 1000 })
 
   if (isLoading) {
     return;
@@ -50,21 +54,21 @@ export default function Home() {
           />
           <Resume
             salary={salary}
-            data={data.expenses}
+            data={data.data.expenses}
           />
           <LatestExpenses
-            data={data.expenses}
+            data={data.data.expenses}
           />
         </section>
         <section>
           <Card
             username={username}
             date={currentDate}
-            data={data.expenses}
-            cards={data.cards}
+            data={data.data.expenses}
+            cards={data.data.cards}
           />
           <Dashboard
-            dataByMonth={data.expenses}
+            dataByMonth={data.data.expenses}
             username={username}
             year={year}
           />
