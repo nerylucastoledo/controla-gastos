@@ -14,7 +14,7 @@ import { useState } from "react";
 import Toast from "../components/toast/toast";
 import { Select } from "../components/select/select";
 
-interface Body {
+interface IData {
   _id?: string;
   username: string;
   name: string;
@@ -45,13 +45,13 @@ export default function NewOption() {
     e.preventDefault();
 
     try {
-      const body: Body = {
+      const body: IData = {
         username,
         name,
         ...(type === "cards" ? { color } : {})
       };
 
-      const response = await fetcherPost<Body, { message: string }>(
+      const response = await fetcherPost<IData, { message: string }>(
         `http://localhost:4000/api/${type}`, 
         "POST", 
         body

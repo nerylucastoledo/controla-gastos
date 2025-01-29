@@ -2,12 +2,12 @@ import React from 'react'
 
 import styles from "../../styles/components/toast.module.scss"
 
-interface Params {
+interface IProps {
 	success: boolean;
 	message: string;
 }
 
-export default function Toast({ success, message }: Params) {
+export default function Toast({ success, message }: IProps) {
 
 	if (!message) return;
 	

@@ -4,33 +4,21 @@ import { Input } from '@/app/components/input/input'
 import Modal from '@/app/components/modal/modal'
 import Toast from '@/app/components/toast/toast';
 import { fetcherPost } from '@/app/utils';
+import { ICard, IPeople } from '@/app/utils/types';
 import React, { SetStateAction, useState } from 'react'
 
-interface People {
-  _id: string;
-  name: string;
-  username: string;
-}
-
-interface Card {
-  _id: string;
-  name: string;
-  username: string;
-  color: string;
-}
-
-interface Update {
+interface IUpdate {
   _id: string;
   name: string;
   color?: string;
 }
 
-interface Props {
+interface IProps {
   onCustomDismiss: (value: SetStateAction<boolean>) => void;
-  item: People | Card | null
+  item: IPeople | ICard | null
 }
 
-export const ConfigModalEdit = ({ onCustomDismiss, item }: Props) => {
+export const ConfigModalEdit = ({ onCustomDismiss, item }: IProps) => {
   const [itemUpdated, setItemUpdated] = useState(item);
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);
@@ -48,7 +36,7 @@ export const ConfigModalEdit = ({ onCustomDismiss, item }: Props) => {
 
     try {
       let url = "peoples";
-      let body: Update;
+      let body: IUpdate;
 
       if ("color" in itemUpdated) {
         url = "cards";
@@ -64,7 +52,7 @@ export const ConfigModalEdit = ({ onCustomDismiss, item }: Props) => {
         };
       }
 
-      const response = await fetcherPost<Update, { message: string }>(
+      const response = await fetcherPost<IUpdate, { message: string }>(
         `http://localhost:4000/api/${url}`, 
         "PUT", 
         body

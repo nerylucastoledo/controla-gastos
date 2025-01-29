@@ -3,14 +3,14 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { months, years } from "../../utils/index"
 import { Select } from '../select/select';
 
-interface Params {
+interface IProps {
   setMonth: Dispatch<SetStateAction<string>>;
   setYear: Dispatch<SetStateAction<string>>;
   currentMonth: string,
   currentYear: string
 }
 
-export default function Filter({ setMonth, setYear, currentMonth, currentYear }: Params) {
+export default function Filter({ setMonth, setYear, currentMonth, currentYear }: IProps) {
   return (
     <div className="content_card">
       <h1 className='content_card__title'>filtro</h1>

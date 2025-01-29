@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation";
 
 import styles from "../../styles/components/modal.module.scss";
 
-interface Props {
+interface IProps {
   children: React.ReactNode;
   background?: string;
   customClass?: string
   onCustomDismiss?: () => void;
 }
 
-const Modal = ({ children, background, customClass = "", onCustomDismiss }: Props) => {
+const Modal = ({ children, background, customClass = "", onCustomDismiss }: IProps) => {
   const overlay = useRef<HTMLDivElement>(null);
   const wrapper = useRef<HTMLDivElement>(null);
   const router = useRouter();

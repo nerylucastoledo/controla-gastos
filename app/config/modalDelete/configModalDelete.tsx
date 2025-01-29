@@ -3,27 +3,15 @@
 import Modal from '@/app/components/modal/modal'
 import Toast from '@/app/components/toast/toast';
 import { fetcherPost } from '@/app/utils';
+import { ICard, IPeople } from '@/app/utils/types';
 import React, { SetStateAction, useState } from 'react'
 
-interface People {
-  _id: string;
-  name: string;
-  username: string;
-}
-
-interface Card {
-  _id: string;
-  name: string;
-  username: string;
-  color: string;
-}
-
-interface Props {
+interface IProps {
   onCustomDismiss: (value: SetStateAction<boolean>) => void;
-  item: People | Card | null
+  item: IPeople | ICard | null
 }
 
-export const ConfigModalDelete = ({ onCustomDismiss, item }: Props) => {
+export const ConfigModalDelete = ({ onCustomDismiss, item }: IProps) => {
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);
 
@@ -43,7 +31,7 @@ export const ConfigModalDelete = ({ onCustomDismiss, item }: Props) => {
         url = `cards/${item?._id}`;
       }
 
-      const response = await fetcherPost<People | Card, { message: string }>(
+      const response = await fetcherPost<IPeople | ICard, { message: string }>(
         `http://localhost:4000/api/${url}`, 
         "DELETE", 
       );

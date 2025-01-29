@@ -3,43 +3,43 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from "../../styles/components/card.module.scss"
 import { CardItem } from './card-item';
-import { CardData, Data } from '@/app/utils/types';
+import { ICardData, IExpense } from '@/app/utils/types';
 import { formatToCurrencyBRL, parseCurrencyString } from '@/app/utils';
 import { InvoiceModal } from '../Invoice/invoice-modal';
 
-interface Props {
+interface IProps {
   username: string,
   date: string,
-  data: Data[],
-  cards: CardData[],
+  data: IExpense[],
+  cards: ICardData[],
 }
 
-interface Invoice {
+interface IInvoice {
   card: string;
   value: number;
 }
 
-interface CardList extends CardData { 
+interface ICardList extends ICardData { 
   invoice: number;
 }
 
-interface CardSelected {
+interface ICardSelected {
   name: string;
   color: string;
 }
 
-export default function Card({ username, date, data, cards }: Props) {
-  const [cardList, setCardList] = useState<CardList[]>([]);
-  const [cardSelected, setCardSelect] = useState<CardSelected>({ name: "", color: "" });
+export default function Card({ username, date, data, cards }: IProps) {
+  const [cardList, setCardList] = useState<ICardList[]>([]);
+  const [cardSelected, setCardSelect] = useState<ICardSelected>({ name: "", color: "" });
 
-  const filterByUniqueCards = (dataByMonth: Data[]) => {
+  const filterByUniqueCards = (dataByMonth: IExpense[]) => {
     const cardSet = new Set<string>();
     dataByMonth.forEach((item) => cardSet.add(item.card));
     return Array.from(cardSet);
   };
 
-  const totalInvoice = (dataByMonth: Data[]) => {
-    const result = dataByMonth.reduce<Invoice[]>((acc, expense) => {
+  const totalInvoice = (dataByMonth: IExpense[]) => {
+    const result = dataByMonth.reduce<IInvoice[]>((acc, expense) => {
       const cardName = expense.card;
       const value = parseCurrencyString(expense.value);
 
@@ -59,11 +59,11 @@ export default function Card({ username, date, data, cards }: Props) {
 
   const getCardsFilteredMonth = useCallback((cardList: string[]) => {
     const newList = cardList.map((item) => cards.find((card) => card.name === item)); 
-    const filteredList = newList.filter((card): card is CardData => card !== undefined);
+    const filteredList = newList.filter((card): card is ICardData => card !== undefined);
     return filteredList;
   }, [cards]);
 
-  const addInvoice = useCallback((cardList: CardData[], total: Invoice[]) => {
+  const addInvoice = useCallback((cardList: ICardData[], total: IInvoice[]) => {
     const newCardList = cardList.map((card) => {
       const invoiceCard = total.find((invoice) => invoice.card === card.name)
       return {...card, invoice: invoiceCard?.value || 0}

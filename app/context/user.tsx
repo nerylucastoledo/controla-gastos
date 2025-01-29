@@ -1,19 +1,19 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
 
-interface UserContextType {
+interface IUserContextType {
     username: string;
     setUsername: (username: string) => void;
     salary: string;
     setSalary: (salary: string) => void;
 }
 
-const UserContext = createContext<UserContextType | undefined>(undefined);
+const UserContext = createContext<IUserContextType | undefined>(undefined);
 
-interface UserProviderProps {
+interface IUserProviderProps {
     children: ReactNode;
 }
 
-export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
+export const UserProvider: React.FC<IUserProviderProps> = ({ children }) => {
 	const [username, setUsername] = useState<string>('');
 	const [salary, setSalary] = useState<string>('');
 

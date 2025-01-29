@@ -15,21 +15,9 @@ import { useUser } from "../context/user";
 import { useState } from "react";
 import Toast from "../components/toast/toast";
 import LoadingNewExpense from "./loading";
+import { ICard, IPeople } from "../utils/types";
 
-interface People {
-  _id: string;
-  name: string;
-  username: string;
-}
-
-interface Card {
-  _id: string;
-  name: string;
-  username: string;
-  color: string;
-}
-
-interface NewExpense {
+interface IData {
   username: string;
   date: string;
   people: string;
@@ -54,8 +42,8 @@ export default function NewExpense() {
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);
 
-  const { data: peopleData, error: peopleError, isLoading: isLoadingPeople, mutate: mutatePeole } = useSWR<People[]>(`http://localhost:4000/api/peoples/${username}`, fetcher);
-  const { data: cardData, error: cardError, isLoading: isLoadingCard, mutate: mutateCard } = useSWR<Card[]>(`http://localhost:4000/api/cards/${username}`, fetcher);
+  const { data: peopleData, error: peopleError, isLoading: isLoadingPeople, mutate: mutatePeole } = useSWR<IPeople[]>(`http://localhost:4000/api/peoples/${username}`, fetcher);
+  const { data: cardData, error: cardError, isLoading: isLoadingCard, mutate: mutateCard } = useSWR<ICard[]>(`http://localhost:4000/api/cards/${username}`, fetcher);
 
   const handleFetch = () => {
     mutatePeole();
@@ -90,7 +78,7 @@ export default function NewExpense() {
         card, 
         installments
       }
-      const response = await fetcherPost<NewExpense, { message: string }>(
+      const response = await fetcherPost<IData, { message: string }>(
         "http://localhost:4000/api/expenses", 
         "POST", 
         body

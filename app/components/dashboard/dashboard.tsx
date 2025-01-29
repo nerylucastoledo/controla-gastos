@@ -8,17 +8,16 @@ import styles from "../../styles/components/dashboard.module.scss"
 import Loading from '../loading/loading-icon';
 import ChartExpensesMonthly from '../chart/ChartExpensesMonthly';
 import ChartExpensesCategorys from '../chart/ChartExpensesCategorys';
-import { Data } from '@/app/utils/types';
+import { IExpense, IExpenseByYear } from '@/app/utils/types';
 
-interface DataByYear {
-  month: string;
-  value: string;
+interface IData {
+  data: IExpenseByYear[]
 }
 
-interface Params {
+interface IProps {
   username: string;
   year: string
-  dataByMonth: Data[]
+  dataByMonth: IExpense[]
 }
 
 const fetcher = (url: string) => 
@@ -27,10 +26,10 @@ const fetcher = (url: string) =>
     credentials: 'include',
   }).then((res) => res.json());
 
-export default function Dashboard({ dataByMonth, username, year }: Params) {
-  const { data, isLoading } = useSWR<DataByYear[]>(`http://localhost:4000/api/expenses/year/${username}/${year}`, fetcher)
+export default function Dashboard({ dataByMonth, username, year }: IProps) {
+  const { data, isLoading } = useSWR<IData>(`http://localhost:4000/api/expenses/year/${username}/${year}`, fetcher)
 
-  const existingData = data?.length && dataByMonth?.length
+  const existingData = data?.data.length && dataByMonth?.length
 
   return (
     <div className={`content_card ${styles.dashboard}`}>
@@ -49,7 +48,7 @@ export default function Dashboard({ dataByMonth, username, year }: Params) {
               <>
                 <div className={`${styles.chart}`}>
                   <div className="wrapper-chart">
-                    <ChartExpensesMonthly data={data} />
+                    <ChartExpensesMonthly data={data.data} />
                   </div>
                   <div className="wrapper-chart">
                     <ChartExpensesCategorys data={dataByMonth} />

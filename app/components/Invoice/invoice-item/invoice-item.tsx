@@ -7,19 +7,19 @@ import styles from "../../../styles/components/invoice-item.module.scss"
 import { MdDeleteForever } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
 
-interface Params {
-  data: InvoiceData[];
-  openModal: (card: InvoiceData, modal: "edit" | "delete") => void
+interface IProps {
+  data: IInvoiceData[];
+  openModal: (card: IInvoiceData, modal: "edit" | "delete") => void
 }
 
-interface InvoiceData {
+interface IInvoiceData {
   _id: string
   item: string,
   value: string,
   category: string,
 }
 
-export const InvoiceItem = ({ data, openModal }: Params) => {
+export const InvoiceItem = ({ data, openModal }: IProps) => {
   return (
     <>
       {data.map((invoice, index) => (

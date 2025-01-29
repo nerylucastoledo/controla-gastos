@@ -15,7 +15,7 @@ import { categorys, fetcher, fetcherPost, formatCurrency, formatToCurrencyBRL } 
 import Toast from '../toast/toast';
 import { Select } from '../select/select';
 
-interface Params {
+interface IProps {
   username: string;
   date: string;
   card: string;
@@ -23,28 +23,28 @@ interface Params {
   onDismiss?: () => void;
 }
 
-interface InvoiceItemType {
+interface IInvoiceItemType {
   _id: string
   item: string,
   value: string,
   category: string,
 }
 
-interface Invoice {
+interface IInvoice {
   name: string,
-  invoices: InvoiceItemType[],
+  invoices: IInvoiceItemType[],
   totalInvoice: number
 }
 
-export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss }: Params) => {
+export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss }: IProps) => {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [name, setName] = useState<string>("");
-  const [itemUpdate, setItemUpdate] = useState<InvoiceItemType>({ _id: "", category: "", item: "", value: ""})
+  const [itemUpdate, setItemUpdate] = useState<IInvoiceItemType>({ _id: "", category: "", item: "", value: ""})
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);
 
-  const { data, error, isLoading, mutate } = useSWR<Invoice[]>(`http://localhost:4000/api/expenses/${username}/${date}/${card}`, fetcher)
+  const { data, error, isLoading, mutate } = useSWR<IInvoice[]>(`http://localhost:4000/api/expenses/${username}/${date}/${card}`, fetcher)
 
   useEffect(() => {
     if (!data) return;
@@ -61,7 +61,7 @@ export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss 
     setTimeout(() => setShowToast(false), 2000);
   }
 
-  const openModal = (invoice: InvoiceItemType, modal: "edit" | "delete") => {
+  const openModal = (invoice: IInvoiceItemType, modal: "edit" | "delete") => {
     setItemUpdate({ _id: invoice._id, category: invoice.category, item: invoice.item, value: invoice.value })
 
     if (modal === "edit") {
@@ -81,7 +81,7 @@ export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss 
 
     if (isModalEditOpen) {
       try {
-        const response = await fetcherPost<InvoiceItemType, { message: string }>(
+        const response = await fetcherPost<IInvoiceItemType, { message: string }>(
           "http://localhost:4000/api/expenses", 
           "PUT", 
           itemUpdate
@@ -94,7 +94,7 @@ export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss 
       }
     } else {
       try {
-        const response = await fetcherPost<InvoiceItemType, { message: string }>(
+        const response = await fetcherPost<IInvoiceItemType, { message: string }>(
           `http://localhost:4000/api/expenses/${itemUpdate._id}`, 
           "DELETE", 
         );

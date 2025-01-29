@@ -3,15 +3,15 @@
 import React, { useEffect } from "react";
 import Chart from "chart.js";
 
-import { Data } from "@/app/utils/types";
+import { IExpense } from "@/app/utils/types";
 import { formatToCurrencyBRL, parseCurrencyString } from "@/app/utils";
 
-interface CategoryItem {
+interface ICategoryItem {
   category: string,
   value: number
 }
 
-const chartCategorys = (data: CategoryItem[]) => {
+const chartCategorys = (data: ICategoryItem[]) => {
   return {
     type: 'doughnut',
     options: {
@@ -54,8 +54,8 @@ const chartCategorys = (data: CategoryItem[]) => {
   }
 };
 
-const groupCategories = (data: Data[]): CategoryItem[] => {
-  return data.reduce((acc: CategoryItem[], expense) => {
+const groupCategories = (data: IExpense[]): ICategoryItem[] => {
+  return data.reduce((acc: ICategoryItem[], expense) => {
     const categoryName = expense.category.toLowerCase();
     const value = parseCurrencyString(expense.value);
 
@@ -72,7 +72,7 @@ const groupCategories = (data: Data[]): CategoryItem[] => {
 };
 
 
-export default function ChartExpensesCategorys({ data }: { data: Data[] }) {
+export default function ChartExpensesCategorys({ data }: { data: IExpense[] }) {
   useEffect(() => {
     const dataFiltred = data.filter((expense) => parseCurrencyString(expense.value) > 0 && expense.people === "Eu")
     const categorys = groupCategories(dataFiltred)

@@ -1,13 +1,9 @@
 import React, { useEffect } from "react";
 import Chart from "chart.js";
 import { formatToCurrencyBRL } from "@/app/utils";
+import { IExpenseByYear } from "@/app/utils/types";
 
-interface DataByYear {
-  month: string;
-  value: string;
-}
-
-const chartConfig = (data: DataByYear[]) => {
+const chartConfig = (data: IExpenseByYear[]) => {
   return {
     type: "bar",
     options: {
@@ -72,7 +68,7 @@ const chartConfig = (data: DataByYear[]) => {
   }
 }
 
-export default function ChartExpensesMonthly({ data }: { data: DataByYear[] }) {
+export default function ChartExpensesMonthly({ data }: { data: IExpenseByYear[] }) {
   useEffect(() => {
     const config = chartConfig(data)
 

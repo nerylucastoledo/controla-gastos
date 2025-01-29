@@ -17,29 +17,17 @@ import { Input } from "../components/input/input";
 import List from "./list/list";
 import { ConfigModalEdit } from "./modalEdit/configModalEdit";
 import { ConfigModalDelete } from "./modalDelete/configModalDelete";
-
-interface People {
-  _id: string;
-  name: string;
-  username: string;
-}
-
-interface Card {
-  _id: string;
-  name: string;
-  username: string;
-  color: string;
-}
+import { ICard, IPeople } from "../utils/types";
 
 export default function NewExpense() {
   const { username, salary } = useUser();
   const [salaryUpdate, setSalaryUpdate] = useState(salary);
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [isModalEdit, setIsModalEdit] = useState(false);
-  const [item, setItem] = useState<People | Card | null>(null);
+  const [item, setItem] = useState<IPeople | ICard | null>(null);
 
-  const { data: peopleData, error: peopleError, isLoading: isLoadingPeople, mutate: mutatePeole } = useSWR<People[]>(`http://localhost:4000/api/peoples/${username}`, fetcher);
-  const { data: cardData, error: cardError, isLoading: isLoadingCard, mutate: mutateCard } = useSWR<Card[]>(`http://localhost:4000/api/cards/${username}`, fetcher);
+  const { data: peopleData, error: peopleError, isLoading: isLoadingPeople, mutate: mutatePeole } = useSWR<IPeople[]>(`http://localhost:4000/api/peoples/${username}`, fetcher);
+  const { data: cardData, error: cardError, isLoading: isLoadingCard, mutate: mutateCard } = useSWR<ICard[]>(`http://localhost:4000/api/cards/${username}`, fetcher);
 
   const handleFetch = () => {
     mutatePeole();
@@ -59,7 +47,7 @@ export default function NewExpense() {
     )
   }
 
-  const openModal = (item: People | Card, method: "PUT" | "DELETE") => {
+  const openModal = (item: IPeople | ICard, method: "PUT" | "DELETE") => {
     setItem(item);
 
     if (method === "PUT") {

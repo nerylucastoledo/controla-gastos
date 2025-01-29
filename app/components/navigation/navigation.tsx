@@ -8,16 +8,16 @@ import { IoFastFoodOutline } from 'react-icons/io5'
 import styles from "../../styles/components/header.module.scss"
 import { IconType } from 'react-icons'
 
-interface Params {
+interface IProps {
 	name: string;
 	href: string;
 	icon: IconType,
 }
-interface NavigationProps {
-  navLinks: Params[];
+interface INavigationProps {
+  navLinks: IProps[];
 }
 
-export const Navigation: React.FC<NavigationProps> = ({ navLinks }) => {
+export const Navigation: React.FC<INavigationProps> = ({ navLinks }) => {
 	const pathname = usePathname();
 
   return (
@@ -28,7 +28,7 @@ export const Navigation: React.FC<NavigationProps> = ({ navLinks }) => {
 				</Link>
 
 				<ul>
-					{navLinks.map((link: Params) => {
+					{navLinks.map((link: IProps) => {
 						const isActive = pathname === link.href;
 
 						return (

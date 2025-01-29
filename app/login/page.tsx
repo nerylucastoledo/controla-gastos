@@ -14,12 +14,17 @@ import { useUser } from "../context/user";
 
 import wallet from "../images/wallet.png";
 import walletRetina from "../images/wallet-retina.png";
+import { fetcherPost } from "../utils";
 
-interface Data {
+interface IResponse {
   message: string,
   username: string,
   salary: string,
-  token: string
+}
+
+interface IData {
+  email: string;
+  password: string;
 }
 
 export default function Login() {
@@ -40,16 +45,16 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:4000/api/login", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include',
-        body: JSON.stringify({ email, password })
-      });
+      const body = { email, password }
+      const response = await fetcherPost<IData, IResponse>(
+        "http://localhost:4000/api/login",
+        "POST", 
+        body
+      );
 
-      const { username, salary, message }: Data = await response.json();
+      const { username, salary, message }: IResponse = response;
 
-      if (!response.ok) {
+      if (!response.username || !response.salary) {
         throw new Error(message);
       }
 
@@ -60,9 +65,8 @@ export default function Login() {
       handleToast(true, message)
       router.replace("/");
       
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
-      handleToast(false, errorMessage)
+    } catch (err) {
+      handleToast(false, (err as Error).message)
     }
   }
 
