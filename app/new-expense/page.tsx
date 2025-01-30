@@ -1,5 +1,10 @@
 "use client"
 
+import { useUser } from "../context/user";
+import { useState } from "react";
+import Link from "next/link";
+import useSWR from "swr";
+
 import styles from "../styles/pages/home.module.scss";
 import stylesNewExpense from "../styles/pages/new-expense.module.scss";
 
@@ -8,24 +13,21 @@ import { IoFastFoodOutline } from 'react-icons/io5'
 import { categorys, fetcher, fetcherPost, formatCurrency, months, years } from "../utils";
 
 import { Input } from "../components/input/input";
-import { Select } from "../components/select/select";
-import Link from "next/link";
-import useSWR from "swr";
-import { useUser } from "../context/user";
-import { useState } from "react";
-import Toast from "../components/toast/toast";
 import LoadingNewExpense from "./loading";
+import { Select } from "../components/select/select";
+import Toast from "../components/toast/toast";
+
 import { ICard, IPeople } from "../utils/types";
 
 interface IData {
-  username: string;
-  date: string;
-  people: string;
-  category: string;
-  value: string;
-  item: string;
   card: string;
+  category: string;
+  date: string;
   installments: number;
+  item: string;
+  people: string;
+  username: string;
+  value: string;
 }
 
 export default function NewExpense() {
@@ -69,14 +71,14 @@ export default function NewExpense() {
     e.preventDefault();
     try {
       const body = {
-        username,
         "date": `${month}${year}`,
-        people,
+        card,
         category,
-        value, 
-        item, 
-        card, 
-        installments
+        item,
+        installments,
+        people,
+        username,
+        value,
       }
       const response = await fetcherPost<IData, { message: string }>(
         "http://localhost:4000/api/expenses", 
@@ -106,7 +108,7 @@ export default function NewExpense() {
   return (
     <section className={`container ${stylesNewExpense.new_expense}`}>
       {showToast && (
-        <Toast success={toastCustom.error} message={toastCustom.message} />
+        <Toast message={toastCustom.message} success={toastCustom.error} />
       )}
       <div className={styles.container_home}>
         <Link href={"/"}>
@@ -122,10 +124,10 @@ export default function NewExpense() {
               <p className="subtitle">Assim que você inserir o gasto ele irá aparecer na sua tela inicial e você conseguirá entender para onde ele está indo</p>
               <div className={stylesNewExpense.date}>
                 <Select 
-                  label={"mês"} 
-                  id={"month"}
                   data-testid="month-select" 
                   defaultValue={month} 
+                  id={"month"}
+                  label={"mês"} 
                   onChange={({ target }) => setMonth(target.value)}
                 >
                   {months.map((month) => (
@@ -136,10 +138,10 @@ export default function NewExpense() {
                 </Select>
 
                 <Select 
-                  label={"ano"} 
-                  id={"year"}
                   data-testid="year-select" 
                   defaultValue={year}
+                  id={"year"}
+                  label={"ano"} 
                   onChange={({ target }) => setYear(target.value)}
                 >
                   {years.map((year) => (
@@ -151,13 +153,13 @@ export default function NewExpense() {
               </div>
 
               <Select
-                id='people' 
-                label='pessoa' 
                 className={"modal-form__select"}
                 data-testid="people-select" 
-                value={people}
+                id='people' 
+                label='pessoa' 
                 onChange={({ target }) => setPeople(target.value)}
                 required
+                value={people}
               >
                 <option value={""} disabled>Selecione a pessoa</option>
                 <option value={"Eu"}>Eu</option>
@@ -169,13 +171,13 @@ export default function NewExpense() {
               </Select>
 
               <Select
-                id='card' 
-                label='cartão' 
                 className={"modal-form__select"}
                 data-testid="card-select" 
-                value={card}
+                id='card' 
+                label='cartão' 
                 onChange={({ target }) => setCard(target.value)}
                 required
+                value={card}
               >
                 <option value={""} disabled>Selecione o cartão</option>
                 {cardData.length && cardData.map((card) => (
@@ -186,58 +188,58 @@ export default function NewExpense() {
               </Select>
 
               <Select 
-                id='category' 
-                label='Categoria' 
                 className={"modal-form__select"}
                 data-testid="category-select" 
-                value={category}
+                id='category' 
+                label='Categoria' 
                 onChange={({ target }) => setCategory(target.value)}
                 required
+                value={category}
               >
                 <option value={""} disabled>Selecione a categoria</option>
                 {categorys.map((category) => <option key={category} value={category}>{category}</option>)}
               </Select>
 
               <Input
-                label="Digite o  item"
-                placeholder="Insira o texto aqui"
-                type="text" 
-                name="item"
                 data-testid="item"
-                value={item}
+                label="Digite o  item"
+                name="item"
+                placeholder="Insira o texto aqui"
                 onChange={({ target }) => setItem(target.value)}
                 required
+                type="text" 
+                value={item}
               />
 
               <Input
-                label="Digite o valor (R$)"
-                type="text" 
-                name="value"
                 data-testid="value"
-                value={value}
+                label="Digite o valor (R$)"
+                name="value"
+                type="text" 
                 onChange={({ currentTarget }) => setValue(formatCurrency(currentTarget.value))}
                 required
+                value={value}
               />
 
               <div className={`form-control ${stylesNewExpense.checkbox}`}>
                 <Input
-                  label="Compra possui parcelas?"
-                  type="checkbox" 
-                  name="has-installment"
                   data-testid="has-installment"
+                  label="Compra possui parcelas?"
+                  name="has-installment"
                   onChange={() => setHasInstallment(!hasInstallment)}
+                  type="checkbox" 
                 />
               </div>
 
               {hasInstallment && (
                 <Input
-                  label="Quantidade"
-                  type="number" 
-                  name="installment"
                   data-testid="installment"
-                  value={installments}
+                  label="Quantidade"
+                  name="installment"
                   onChange={({ currentTarget }) => setInstallments(Number(currentTarget.value))}
                   required
+                  type="number" 
+                  value={installments}
                 />
               )}
 

@@ -5,11 +5,11 @@ import useSWR from "swr";
 
 import styles from "./styles/pages/home.module.scss";
 
-import Filter from "./components/filter/filter";
-import Resume from "./components/resume/resume";
-import LatestExpenses from "./components/latest-expenses/latest-expenses";
 import Card from "./components/card/card";
 import Dashboard from "./components/dashboard/dashboard";
+import Filter from "./components/filter/filter";
+import LatestExpenses from "./components/latest-expenses/latest-expenses";
+import Resume from "./components/resume/resume";
 
 import { fetcher, months } from "./utils/index";
 import { IExpensesByUsernameAndDate } from "./utils/types";
@@ -25,13 +25,13 @@ export default function Home() {
   const { username, salary } = useUser();
 
   const currentDate = `${month}${year}`
-  const { data, error, isLoading, mutate } = useSWR<IData>(`http://localhost:4000/api/expenses/${username}/${currentDate}`, fetcher, { refreshInterval: 1000 })
+  const { data, error, mutate } = useSWR<IData>(
+    `http://localhost:4000/api/expenses/${username}/${currentDate}`, 
+    fetcher, 
+    { refreshInterval: 3000 }
+  )
 
-  if (isLoading) {
-    return;
-  }
-
-  if (error || !data) {
+  if (error) {
     return (
       <div className={styles.container_home}>
         <div className={styles.container_home_error}>
@@ -42,19 +42,21 @@ export default function Home() {
     )
   }
 
+  if (!data || !data.data) return;
+
   return (
     <div className="container">
       <div className={styles.container_home}>
         <section>
           <Filter
-            setMonth={setMonth}
-            setYear={setYear}
             currentMonth={month}
             currentYear={year}
+            setMonth={setMonth}
+            setYear={setYear}
           />
           <Resume
-            salary={salary}
             data={data.data.expenses}
+            salary={salary}
           />
           <LatestExpenses
             data={data.data.expenses}
@@ -62,10 +64,10 @@ export default function Home() {
         </section>
         <section>
           <Card
-            username={username}
-            date={currentDate}
-            data={data.data.expenses}
             cards={data.data.cards}
+            data={data.data.expenses}
+            date={currentDate}
+            username={username}
           />
           <Dashboard
             dataByMonth={data.data.expenses}

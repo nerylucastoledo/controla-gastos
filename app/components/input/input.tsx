@@ -1,11 +1,11 @@
 import React, { FC, InputHTMLAttributes } from 'react'
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-	name: string;
 	label: string;
+	name: string;
 }
 
-export const Input: FC<InputProps> = ({ name, label, ...props }) => {
+export const Input: FC<InputProps> = ({ label, name, ...props }) => {
   return (
     <div className='form-control'>
 			<input 

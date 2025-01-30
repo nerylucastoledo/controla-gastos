@@ -9,22 +9,17 @@ import Loading from '../loading/loading-icon';
 import ChartExpensesMonthly from '../chart/ChartExpensesMonthly';
 import ChartExpensesCategorys from '../chart/ChartExpensesCategorys';
 import { IExpense, IExpenseByYear } from '@/app/utils/types';
+import { fetcher } from '@/app/utils';
 
 interface IData {
   data: IExpenseByYear[]
 }
 
 interface IProps {
+  dataByMonth: IExpense[]
   username: string;
   year: string
-  dataByMonth: IExpense[]
 }
-
-const fetcher = (url: string) => 
-  fetch(url, {
-    method: 'GET',
-    credentials: 'include',
-  }).then((res) => res.json());
 
 export default function Dashboard({ dataByMonth, username, year }: IProps) {
   const { data, isLoading } = useSWR<IData>(`http://localhost:4000/api/expenses/year/${username}/${year}`, fetcher)

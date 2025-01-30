@@ -6,13 +6,13 @@ import { useRouter } from "next/navigation";
 import styles from "../../styles/components/modal.module.scss";
 
 interface IProps {
-  children: React.ReactNode;
   background?: string;
+  children: React.ReactNode;
   customClass?: string
   onCustomDismiss?: () => void;
 }
 
-const Modal = ({ children, background, customClass = "", onCustomDismiss }: IProps) => {
+const Modal = ({ background, children, customClass = "", onCustomDismiss }: IProps) => {
   const overlay = useRef<HTMLDivElement>(null);
   const wrapper = useRef<HTMLDivElement>(null);
   const router = useRouter();

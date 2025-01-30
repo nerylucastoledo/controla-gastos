@@ -9,9 +9,9 @@ import styles from "../../styles/components/header.module.scss"
 import { IconType } from 'react-icons'
 
 interface IProps {
-	name: string;
 	href: string;
 	icon: IconType,
+	name: string;
 }
 interface INavigationProps {
   navLinks: IProps[];
@@ -33,7 +33,10 @@ export const Navigation: React.FC<INavigationProps> = ({ navLinks }) => {
 
 						return (
 							<li key={link.name}>
-								<Link href={link.href} className={isActive ? styles.active : ""} prefetch={true}>{link.icon} <span>{link.name}</span></Link>
+								<Link href={link.href} className={isActive ? styles.active : ""} prefetch={true}>
+									{link.icon}
+									<span>{link.name}</span>
+								</Link>
 							</li>
 						)
 					})}

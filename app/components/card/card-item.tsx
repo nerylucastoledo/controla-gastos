@@ -4,13 +4,13 @@ import styles from "../../styles/components/card.module.scss"
 
 import { FaCreditCard } from 'react-icons/fa6'
 
-interface IParams { 
+interface IProps { 
+	color: string 
 	name: string;
 	value: string;
-	color: string 
 }
 
-export const CardItem = ({ name, value, color }: IParams) => {
+export const CardItem = ({ color, name, value }: IProps) => {
   return (
     <div className={`${styles.item_content}`} style={{ backgroundColor: color }}>
 			<div>

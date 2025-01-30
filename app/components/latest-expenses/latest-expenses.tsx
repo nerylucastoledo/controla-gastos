@@ -3,11 +3,13 @@ import React from 'react';
 import styles from "../../styles/components/latest-expenses.module.scss"
 
 import Icon from '../icon/icons';
-import { Data } from '@/app/utils/types';
+import { IExpense } from '@/app/utils/types';
 
-export default function LatestExpenses({ data }: { data: Data[] }) {
-  if (!data) return;
-  
+interface IProps {
+  data: IExpense[];
+}
+
+export default function LatestExpenses({ data }: IProps) {
   const latestExpenses = data.slice(-10).reverse();
 
   return (

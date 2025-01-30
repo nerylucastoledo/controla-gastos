@@ -18,14 +18,14 @@ export const UserProvider: React.FC<IUserProviderProps> = ({ children }) => {
 	const [salary, setSalary] = useState<string>('');
 
 	useEffect(() => {
-			const storedUsername = localStorage.getItem("username");
-			const storedSalary = localStorage.getItem("salary");
-			if (storedUsername) {
-					setUsername(storedUsername);
-			}
-			if (storedSalary) {
-					setSalary(storedSalary);
-			}
+		const storedUsername = localStorage.getItem("username");
+		const storedSalary = localStorage.getItem("salary");
+		if (storedUsername) {
+			setUsername(storedUsername);
+		}
+		if (storedSalary) {
+			setSalary(storedSalary);
+		}
 	}, []);
 
 	const value = useMemo(() => ({ username, salary, setUsername, setSalary }), [username, salary]);

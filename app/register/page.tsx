@@ -7,17 +7,19 @@ import Link from "next/link";
 
 import styles from "../styles/pages/login.module.scss"
 
-import wallet from "../images/wallet.png";
-import walletRetina from "../images/wallet-retina.png";
 import Toast from "../components/toast/toast";
+import wallet from "../images/wallet.png";
 import { Input } from "../components/input/input";
+
 import { fetcherPost, formatCurrency } from "../utils";
+
+import walletRetina from "../images/wallet-retina.png";
 
 interface IData {
   email: string;
   name: string;
-  salary: string;
   password: string;
+  salary: string;
   username: string;
 }
 
@@ -63,7 +65,7 @@ export default function Register() {
   return (
     <div className={styles.background}>
       {showToast && (
-        <Toast success={toastCustom.error} message={toastCustom.message} />
+        <Toast message={toastCustom.message} success={toastCustom.error} />
       )}
 
       <div className={styles.container_user}>
@@ -82,46 +84,46 @@ export default function Register() {
           <form onSubmit={submit}>
             <Input
               label="Email"
-              type="email" 
-              placeholder=""
-              required
               name="email"
-              role="email"
-              value={email}
+              placeholder=""
               onChange={({ target }) => setEmail(target.value)}
+              required
+              role="email"
+              type="email" 
+              value={email}
             />
 
             <Input
               label="Nome"
-              type="text" 
-              placeholder=""
-              required
               name="name"
-              role="name"
-              value={name}
+              placeholder=""
               onChange={({ target }) => setName(target.value)}
+              required
+              role="name"
+              type="text" 
+              value={name}
             />
 
             <Input
               label="Salário"
-              type="text" 
-              placeholder=""
-              required
               name="salary"
-              role="salary"
-              value={salary}
+              placeholder=""
               onChange={({ target }) => setSalary(formatCurrency(target.value))}
+              required
+              role="salary"
+              type="text" 
+              value={salary}
             />
 
             <Input
               label="Senha"
-              type="password" 
-              placeholder=""
-              required
               name="password"
-              role="password"
-              value={password}
+              placeholder=""
               onChange={({ target }) => setPassword(target.value)}
+              required
+              role="password"
+              type="password" 
+              value={password}
             />
 
             <input type="submit" value="Cadastrar" className="button button__primary"/>

@@ -4,8 +4,8 @@ import React from 'react'
 
 import styles from "../../../styles/components/invoice-item.module.scss"
 
-import { MdDeleteForever } from "react-icons/md";
 import { FaEdit } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 
 interface IProps {
   data: IInvoiceData[];
@@ -14,9 +14,9 @@ interface IProps {
 
 interface IInvoiceData {
   _id: string
+  category: string,
   item: string,
   value: string,
-  category: string,
 }
 
 export const InvoiceItem = ({ data, openModal }: IProps) => {

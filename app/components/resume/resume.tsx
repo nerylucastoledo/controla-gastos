@@ -3,11 +3,14 @@ import React from 'react';
 import styles from "../../styles/components/resume.module.scss"
 
 import { formatToCurrencyBRL, parseCurrencyString } from '@/app/utils';
-import { Data } from '@/app/utils/types';
+import { IExpense } from '@/app/utils/types';
 
-export default function Resume({ salary, data }: { salary: string, data: Data[] }) {
-  if (!data) return null;
+interface IProps {
+  salary: string;
+  data: IExpense[];
+}
 
+export default function Resume({ salary, data }: IProps) {
   const getAllExpenses = data.filter(expense =>  expense.people === "Eu")
   const totalAccount = getAllExpenses.reduce((a, b) => a + parseCurrencyString(b.value), 0)
   const remaining = parseCurrencyString(salary) - totalAccount;

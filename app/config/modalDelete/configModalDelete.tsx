@@ -1,14 +1,16 @@
 "use client"
 
-import Modal from '@/app/components/modal/modal'
-import Toast from '@/app/components/toast/toast';
-import { fetcherPost } from '@/app/utils';
-import { ICard, IPeople } from '@/app/utils/types';
 import React, { SetStateAction, useState } from 'react'
 
+import Modal from '@/app/components/modal/modal'
+import Toast from '@/app/components/toast/toast';
+
+import { fetcherPost } from '@/app/utils';
+import { ICard, IPeople } from '@/app/utils/types';
+
 interface IProps {
-  onCustomDismiss: (value: SetStateAction<boolean>) => void;
   item: IPeople | ICard | null
+  onCustomDismiss: (value: SetStateAction<boolean>) => void;
 }
 
 export const ConfigModalDelete = ({ onCustomDismiss, item }: IProps) => {
@@ -45,7 +47,7 @@ export const ConfigModalDelete = ({ onCustomDismiss, item }: IProps) => {
   return (
     <>
       {showToast && (
-        <Toast success={toastCustom.error} message={toastCustom.message} />
+        <Toast message={toastCustom.message} success={toastCustom.error} />
       )}
       <Modal
         background='#1E1E1E'

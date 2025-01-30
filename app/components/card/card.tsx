@@ -1,22 +1,20 @@
 "use client"
 
 import React, { useCallback, useEffect, useState } from 'react';
+
 import styles from "../../styles/components/card.module.scss"
+
 import { CardItem } from './card-item';
-import { ICardData, IExpense } from '@/app/utils/types';
-import { formatToCurrencyBRL, parseCurrencyString } from '@/app/utils';
 import { InvoiceModal } from '../Invoice/invoice-modal';
 
-interface IProps {
-  username: string,
-  date: string,
-  data: IExpense[],
-  cards: ICardData[],
-}
+import { ICardData, IExpense } from '@/app/utils/types';
+import { formatToCurrencyBRL, parseCurrencyString } from '@/app/utils';
 
-interface IInvoice {
-  card: string;
-  value: number;
+interface IProps {
+  cards: ICardData[],
+  data: IExpense[],
+  date: string,
+  username: string,
 }
 
 interface ICardList extends ICardData { 
@@ -24,11 +22,16 @@ interface ICardList extends ICardData {
 }
 
 interface ICardSelected {
-  name: string;
   color: string;
+  name: string;
 }
 
-export default function Card({ username, date, data, cards }: IProps) {
+interface IInvoice {
+  card: string;
+  value: number;
+}
+
+export default function Card({ cards, data, date, username }: IProps) {
   const [cardList, setCardList] = useState<ICardList[]>([]);
   const [cardSelected, setCardSelect] = useState<ICardSelected>({ name: "", color: "" });
 
@@ -42,7 +45,6 @@ export default function Card({ username, date, data, cards }: IProps) {
     const result = dataByMonth.reduce<IInvoice[]>((acc, expense) => {
       const cardName = expense.card;
       const value = parseCurrencyString(expense.value);
-
       const existingCard = acc.find(item => item.card === cardName);
 
       if (existingCard) {
@@ -98,17 +100,21 @@ export default function Card({ username, date, data, cards }: IProps) {
                 key={card.name}
                 onClick={() => setCardSelect({ name: card.name, color: card.color })}
               >
-                <CardItem name={card.name} color={card.color} value={formatToCurrencyBRL(card.invoice)} />
+                <CardItem 
+                  color={card.color} 
+                  name={card.name} 
+                  value={formatToCurrencyBRL(card.invoice)} 
+                />
               </button>
             ))}
 
             {cardSelected.name && cardSelected.color && (
               <InvoiceModal
-                username={username}
-                date={date}
                 card={cardSelected.name}
                 backgroundColor={cardSelected.color}
+                date={date}
                 onDismiss={() => setCardSelect({ name: "", color: "" })}
+                username={username}
               />
             )}
           </>

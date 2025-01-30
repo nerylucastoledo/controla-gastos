@@ -7,19 +7,19 @@ import Link from "next/link";
 
 import styles from "../styles/pages/login.module.scss"
 
-import Toast from "../components/toast/toast";
 import { Input } from "../components/input/input";
+import Toast from "../components/toast/toast";
 
 import { useUser } from "../context/user";
 
+import { fetcherPost } from "../utils";
 import wallet from "../images/wallet.png";
 import walletRetina from "../images/wallet-retina.png";
-import { fetcherPost } from "../utils";
 
 interface IResponse {
   message: string,
-  username: string,
   salary: string,
+  username: string,
 }
 
 interface IData {
@@ -93,22 +93,22 @@ export default function Login() {
             <Input
               label="Email"
               type="email" 
+              name="email"
+              onChange={({ target }) => setEmail(target.value)}
               placeholder=""
               required
-              name="email"
               value={email}
-              onChange={({ target }) => setEmail(target.value)}
             />
 
             <Input
               label="Senha"
-              type="password" 
+              name="password"
+              onChange={({ target }) => setPassword(target.value)}
               placeholder=""
               required
-              name="password"
               role="password"
+              type="password" 
               value={password}
-              onChange={({ target }) => setPassword(target.value)}
             />
 
             <input type="submit" value="Acessar" className="button button__primary"/>

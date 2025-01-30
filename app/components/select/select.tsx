@@ -8,13 +8,13 @@ interface IProps extends SelectHTMLAttributes<HTMLSelectElement> {
 	id: string;
 }
 
-export const Select: FC<IProps> = ({ children, label, id, ...props }: IProps) => {
+export const Select: FC<IProps> = ({ children, id, label, ...props }: IProps) => {
   return (
     <div className={styles.select_container}>
 			<label htmlFor={id}>{label}</label>
 			<select 
-				name={id} 
 				id={id}
+				name={id} 
 				{...props}
 			>
 				{children}

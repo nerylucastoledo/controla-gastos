@@ -1,16 +1,17 @@
 import React, { Dispatch, SetStateAction } from 'react';
 
-import { months, years } from "../../utils/index"
 import { Select } from '../select/select';
 
+import { months, years } from "../../utils/index"
+
 interface IProps {
-  setMonth: Dispatch<SetStateAction<string>>;
-  setYear: Dispatch<SetStateAction<string>>;
   currentMonth: string,
   currentYear: string
+  setMonth: Dispatch<SetStateAction<string>>;
+  setYear: Dispatch<SetStateAction<string>>;
 }
 
-export default function Filter({ setMonth, setYear, currentMonth, currentYear }: IProps) {
+export default function Filter({ currentMonth, currentYear, setMonth, setYear }: IProps) {
   return (
     <div className="content_card">
       <h1 className='content_card__title'>filtro</h1>

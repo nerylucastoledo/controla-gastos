@@ -1,24 +1,26 @@
 "use client"
 
+import React, { SetStateAction, useState } from 'react'
+
 import { Input } from '@/app/components/input/input'
 import Modal from '@/app/components/modal/modal'
 import Toast from '@/app/components/toast/toast';
+
 import { fetcherPost } from '@/app/utils';
 import { ICard, IPeople } from '@/app/utils/types';
-import React, { SetStateAction, useState } from 'react'
 
 interface IUpdate {
   _id: string;
-  name: string;
   color?: string;
+  name: string;
 }
 
 interface IProps {
-  onCustomDismiss: (value: SetStateAction<boolean>) => void;
   item: IPeople | ICard | null
+  onCustomDismiss: (value: SetStateAction<boolean>) => void;
 }
 
-export const ConfigModalEdit = ({ onCustomDismiss, item }: IProps) => {
+export const ConfigModalEdit = ({ item, onCustomDismiss }: IProps) => {
   const [itemUpdated, setItemUpdated] = useState(item);
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);
@@ -67,7 +69,7 @@ export const ConfigModalEdit = ({ onCustomDismiss, item }: IProps) => {
   return (
     <>
       {showToast && (
-        <Toast success={toastCustom.error} message={toastCustom.message} />
+        <Toast message={toastCustom.message} success={toastCustom.error} />
       )}
       <Modal
         background='#1E1E1E'
@@ -78,24 +80,24 @@ export const ConfigModalEdit = ({ onCustomDismiss, item }: IProps) => {
 
         <form onSubmit={handleSubmit}>
           <Input
-            label="Item"
-            type="text" 
-            name="item"
             data-testid="item"
-            required
-            value={itemUpdated?.name}
+            label="Item"
+            name="item"
             onChange={({ target }) => setItemUpdated(prev => prev ? { ...prev, name: target.value } : null)}
+            required
+            type="text" 
+            value={itemUpdated?.name}
           />
 
           {itemUpdated && "color" in itemUpdated && (
             <Input
-              label="Cor"
-              type="color" 
-              name="item"
               data-testid="cor"
-              required
-              value={itemUpdated?.color}
+              label="Cor"
+              name="item"
               onChange={({ target }) => setItemUpdated(prev => prev ? { ...prev, color: target.value } : null)}
+              required
+              type="color" 
+              value={itemUpdated?.color}
             />
           )}
 

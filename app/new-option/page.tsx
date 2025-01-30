@@ -1,24 +1,25 @@
 "use client"
 
+import { useUser } from "../context/user";
+import { useState } from "react";
+import Link from "next/link";
+
 import styles from "../styles/pages/home.module.scss";
 import stylesNewExpense from "../styles/pages/new-expense.module.scss";
 
 import { IoFastFoodOutline } from 'react-icons/io5'
 
-import { fetcherPost } from "../utils";
-
 import { Input } from "../components/input/input";
-import Link from "next/link";
-import { useUser } from "../context/user";
-import { useState } from "react";
-import Toast from "../components/toast/toast";
 import { Select } from "../components/select/select";
+import Toast from "../components/toast/toast";
+
+import { fetcherPost } from "../utils";
 
 interface IData {
   _id?: string;
-  username: string;
-  name: string;
   color?: string;
+  name: string;
+  username: string;
 }
 
 export default function NewOption() {
@@ -66,7 +67,7 @@ export default function NewOption() {
   return (
     <section className={`container ${stylesNewExpense.new_expense}`}>
       {showToast && (
-        <Toast success={toastCustom.error} message={toastCustom.message} />
+        <Toast message={toastCustom.message} success={toastCustom.error} />
       )}
       <div className={styles.container_home}>
         <Link href={"/"}>
@@ -77,12 +78,12 @@ export default function NewOption() {
           <h1 className="title">Cadastre a opção</h1>
 
           <Select 
+            data-testid="name-select" 
             id='type' 
             label='O que?' 
-            data-testid="name-select" 
-            value={type}
             onChange={({ target }) => setType(target.value)}
             required
+            value={type}
           >
             <option value={""} disabled>Selecione</option>
             <option value={"peoples"}>Pessoa</option>
@@ -90,24 +91,24 @@ export default function NewOption() {
           </Select>
 
           <Input
-            label="Nome"
-            type="text" 
-            name="name"
             data-testid="name"
+            label="Nome"
+            name="name"
+            onChange={({ target }) => setName(target.value)}
+            type="text" 
             required
             value={name}
-            onChange={({ target }) => setName(target.value)}
           />
 
           {type === "cards" && (
             <Input
-              label="Cor"
-              type="color" 
-              name="color"
               data-testid="cor"
-              required
-              value={color}
+              label="Cor"
+              name="color"
               onChange={({ target }) => setColor(target.value)}
+              required
+              type="color" 
+              value={color}
             />
           )}
           <input type="submit" value="Cadastrar" className="button button__primary" />

@@ -10,24 +10,32 @@ import stylesConfig from "../styles/pages/config.module.scss";
 import { IoFastFoodOutline } from "react-icons/io5";
 
 import { useUser } from "../context/user";
-import { fetcher, formatCurrency } from "../utils";
+import { fetcher, fetcherPost, formatCurrency } from "../utils";
 
-import LoadingConfig from "./loading";
+import { ConfigModalDelete } from "./modalDelete/configModalDelete";
+import { ConfigModalEdit } from "./modalEdit/configModalEdit";
 import { Input } from "../components/input/input";
 import List from "./list/list";
-import { ConfigModalEdit } from "./modalEdit/configModalEdit";
-import { ConfigModalDelete } from "./modalDelete/configModalDelete";
+import LoadingConfig from "./loading";
+import Toast from "../components/toast/toast";
+
 import { ICard, IPeople } from "../utils/types";
 
+interface IData {
+  data: IPeople[] | ICard[]
+}
+
 export default function NewExpense() {
-  const { username, salary } = useUser();
+  const { username, salary, setSalary } = useUser();
   const [salaryUpdate, setSalaryUpdate] = useState(salary);
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [item, setItem] = useState<IPeople | ICard | null>(null);
+  const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
+  const [showToast, setShowToast] = useState(false);
 
-  const { data: peopleData, error: peopleError, isLoading: isLoadingPeople, mutate: mutatePeole } = useSWR<IPeople[]>(`http://localhost:4000/api/peoples/${username}`, fetcher);
-  const { data: cardData, error: cardError, isLoading: isLoadingCard, mutate: mutateCard } = useSWR<ICard[]>(`http://localhost:4000/api/cards/${username}`, fetcher);
+  const { data: peopleData, error: peopleError, isLoading: isLoadingPeople, mutate: mutatePeole } = useSWR<IData>(`http://localhost:4000/api/peoples/${username}`, fetcher);
+  const { data: cardData, error: cardError, isLoading: isLoadingCard, mutate: mutateCard } = useSWR<IData>(`http://localhost:4000/api/cards/${username}`, fetcher);
 
   const handleFetch = () => {
     mutatePeole();
@@ -36,7 +44,7 @@ export default function NewExpense() {
 
   if (isLoadingPeople && isLoadingCard) return <LoadingConfig />;
 
-  if (peopleError || cardError || !peopleData || !cardData ) {
+  if (peopleError || cardError ) {
     return (
       <div className={styles.container_home}>
         <div className={styles.container_home_error}>
@@ -46,6 +54,8 @@ export default function NewExpense() {
       </div>
     )
   }
+
+  if (!peopleData || !cardData || !peopleData.data || !cardData.data) return;
 
   const openModal = (item: IPeople | ICard, method: "PUT" | "DELETE") => {
     setItem(item);
@@ -57,8 +67,32 @@ export default function NewExpense() {
     }
   };
 
+  const handleToast = (error: boolean, message: string) => {
+    setToastCustom({ error, message })
+    setShowToast(true)
+    setTimeout(() => setShowToast(false), 2000);
+  }
+
+  const upateSalary = async () => {
+    try {
+      const response = await fetcherPost<{ salary: string }, { message: string }>(
+        `http://localhost:4000/api/users/${username}`, 
+        "PUT", 
+        { salary: salaryUpdate }
+      );
+      handleToast(true, response.message)
+      localStorage.setItem("salary", salaryUpdate)
+      setSalary(salaryUpdate)
+    } catch (err) {
+      handleToast(false, (err as Error).message);
+    }
+  }
+
   return (
     <>
+      {showToast && (
+        <Toast success={toastCustom.error} message={toastCustom.message} />
+      )}
       <section className={`container ${styles.container_home} ${stylesConfig.config}`}>
         <Link href={"/"}>
           <IoFastFoodOutline size={60}/>
@@ -74,33 +108,33 @@ export default function NewExpense() {
 
               <div className={`${stylesConfig.item__salary}`}>
                 <Input
-                  label="Valor (R$)"
-                  type="text" 
-                  name="value"
                   data-testid="value"
-                  required
-                  value={salaryUpdate}
+                  label="Valor (R$)"
+                  name="value"
                   onChange={({ currentTarget }) => setSalaryUpdate(formatCurrency(currentTarget.value))}
+                  required
+                  type="text" 
+                  value={salaryUpdate}
                 />
-                <button className="button button__primary">Salvar</button>
+                <button className="button button__primary" onClick={() => upateSalary()}>Salvar</button>
               </div>
             </div>
 
             <div className={`${stylesConfig.item}`}>
               <h3>pessoas</h3>
-              {!peopleData.length ? (
+              {!peopleData.data.length ? (
                 <p className="empty">nenhuma pessoa cadastrada</p>
               ) : (
-                <List data={peopleData} openModal={openModal} />
+                <List data={peopleData.data} openModal={openModal} />
               )}
             </div>
 
             <div className={`${stylesConfig.item}`}>
               <h3>cartões</h3>
-              {!cardData.length ? (
+              {!cardData.data.length ? (
                 <p className="empty">nenhum cartão cadastrado</p>
               ) : (
-                <List data={cardData} openModal={openModal} />
+                <List data={cardData.data} openModal={openModal} />
               )}
             </div>
           </div>

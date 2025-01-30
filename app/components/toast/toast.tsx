@@ -3,14 +3,11 @@ import React from 'react'
 import styles from "../../styles/components/toast.module.scss"
 
 interface IProps {
-	success: boolean;
 	message: string;
+	success: boolean;
 }
 
-export default function Toast({ success, message }: IProps) {
-
-	if (!message) return;
-	
+export default function Toast({ message, success }: IProps) {
   return (
 		<>
 			{message && (

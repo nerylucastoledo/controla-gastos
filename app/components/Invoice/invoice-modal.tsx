@@ -5,29 +5,29 @@ import useSWR from "swr";
 
 import styles from "../../styles/components/invoice.module.scss";
 
+import { Input } from '../input/input';
 import { InvoicePeople } from './invoice-people/invoice-people';
 import { InvoiceItem } from './invoice-item/invoice-item';
-import { Input } from '../input/input';
-import Modal from '@/app/components/modal/modal';
 import Loading from '@/app/components/loading/loading-icon';
+import Modal from '@/app/components/modal/modal';
+import { Select } from '../select/select';
+import Toast from '../toast/toast';
 
 import { categorys, fetcher, fetcherPost, formatCurrency, formatToCurrencyBRL } from '@/app/utils';
-import Toast from '../toast/toast';
-import { Select } from '../select/select';
 
 interface IProps {
-  username: string;
-  date: string;
   card: string;
   backgroundColor: string;
+  date: string;
   onDismiss?: () => void;
+  username: string;
 }
 
 interface IInvoiceItemType {
   _id: string
+  category: string,
   item: string,
   value: string,
-  category: string,
 }
 
 interface IInvoice {
@@ -36,7 +36,7 @@ interface IInvoice {
   totalInvoice: number
 }
 
-export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss }: IProps) => {
+export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username }: IProps) => {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [name, setName] = useState<string>("");
@@ -113,7 +113,7 @@ export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss 
   return (
     <>
       {showToast && (
-        <Toast success={toastCustom.error} message={toastCustom.message} />
+        <Toast message={toastCustom.message} success={toastCustom.error} />
       )}
       <Modal background={backgroundColor} onCustomDismiss={onDismiss}>
         {isLoading ? (
@@ -130,10 +130,10 @@ export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss 
                   <div className={styles.people}>
                     {data.map((people) => (
                       <InvoicePeople 
+                        key={people.name}
                         name={people.name} 
                         nameActive={name} 
                         setName={setName} 
-                        key={people.name}
                       />
                     ))}
                   </div>
@@ -165,30 +165,30 @@ export const InvoiceModal = ({ username, date, card, backgroundColor, onDismiss 
 
           <form onSubmit={handleSubmit}>
             <Input
-              label="Item"
-              type="text" 
-              name="item"
               data-testid="item"
-              required
-              value={itemUpdate.item}
+              label="Item"
+              name="item"
               onChange={({ target }) => setItemUpdate(prev => ({ ...prev, item: target.value }))}
+              required
+              type="text" 
+              value={itemUpdate.item}
             />
 
             <Input
-              label="Valor (R$)"
-              type="text" 
-              name="value"
               data-testid="value"
-              required
-              value={itemUpdate.value}
+              label="Valor (R$)"
+              name="value"
               onChange={({ currentTarget }) => setItemUpdate(prev => ({ ...prev, value: formatCurrency(currentTarget.value) }))}
+              required
+              type="text" 
+              value={itemUpdate.value}
             />
 
             <Select 
               id='category' 
               label='Categoria' 
-              defaultValue={itemUpdate.category}
               className={"modal-form__select"}
+              defaultValue={itemUpdate.category}
               onChange={({ currentTarget }) => setItemUpdate(prev => ({ ...prev, category: currentTarget.value }))}
             >
               {categorys.map((category) => <option key={category} value={category}>{category}</option>)}
