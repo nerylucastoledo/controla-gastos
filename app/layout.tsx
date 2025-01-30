@@ -14,24 +14,24 @@ const montserrat = Montserrat({ subsets: ['latin'] })
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const links = [
     {
-      name: "Ínicio",
       href:"/",
       icon: <IoHomeSharp size={24} />,
+      name: "Ínicio",
     },
     {
-      name: "Inserir gasto",
       href:"/new-expense",
-      icon: <IoIosAddCircle size={24} />
+      icon: <IoIosAddCircle size={24} />,
+      name: "Inserir gasto",
     },
     {
-      name: "Cadastrar opção",
       href:"/new-option",
-      icon: <IoOptionsSharp size={24} />
+      icon: <IoOptionsSharp size={24} />,
+      name: "Cadastrar opção",
     },
     {
-      name: "Configurações",
       href:"/config",
-      icon: <PiSealBold size={24} />
+      icon: <PiSealBold size={24} />,
+      name: "Configurações",
     },
   ]
 
