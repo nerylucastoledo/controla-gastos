@@ -8,12 +8,12 @@ import styles from "../../styles/components/invoice.module.scss";
 import { Input } from '../input/input';
 import { InvoicePeople } from './invoice-people/invoice-people';
 import { InvoiceItem } from './invoice-item/invoice-item';
-import Loading from '@/app/components/loading/loading-icon';
-import Modal from '@/app/components/modal/modal';
+import { LoadingICon } from '../loading/loadingIcon';
 import { Select } from '../select/select';
-import Toast from '../toast/toast';
+import { Toast } from '../toast/toast';
 
 import { categorys, fetcher, fetcherPost, formatCurrency, formatToCurrencyBRL } from '@/app/utils';
+import { Modal } from '../modal/modal';
 
 interface IProps {
   card: string;
@@ -36,6 +36,10 @@ interface IInvoice {
   totalInvoice: number
 }
 
+interface IData {
+  data: IInvoice[]
+}
+
 export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username }: IProps) => {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
@@ -44,11 +48,11 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);
 
-  const { data, error, isLoading, mutate } = useSWR<IInvoice[]>(`http://localhost:4000/api/expenses/${username}/${date}/${card}`, fetcher)
+  const { data, error, isLoading, mutate } = useSWR<IData>(`http://localhost:4000/api/expenses/${username}/${date}/${card}`, fetcher)
 
   useEffect(() => {
     if (!data) return;
-    setName(data.length ? data[0].name : "Eu");
+    setName(data.data.length ? data.data[0].name : "Eu");
   }, [data]);
   
   if (!data || error) {
@@ -107,7 +111,7 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
     }
   }
 
-  const invocieByName = data.filter((item) => item.name === name)
+  const invocieByName = data.data.filter((item) => item.name === name)
   const cardName = card.replace("%20", " ")
 
   return (
@@ -117,10 +121,10 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
       )}
       <Modal background={backgroundColor} onCustomDismiss={onDismiss}>
         {isLoading ? (
-          <Loading />
+          <LoadingICon />
         ) : (
           <>
-            {data.length && invocieByName.length && (
+            {data.data.length && invocieByName.length && (
               <div className={styles.invoice}>
                 <div className={styles.title}>
                   {cardName}
@@ -128,7 +132,7 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
                 
                 <div className={styles.container}>
                   <div className={styles.people}>
-                    {data.map((people) => (
+                    {data.data.map((people) => (
                       <InvoicePeople 
                         key={people.name}
                         name={people.name} 

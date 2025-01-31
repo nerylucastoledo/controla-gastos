@@ -12,12 +12,11 @@ import { IoFastFoodOutline } from "react-icons/io5";
 import { useUser } from "../context/user";
 import { fetcher, fetcherPost, formatCurrency } from "../utils";
 
-import { ConfigModalDelete } from "./modalDelete/configModalDelete";
-import { ConfigModalEdit } from "./modalEdit/configModalEdit";
+import { ConfigList } from "../components/configList/list";
 import { Input } from "../components/input/input";
-import List from "./list/list";
-import LoadingConfig from "./loading";
-import Toast from "../components/toast/toast";
+import { ModalConfigEdit } from "../components/modalEditConfig/configModalEdit";
+import { ModalConfigDelete } from "../components/modalDeleteConfig/modalDeleteConfig";
+import { Toast } from "../components/toast/toast";
 
 import { ICard, IPeople } from "../utils/types";
 
@@ -34,15 +33,13 @@ export default function NewExpense() {
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);
 
-  const { data: peopleData, error: peopleError, isLoading: isLoadingPeople, mutate: mutatePeole } = useSWR<IData>(`http://localhost:4000/api/peoples/${username}`, fetcher);
-  const { data: cardData, error: cardError, isLoading: isLoadingCard, mutate: mutateCard } = useSWR<IData>(`http://localhost:4000/api/cards/${username}`, fetcher);
+  const { data: peopleData, error: peopleError, mutate: mutatePeole } = useSWR<IData>(`http://localhost:4000/api/peoples/${username}`, fetcher);
+  const { data: cardData, error: cardError, mutate: mutateCard } = useSWR<IData>(`http://localhost:4000/api/cards/${username}`, fetcher);
 
   const handleFetch = () => {
     mutatePeole();
     mutateCard()
   }
-
-  if (isLoadingPeople && isLoadingCard) return <LoadingConfig />;
 
   if (peopleError || cardError ) {
     return (
@@ -125,7 +122,7 @@ export default function NewExpense() {
               {!peopleData.data.length ? (
                 <p className="empty">nenhuma pessoa cadastrada</p>
               ) : (
-                <List data={peopleData.data} openModal={openModal} />
+                <ConfigList data={peopleData.data} openModal={openModal} />
               )}
             </div>
 
@@ -134,15 +131,15 @@ export default function NewExpense() {
               {!cardData.data.length ? (
                 <p className="empty">nenhum cartão cadastrado</p>
               ) : (
-                <List data={cardData.data} openModal={openModal} />
+                <ConfigList data={cardData.data} openModal={openModal} />
               )}
             </div>
           </div>
         </div>
       </section>
 
-      {isModalEdit && <ConfigModalEdit item={item} onCustomDismiss={() => setIsModalEdit(false)} />}
-      {isModalDelete && <ConfigModalDelete item={item} onCustomDismiss={() => setIsModalDelete(false)} />}
+      {isModalEdit && <ModalConfigEdit item={item} mutate={handleFetch} onCustomDismiss={() => setIsModalEdit(false)} />}
+      {isModalDelete && <ModalConfigDelete item={item} mutate={handleFetch} onCustomDismiss={() => setIsModalDelete(false)} />}
     </>
   );
 }

@@ -4,11 +4,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 
 import styles from "../../styles/components/card.module.scss"
 
-import { CardItem } from './card-item';
 import { InvoiceModal } from '../Invoice/invoice-modal';
 
 import { ICardData, IExpense } from '@/app/utils/types';
 import { formatToCurrencyBRL, parseCurrencyString } from '@/app/utils';
+import { CardItem } from './card-item';
 
 interface IProps {
   cards: ICardData[],
@@ -31,7 +31,7 @@ interface IInvoice {
   value: number;
 }
 
-export default function Card({ cards, data, date, username }: IProps) {
+export const Card = ({ cards, data, date, username }: IProps) => {
   const [cardList, setCardList] = useState<ICardList[]>([]);
   const [cardSelected, setCardSelect] = useState<ICardSelected>({ name: "", color: "" });
 
@@ -100,7 +100,7 @@ export default function Card({ cards, data, date, username }: IProps) {
                 key={card.name}
                 onClick={() => setCardSelect({ name: card.name, color: card.color })}
               >
-                <CardItem 
+                <CardItem
                   color={card.color} 
                   name={card.name} 
                   value={formatToCurrencyBRL(card.invoice)} 

@@ -68,7 +68,7 @@ const chartConfig = (data: IExpenseByYear[]) => {
   }
 }
 
-export default function ChartExpensesMonthly({ data }: { data: IExpenseByYear[] }) {
+export const ChartExpensesMonthly = ({ data }: { data: IExpenseByYear[] }) => {
   useEffect(() => {
     const config = chartConfig(data)
 

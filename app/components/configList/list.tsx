@@ -1,9 +1,11 @@
 "use client"
 
-import { ICard, IPeople } from '@/app/utils/types';
 import React from 'react'
+
 import { FaRegEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
+
+import { ICard, IPeople } from '@/app/utils/types';
 
 type DataType = IPeople | ICard;
 
@@ -12,7 +14,7 @@ interface IProps {
   openModal: (item: IPeople | ICard, operation: "PUT" | "DELETE") => void;
 }
 
-export default function List({ data, openModal }: IProps) {
+export const ConfigList = ({ data, openModal }: IProps) => {
   return (
     <div>
       {data.length && data.map((people) => (

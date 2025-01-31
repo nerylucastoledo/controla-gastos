@@ -1,12 +1,13 @@
 "use client"
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import React from 'react'
-import { IoFastFoodOutline } from 'react-icons/io5'
+import { usePathname } from 'next/navigation'
 
 import styles from "../../styles/components/header.module.scss"
+
 import { IconType } from 'react-icons'
+import { IoFastFoodOutline } from 'react-icons/io5'
 
 interface IProps {
 	href: string;

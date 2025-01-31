@@ -11,7 +11,7 @@ import { IoFastFoodOutline } from 'react-icons/io5'
 
 import { Input } from "../components/input/input";
 import { Select } from "../components/select/select";
-import Toast from "../components/toast/toast";
+import { Toast } from "../components/toast/toast";
 
 import { fetcherPost } from "../utils";
 

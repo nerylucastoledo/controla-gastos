@@ -72,7 +72,7 @@ const groupCategories = (data: IExpense[]): ICategoryItem[] => {
 };
 
 
-export default function ChartExpensesCategorys({ data }: { data: IExpense[] }) {
+export const ChartExpensesCategorys = ({ data }: { data: IExpense[] }) => {
   useEffect(() => {
     const dataFiltred = data.filter((expense) => parseCurrencyString(expense.value) > 0 && expense.people === "Eu")
     const categorys = groupCategories(dataFiltred)

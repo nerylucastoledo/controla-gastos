@@ -11,7 +11,7 @@ interface IProps {
   setYear: Dispatch<SetStateAction<string>>;
 }
 
-export default function Filter({ currentMonth, currentYear, setMonth, setYear }: IProps) {
+export const Filter = ({ currentMonth, currentYear, setMonth, setYear }: IProps) => {
   return (
     <div className="content_card">
       <h1 className='content_card__title'>filtro</h1>

@@ -5,9 +5,10 @@ import useSWR from 'swr';
 
 import styles from "../../styles/components/dashboard.module.scss"
 
-import Loading from '../loading/loading-icon';
-import ChartExpensesMonthly from '../chart/ChartExpensesMonthly';
-import ChartExpensesCategorys from '../chart/ChartExpensesCategorys';
+import { ChartExpensesMonthly } from '../chart/ChartExpensesMonthly';
+import { ChartExpensesCategorys } from '../chart/ChartExpensesCategorys';
+import { LoadingICon } from '../loading/loadingIcon';
+
 import { IExpense, IExpenseByYear } from '@/app/utils/types';
 import { fetcher } from '@/app/utils';
 
@@ -21,7 +22,7 @@ interface IProps {
   year: string
 }
 
-export default function Dashboard({ dataByMonth, username, year }: IProps) {
+export const Dashboard = ({ dataByMonth, username, year }: IProps) => {
   const { data, isLoading } = useSWR<IData>(`http://localhost:4000/api/expenses/year/${username}/${year}`, fetcher)
 
   const existingData = data?.data.length && dataByMonth?.length
@@ -32,7 +33,7 @@ export default function Dashboard({ dataByMonth, username, year }: IProps) {
 
       <div className={`${styles.container}`}>
         {isLoading ? (
-          <Loading />
+          <LoadingICon />
         ) : (
           <>
             {!existingData ? (

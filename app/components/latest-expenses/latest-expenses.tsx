@@ -9,7 +9,7 @@ interface IProps {
   data: IExpense[];
 }
 
-export default function LatestExpenses({ data }: IProps) {
+export const LatestExpenses = ({ data }: IProps) => {
   const latestExpenses = data.slice(-10).reverse();
 
   return (

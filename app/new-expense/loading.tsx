@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from "../styles/components/skeleton.module.scss";
 
-const LoadingNewExpense = ({ cardCount = 1, lineCount = 11 }) => {
+const Loading = ({ cardCount = 1, lineCount = 11 }) => {
   return (
     <div data-testid="loading-new-expense" className={`${styles.skeleton} ${styles.skeletonNewExpense}`}>
       <div className={styles.container}>
@@ -18,4 +18,4 @@ const LoadingNewExpense = ({ cardCount = 1, lineCount = 11 }) => {
   );
 }
 
-export default LoadingNewExpense;
+export default Loading;

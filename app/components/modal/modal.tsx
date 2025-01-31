@@ -12,7 +12,7 @@ interface IProps {
   onCustomDismiss?: () => void;
 }
 
-const Modal = ({ background, children, customClass = "", onCustomDismiss }: IProps) => {
+export const Modal = ({ background, children, customClass = "", onCustomDismiss }: IProps) => {
   const overlay = useRef<HTMLDivElement>(null);
   const wrapper = useRef<HTMLDivElement>(null);
   const router = useRouter();
@@ -56,5 +56,3 @@ const Modal = ({ background, children, customClass = "", onCustomDismiss }: IPro
     </div>
   );
 };
-
-export default Modal;

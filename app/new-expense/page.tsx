@@ -13,13 +13,12 @@ import { IoFastFoodOutline } from 'react-icons/io5'
 import { categorys, fetcher, fetcherPost, formatCurrency, months, years } from "../utils";
 
 import { Input } from "../components/input/input";
-import LoadingNewExpense from "./loading";
 import { Select } from "../components/select/select";
-import Toast from "../components/toast/toast";
+import { Toast } from "../components/toast/toast";
 
 import { ICard, IPeople } from "../utils/types";
 
-interface IData {
+interface IBody {
   card: string;
   category: string;
   date: string;
@@ -28,6 +27,10 @@ interface IData {
   people: string;
   username: string;
   value: string;
+}
+
+interface IData {
+  data: IPeople[] | ICard[]
 }
 
 export default function NewExpense() {
@@ -44,8 +47,8 @@ export default function NewExpense() {
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);
 
-  const { data: peopleData, error: peopleError, isLoading: isLoadingPeople, mutate: mutatePeole } = useSWR<IPeople[]>(`http://localhost:4000/api/peoples/${username}`, fetcher);
-  const { data: cardData, error: cardError, isLoading: isLoadingCard, mutate: mutateCard } = useSWR<ICard[]>(`http://localhost:4000/api/cards/${username}`, fetcher);
+  const { data: peopleData, error: peopleError, mutate: mutatePeole } = useSWR<IData>(`http://localhost:4000/api/peoples/${username}`, fetcher);
+  const { data: cardData, error: cardError, mutate: mutateCard } = useSWR<IData>(`http://localhost:4000/api/cards/${username}`, fetcher);
 
   const handleFetch = () => {
     mutatePeole();
@@ -80,7 +83,7 @@ export default function NewExpense() {
         username,
         value,
       }
-      const response = await fetcherPost<IData, { message: string }>(
+      const response = await fetcherPost<IBody, { message: string }>(
         "http://localhost:4000/api/expenses", 
         "POST", 
         body
@@ -92,9 +95,7 @@ export default function NewExpense() {
     }
   }
 
-  if (isLoadingPeople && isLoadingCard) return <LoadingNewExpense />;
-
-  if (peopleError || cardError || !peopleData || !cardData ) {
+  if (peopleError || cardError ) {
     return (
       <div className={styles.container_home}>
         <div className={styles.container_home_error}>
@@ -104,6 +105,8 @@ export default function NewExpense() {
       </div>
     )
   }
+
+  if (!cardData || !peopleData) return;
 
   return (
     <section className={`container ${stylesNewExpense.new_expense}`}>
@@ -116,7 +119,7 @@ export default function NewExpense() {
 				</Link>
 
         <form onSubmit={handleSubmit}>
-          {!cardData.length ? (
+          {!cardData.data.length ? (
             <p className={"empty"}>Você precisa cadastrar um cartão para continuar</p>
           ) : (
             <>
@@ -163,7 +166,7 @@ export default function NewExpense() {
               >
                 <option value={""} disabled>Selecione a pessoa</option>
                 <option value={"Eu"}>Eu</option>
-                {peopleData.length && peopleData.map((people) => (
+                {peopleData.data.length && peopleData.data.map((people) => (
                   <option key={people.name} value={people.name}>
                       {people.name}
                   </option>
@@ -180,7 +183,7 @@ export default function NewExpense() {
                 value={card}
               >
                 <option value={""} disabled>Selecione o cartão</option>
-                {cardData.length && cardData.map((card) => (
+                {cardData.data.length && cardData.data.map((card) => (
                   <option key={card.name} value={card.name}>
                     {card.name}
                   </option>

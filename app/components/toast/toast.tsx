@@ -7,7 +7,7 @@ interface IProps {
 	success: boolean;
 }
 
-export default function Toast({ message, success }: IProps) {
+export const Toast = ({ message, success }: IProps) => {
   return (
 		<>
 			{message && (

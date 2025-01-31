@@ -5,11 +5,11 @@ import useSWR from "swr";
 
 import styles from "./styles/pages/home.module.scss";
 
-import Card from "./components/card/card";
-import Dashboard from "./components/dashboard/dashboard";
-import Filter from "./components/filter/filter";
-import LatestExpenses from "./components/latest-expenses/latest-expenses";
-import Resume from "./components/resume/resume";
+import { Card } from "./components/card/card";
+import { Dashboard } from "./components/dashboard/dashboard";
+import { Filter } from "./components/filter/filter";
+import { LatestExpenses } from "./components/latest-expenses/latest-expenses";
+import { Resume } from "./components/resume/resume";
 
 import { fetcher, months } from "./utils/index";
 import { IExpensesByUsernameAndDate } from "./utils/types";

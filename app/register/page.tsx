@@ -7,9 +7,9 @@ import Link from "next/link";
 
 import styles from "../styles/pages/login.module.scss"
 
-import Toast from "../components/toast/toast";
-import wallet from "../images/wallet.png";
 import { Input } from "../components/input/input";
+import { Toast } from "../components/toast/toast";
+import wallet from "../images/wallet.png";
 
 import { fetcherPost, formatCurrency } from "../utils";
 

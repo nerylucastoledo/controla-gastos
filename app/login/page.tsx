@@ -8,7 +8,7 @@ import Link from "next/link";
 import styles from "../styles/pages/login.module.scss"
 
 import { Input } from "../components/input/input";
-import Toast from "../components/toast/toast";
+import { Toast } from "../components/toast/toast";
 
 import { useUser } from "../context/user";
 

@@ -10,7 +10,7 @@ interface IProps {
   data: IExpense[];
 }
 
-export default function Resume({ salary, data }: IProps) {
+export const Resume = ({ salary, data }: IProps) => {
   const getAllExpenses = data.filter(expense =>  expense.people === "Eu")
   const totalAccount = getAllExpenses.reduce((a, b) => a + parseCurrencyString(b.value), 0)
   const remaining = parseCurrencyString(salary) - totalAccount;
