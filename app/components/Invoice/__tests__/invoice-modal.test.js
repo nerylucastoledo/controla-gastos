@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 
 import React from 'react';
-import { render, fireEvent, waitFor } from '@testing-library/react';
+import { render, fireEvent, waitFor, getByTestId, screen } from '@testing-library/react';
 import { InvoiceModal } from '../invoice-modal';
 import useSWR from 'swr';
 
@@ -40,14 +40,32 @@ describe('InvoiceModal', () => {
 
   beforeEach(() => {
     onDismissMock = jest.fn();
-    useSWR.mockReturnValue({ data: mockData, error: null, isLoading: false, mutate: jest.fn() });
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
+
+  it('renders loading', () => {
+    useSWR.mockReturnValue({ data: { data: [] }, error: null, isLoading: true, mutate: jest.fn() });
+
+    render(
+      <InvoiceModal 
+        username="testuser" 
+        date="2023-10-10" 
+        card="test" 
+        backgroundColor="#fff" 
+        onDismiss={onDismissMock} 
+      />
+    );
+
+    expect(screen.getByTestId('loading')).toBeInTheDocument();
+  });
+
   it('renders correctly with data', () => {
+    useSWR.mockReturnValue({ data: mockData, error: null, isLoading: false, mutate: jest.fn() });
+    
     const { getByText } = render(
       <InvoiceModal 
         username="testuser" 
@@ -158,6 +176,8 @@ describe('InvoiceModal', () => {
   });
 
   it('handles delete modal', async () => {
+    useSWR.mockReturnValue({ data: mockData, error: null, isLoading: false, mutate: jest.fn() });
+
     const { getByText, getByTestId, getAllByTestId } = render(
       <InvoiceModal 
         username="testuser" 

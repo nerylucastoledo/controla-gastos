@@ -8,7 +8,7 @@ import { InvoiceModal } from '../Invoice/invoice-modal';
 
 import { ICardData, IExpense } from '@/app/utils/types';
 import { formatToCurrencyBRL, parseCurrencyString } from '@/app/utils';
-import { CardItem } from './card-item';
+import { CardItem } from './cardItem/cardItem';
 
 interface IProps {
   cards: ICardData[],

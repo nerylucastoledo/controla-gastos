@@ -25,7 +25,7 @@ interface IProps {
 export const Dashboard = ({ dataByMonth, username, year }: IProps) => {
   const { data, isLoading } = useSWR<IData>(`http://localhost:4000/api/expenses/year/${username}/${year}`, fetcher)
 
-  const existingData = data?.data.length && dataByMonth?.length
+  const existingData = data && dataByMonth && data.data.length && dataByMonth.length
 
   return (
     <div className={`content_card ${styles.dashboard}`}>

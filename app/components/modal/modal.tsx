@@ -44,7 +44,7 @@ export const Modal = ({ background, children, customClass = "", onCustomDismiss 
   }, [onKeyDown]);
 
   return (
-    <div className={`${customClass} ${styles.modal_overlay}`} ref={overlay} onClick={onClick} >
+    <div className={`${customClass} ${styles.modal_overlay}`} ref={overlay} onClick={onClick} data-testid="modal-overlay">
       <div className={styles.modal_wrapper} ref={wrapper} tabIndex={0}>
         <div className={styles.modal_wrapper_content} style={{ background }}>
           <div className={styles.modal_wrapper_content_close}>

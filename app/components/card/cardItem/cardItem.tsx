@@ -12,10 +12,10 @@ interface IProps {
 
 export const CardItem = ({ color, name, value }: IProps) => {
   return (
-    <div className={`${styles.item_content}`} style={{ backgroundColor: color }}>
+    <div className={`${styles.item_content}`} style={{ backgroundColor: color }} data-testid="card-item">
 			<div>
 				<p>{name}</p>
-				<FaCreditCard size={24} />
+				<FaCreditCard size={24} data-testid="icon"/>
 			</div>
 			<div className={`${styles.item_content_value}`}>
 				<span>**** **** **** ****</span>
