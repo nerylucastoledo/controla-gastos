@@ -13,7 +13,7 @@ export const Input: FC<InputProps> = ({ label, name, ...props }) => {
 				id={name}
 				{ ...props }
 			/>
-			<label htmlFor={name} data-testid="email-label">{label}</label>
+			<label htmlFor={name} data-testid={`${name}-label`}>{label}</label>
 		</div>
   )
 }

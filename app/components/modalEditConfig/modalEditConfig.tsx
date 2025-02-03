@@ -7,6 +7,7 @@ import { Modal } from '@/app/components/modal/modal'
 
 import { fetcherPost } from '@/app/utils';
 import { ICard, IPeople } from '@/app/utils/types';
+import { Toast } from '../toast/toast';
 
 interface IUpdate {
   _id: string;
@@ -20,13 +21,24 @@ interface IProps {
   onCustomDismiss: (value: SetStateAction<boolean>) => void;
 }
 
-export const ModalConfigEdit = ({ item, mutate, onCustomDismiss }: IProps) => {
+export const ModalEditConfig = ({ item, mutate, onCustomDismiss }: IProps) => {
   const [itemUpdated, setItemUpdated] = useState(item);
+  const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
+  const [showToast, setShowToast] = useState(false);
+
+  const handleToast = (error: boolean, message: string) => {
+    setToastCustom({ error, message })
+    setShowToast(true)
+    setTimeout(() => {
+      onCustomDismiss(false)
+      setShowToast(false)
+    }, 1000);
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!itemUpdated) return; 
+    if (!itemUpdated) return;
 
     try {
       let url = "peoples";
@@ -46,28 +58,31 @@ export const ModalConfigEdit = ({ item, mutate, onCustomDismiss }: IProps) => {
         };
       }
 
-      await fetcherPost<IUpdate, { message: string }>(
+      const response = await fetcherPost<IUpdate, { message: string }>(
         `http://localhost:4000/api/${url}`, 
         "PUT", 
         body
       );
       mutate()
-      onCustomDismiss(false)
+      handleToast(true, response.message)
     } catch (err) {
-      console.log(err);
+      handleToast(false, (err as Error).message);
     }
   }
 
   return (
     <>
+      {showToast && (
+        <Toast message={toastCustom.message} success={toastCustom.error} />
+      )}
       <Modal
         background='#1E1E1E'
         customClass={`modal-form-active modal-form`}
         onCustomDismiss={() => onCustomDismiss(false)}
       >
-        <h2 className='title'>Atualizar</h2>
+        <h2 className='title' data-testid="title-edit">Atualizar</h2>
 
-        <p className='subtitle' data-testid="text-edit">Atualize a informação</p>
+        <p className='subtitle' data-testid="subtitle-edit">Atualize a informação</p>
 
         <form onSubmit={handleSubmit}>
           <Input

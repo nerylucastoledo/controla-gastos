@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Toast from '../toast';
+import { Toast } from '../toast';
 import styles from "../../../styles/toast.module.scss";
 
 describe('Toast Component', () => {

@@ -7,7 +7,7 @@ import styles from "../../styles/components/dashboard.module.scss"
 
 import { ChartExpensesMonthly } from '../chart/ChartExpensesMonthly';
 import { ChartExpensesCategorys } from '../chart/ChartExpensesCategorys';
-import { LoadingICon } from '../loading/loadingIcon';
+import { LoadingIcon } from '../loading/loadingIcon';
 
 import { IExpense, IExpenseByYear } from '@/app/utils/types';
 import { fetcher } from '@/app/utils';
@@ -33,7 +33,7 @@ export const Dashboard = ({ dataByMonth, username, year }: IProps) => {
 
       <div className={`${styles.container}`}>
         {isLoading ? (
-          <LoadingICon />
+          <LoadingIcon />
         ) : (
           <>
             {!existingData ? (

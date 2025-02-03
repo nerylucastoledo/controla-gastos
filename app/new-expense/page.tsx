@@ -65,6 +65,7 @@ export default function NewExpense() {
     setPeople("")
     setCard("")
     setCategory("")
+    setItem("")
     setValue("")
     setHasInstallment(false)
     setInstallments(1)
@@ -106,7 +107,7 @@ export default function NewExpense() {
     )
   }
 
-  if (!cardData || !peopleData) return;
+  if (!cardData?.data || !peopleData?.data) return;
 
   return (
     <section className={`container ${stylesNewExpense.new_expense}`}>

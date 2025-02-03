@@ -83,6 +83,7 @@ export default function Register() {
 
           <form onSubmit={submit}>
             <Input
+              data-testid="email"
               label="Email"
               name="email"
               placeholder=""
@@ -94,6 +95,7 @@ export default function Register() {
             />
 
             <Input
+              data-testid="name"
               label="Nome"
               name="name"
               placeholder=""
@@ -105,6 +107,7 @@ export default function Register() {
             />
 
             <Input
+              data-testid="salary"
               label="Salário"
               name="salary"
               placeholder=""
@@ -116,6 +119,7 @@ export default function Register() {
             />
 
             <Input
+              data-testid="password"
               label="Senha"
               name="password"
               placeholder=""
@@ -126,7 +130,7 @@ export default function Register() {
               value={password}
             />
 
-            <input type="submit" value="Cadastrar" className="button button__primary"/>
+            <input type="submit" value="Cadastrar" data-testid="submit" className="button button__primary"/>
           </form>
 
           <p className={styles.container_user__form_new}>Já possui conta? <Link href="/login">Acesse</Link></p>

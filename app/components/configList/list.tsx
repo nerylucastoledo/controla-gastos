@@ -17,14 +17,14 @@ interface IProps {
 export const ConfigList = ({ data, openModal }: IProps) => {
   return (
     <div>
-      {data.length && data.map((people) => (
-        <p key={people.name}>
-          {people.name}
+      {data.length && data.map((item) => (
+        <div key={item.name}>
+          {item.name}
           <div>
-            <button onClick={() => openModal(people, "PUT")} data-testid="edit-button"><FaRegEdit size={16} color='28A745' /></button>
-            <button onClick={() => openModal(people, "DELETE")} data-testid="delete-button"><MdDeleteForever size={16} color='#DC3545' /></button>
+            <button onClick={() => openModal(item, "PUT")} data-testid="edit-button"><FaRegEdit size={16} color='28A745' /></button>
+            <button onClick={() => openModal(item, "DELETE")} data-testid="delete-button"><MdDeleteForever size={16} color='#DC3545' /></button>
           </div>
-        </p>
+        </div>
       ))}
     </div>
   )

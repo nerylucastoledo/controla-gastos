@@ -14,7 +14,7 @@ import { fetcher, fetcherPost, formatCurrency } from "../utils";
 
 import { ConfigList } from "../components/configList/list";
 import { Input } from "../components/input/input";
-import { ModalConfigEdit } from "../components/modalEditConfig/configModalEdit";
+import { ModalEditConfig } from "../components/modalEditConfig/modalEditConfig";
 import { ModalConfigDelete } from "../components/modalDeleteConfig/modalDeleteConfig";
 import { Toast } from "../components/toast/toast";
 
@@ -24,7 +24,7 @@ interface IData {
   data: IPeople[] | ICard[]
 }
 
-export default function NewExpense() {
+export default function Config() {
   const { username, salary, setSalary } = useUser();
   const [salaryUpdate, setSalaryUpdate] = useState(salary);
   const [isModalDelete, setIsModalDelete] = useState(false);
@@ -113,7 +113,9 @@ export default function NewExpense() {
                   type="text" 
                   value={salaryUpdate}
                 />
-                <button className="button button__primary" onClick={() => upateSalary()}>Salvar</button>
+                <button className="button button__primary" onClick={() => upateSalary()} data-testid="update-salary">
+                  Salvar
+                </button>
               </div>
             </div>
 
@@ -138,7 +140,7 @@ export default function NewExpense() {
         </div>
       </section>
 
-      {isModalEdit && <ModalConfigEdit item={item} mutate={handleFetch} onCustomDismiss={() => setIsModalEdit(false)} />}
+      {isModalEdit && <ModalEditConfig item={item} mutate={handleFetch} onCustomDismiss={() => setIsModalEdit(false)} />}
       {isModalDelete && <ModalConfigDelete item={item} mutate={handleFetch} onCustomDismiss={() => setIsModalDelete(false)} />}
     </>
   );

@@ -36,15 +36,16 @@ describe('Register page', () => {
   it('renders register form correctly', () => {
     render(<Register />);
 
+    
     const emailLabel = screen.getByTestId("email-label");
-    const emailInput = screen.getByRole('textbox', { name: "Email" })
+    const emailInput = screen.getByTestId("email")
     const nameLabel = screen.getByTestId("name-label");
-    const nameInput = screen.getByRole('textbox', { name: "Nome" })
+    const nameInput = screen.getByTestId("name")
     const salaryLabel = screen.getByTestId("salary-label");
-    const salaryInput = screen.getByRole('textbox', { name: "Salário" })
+    const salaryInput = screen.getByTestId("salary")
     const passwordLabel = screen.getByTestId("password-label");
-    const passwordInput = screen.getByRole('password', { name: "Senha" })
-    const submitForm = screen.getByRole('button', { name: "Cadastrar" })
+    const passwordInput = screen.getByTestId("password")
+    const submitForm = screen.getByTestId("submit")
     const btnLogin = screen.getByRole('link', { href: "/login" })
 
     expect(emailLabel).toBeInTheDocument();
@@ -62,14 +63,14 @@ describe('Register page', () => {
   it('updates email, name, salary and password fields', () => {
     render(<Register />);
 
-    const emailInput = screen.getByRole('textbox', { name: "Email" })
-    const nameInput = screen.getByRole('textbox', { name: "Nome" })
-    const salaryInput = screen.getByRole('textbox', { name: "Salário" })
-    const passwordInput = screen.getByRole('password', { name: "Senha" })
+    const emailInput = screen.getByTestId("email")
+    const nameInput = screen.getByTestId("name")
+    const salaryInput = screen.getByTestId("salary")
+    const passwordInput = screen.getByTestId("password")
 
     expect(emailInput.value).toEqual("")
     expect(nameInput.value).toEqual("")
-    expect(salaryInput.value).toEqual("")
+    expect(salaryInput.value).toEqual("R$ 0,00")
     expect(passwordInput.value).toEqual("")
 
     fireEvent.change(emailInput, { target: { value: "teste@teste.com" }});
@@ -97,11 +98,11 @@ describe('Register page', () => {
 
     render(<Register />);
 
-    const emailInput = screen.getByRole('textbox', { name: "Email" })
-    const nameInput = screen.getByRole('textbox', { name: "Nome" })
-    const salaryInput = screen.getByRole('textbox', { name: "Salário" })
-    const passwordInput = screen.getByRole('password', { name: "Senha" })
-    const submitForm = screen.getByRole('button', { name: "Cadastrar" })
+    const emailInput = screen.getByTestId("email")
+    const nameInput = screen.getByTestId("name")
+    const salaryInput = screen.getByTestId("salary")
+    const passwordInput = screen.getByTestId("password")
+    const submitForm = screen.getByTestId("submit")
 
     fireEvent.change(emailInput, { target: { value: "teste@teste.com" }});
     fireEvent.change(nameInput, { target: { value: "Testname" }});
@@ -126,11 +127,11 @@ describe('Register page', () => {
     
     render(<Register />);
 
-    const emailInput = screen.getByRole('textbox', { name: "Email" })
-    const nameInput = screen.getByRole('textbox', { name: "Nome" })
-    const salaryInput = screen.getByRole('textbox', { name: "Salário" })
-    const passwordInput = screen.getByRole('password', { name: "Senha" })
-    const submitForm = screen.getByRole('button', { name: "Cadastrar" })
+    const emailInput = screen.getByTestId("email")
+    const nameInput = screen.getByTestId("name")
+    const salaryInput = screen.getByTestId("salary")
+    const passwordInput = screen.getByTestId("password")
+    const submitForm = screen.getByTestId("submit")
 
     fireEvent.change(emailInput, { target: { value: "teste@teste.com" }});
     fireEvent.change(nameInput, { target: { value: "Testname" }});
@@ -154,11 +155,11 @@ describe('Register page', () => {
     
     render(<Register />);
 
-    const emailInput = screen.getByRole('textbox', { name: "Email" })
-    const nameInput = screen.getByRole('textbox', { name: "Nome" })
-    const salaryInput = screen.getByRole('textbox', { name: "Salário" })
-    const passwordInput = screen.getByRole('password', { name: "Senha" })
-    const submitForm = screen.getByRole('button', { name: "Cadastrar" })
+    const emailInput = screen.getByTestId("email")
+    const nameInput = screen.getByTestId("name")
+    const salaryInput = screen.getByTestId("salary")
+    const passwordInput = screen.getByTestId("password")
+    const submitForm = screen.getByTestId("submit")
 
     fireEvent.change(emailInput, { target: { value: "teste@teste.com" }});
     fireEvent.change(nameInput, { target: { value: "Testname" }});

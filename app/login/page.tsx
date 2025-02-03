@@ -91,6 +91,7 @@ export default function Login() {
 
           <form onSubmit={submit}>
             <Input
+              data-testid="email"
               label="Email"
               type="email" 
               name="email"
@@ -101,6 +102,7 @@ export default function Login() {
             />
 
             <Input
+              data-testid="password"
               label="Senha"
               name="password"
               onChange={({ target }) => setPassword(target.value)}

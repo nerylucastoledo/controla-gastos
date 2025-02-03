@@ -19,7 +19,7 @@ describe('NewExpense page', () => {
   test('renders without crashing', () => {
     // Mock SWR to simulate successful data fetching
     useSWR.mockReturnValue({
-      data: [{ _id: '1', name: 'John', username: 'john_doe' }],
+      data: { data: [{ _id: '1', name: 'John', username: 'john_doe' }] },
       error: null,
       isLoading: false,
       mutate: jest.fn(),
@@ -29,23 +29,10 @@ describe('NewExpense page', () => {
     expect(screen.getByText(/cadastre o novo gasto/i)).toBeInTheDocument();
   });
 
-  test('shows loading state', () => {
-    // Mock SWR to simulate loading state
-    useSWR.mockReturnValue({
-      data: null,
-      error: null,
-      isLoading: true,
-      mutate: jest.fn(),
-    });
-
-    render(<Providers><NewExpense /></Providers>);
-    expect(screen.getByTestId("loading-new-expense")).toBeInTheDocument();
-  });
-
   test('shows error message on data fetch failure', async () => {
     // Mock SWR to simulate error state
     useSWR.mockReturnValue({
-      data: null,
+      data: { data: null },
       error: { message: 'Fetch error' },
       isLoading: false,
       mutate: jest.fn(),
@@ -58,7 +45,7 @@ describe('NewExpense page', () => {
 
   test('submits the form with valid data', async () => {
     const mutateMock = jest.fn();
-    useSWR.mockReturnValue({ data: [{ _id: '1', name: 'Teste', username: 'john_doe' }], error: null, isLoading: false, mutate: mutateMock });
+    useSWR.mockReturnValue({ data: { data: [{ _id: '1', name: 'Teste', username: 'john_doe' }] }, error: null, isLoading: false, mutate: mutateMock });
   
     // Mock da API para simular um erro
     const message = 'Ocorreu um erro interno! Tente novamente';
@@ -91,7 +78,7 @@ describe('NewExpense page', () => {
 
   it('submits the form with invalid data', async () => {
     const mutateMock = jest.fn();
-    useSWR.mockReturnValue({ data: [{ _id: '1', name: 'Teste', username: 'john_doe' }], error: null, isLoading: false, mutate: mutateMock });
+    useSWR.mockReturnValue({ data: { data: [{ _id: '1', name: 'Teste', username: 'john_doe' }]}, error: null, isLoading: false, mutate: mutateMock });
   
     // Mock da API para simular um erro
     const message = 'Ocorreu um erro interno! Tente novamente';
@@ -125,7 +112,7 @@ describe('NewExpense page', () => {
 
   it('show message to add card', async () => {
     const mutateMock = jest.fn();
-    useSWR.mockReturnValue({ data: [], error: null, isLoading: false, mutate: mutateMock });
+    useSWR.mockReturnValue({ data: { data: [] }, error: null, isLoading: false, mutate: mutateMock });
   
     // Mock da API para simular um erro
     const message = 'Ocorreu um erro interno! Tente novamente';

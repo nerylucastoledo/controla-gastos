@@ -8,7 +8,7 @@ import styles from "../../styles/components/invoice.module.scss";
 import { Input } from '../input/input';
 import { InvoicePeople } from './invoice-people/invoice-people';
 import { InvoiceItem } from './invoice-item/invoice-item';
-import { LoadingICon } from '../loading/loadingIcon';
+import { LoadingIcon } from '../loading/loadingIcon';
 import { Select } from '../select/select';
 import { Toast } from '../toast/toast';
 
@@ -92,7 +92,7 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
         );
         handleToast(true, response.message)
         closeModal();
-        mutate(); 
+        mutate();
       } catch (err) {
         handleToast(false, (err as Error).message);
       }
@@ -104,14 +104,20 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
         );
         handleToast(true, response.message)
         closeModal();
-        mutate(); 
+
+        if (data.data.length === 1 && onDismiss) {
+          onDismiss()
+          return;
+        }
+        
+        mutate();
       } catch (err) {
         handleToast(false, (err as Error).message);
       }
     }
   }
 
-  const invocieByName = data.data.filter((item) => item.name === name)
+  const invoiceByName = data.data.filter((item) => item.name === name)
   const cardName = card.replace("%20", " ")
 
   return (
@@ -121,10 +127,10 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
       )}
       <Modal background={backgroundColor} onCustomDismiss={onDismiss}>
         {isLoading ? (
-          <LoadingICon />
+          <LoadingIcon />
         ) : (
           <>
-            {data.data.length && invocieByName.length && (
+            {data.data.length && invoiceByName.length && (
               <div className={styles.invoice}>
                 <div className={styles.title}>
                   {cardName}
@@ -144,14 +150,14 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
 
                   <div className={styles.item}>
                     <InvoiceItem
-                      data={invocieByName[0].invoices} 
+                      data={invoiceByName[0].invoices} 
                       openModal={openModal}
                     />
                   </div>
                 </div>
                 
                 <p className={styles.total}>
-                  Total: {formatToCurrencyBRL(invocieByName[0].totalInvoice)}
+                  Total: {formatToCurrencyBRL(invoiceByName[0].totalInvoice)}
                 </p>
               </div>
             )}

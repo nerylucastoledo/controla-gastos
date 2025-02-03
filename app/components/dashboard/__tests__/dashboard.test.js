@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Dashboard from '../Dashboard';
+import { Dashboard } from '../Dashboard';
 import useSWR from 'swr';
 
 jest.mock('swr');
@@ -39,11 +39,13 @@ const mockDataByMonth = [
   }
 ];
 
-const mockData = [
-  { month: "Janeiro", value: 1000 },
-  { month: "Fevereiro", value: 2000 },
-  { month: "Março", value: 3000 }
-];
+const mockData = {
+  data: [
+    { month: "Janeiro", value: 1000 },
+    { month: "Fevereiro", value: 2000 },
+    { month: "Março", value: 3000 }
+  ]
+};
 
 describe('Dashboard Component', () => {
   beforeAll(() => {
@@ -79,7 +81,7 @@ describe('Dashboard Component', () => {
 
   it('renders empty state when no data', () => {
     useSWR.mockReturnValue({
-      data: [],
+      data: { data: [] },
       isLoading: false,
     });
 

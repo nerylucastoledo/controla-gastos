@@ -11,19 +11,29 @@ jest.mock('next/navigation', () => ({
   useRouter: () => jest.fn(),
 }));
 
-const mockData = [
-  {
-    name: "Alessa",
-    invoices: [
-      { item: "Teste item 1", value: "R$ 10,00", _id: "1", category: "Outros" },
-      { item: "Teste item 2", value: "R$ 20,00", _id: "2", category: "transporte" },
-      { item: "Teste item 3", value: "R$ 30,00", _id: "3", category: "vestuario" },
-      { item: "Teste item 4", value: "R$ 40,00", _id: "4", category: "alimentacao" },
-      { item: "Teste item 5", value: "R$ 50,00", _id: "5", category: "vestuario" }
-    ],
-    totalInvoice: 150.00
-  },
-];
+const mockData = {
+  data: [
+    {
+      name: "Alessa",
+      invoices: [
+        { item: "Teste item 1", value: "R$ 10,00", _id: "1", category: "Outros" },
+        { item: "Teste item 2", value: "R$ 20,00", _id: "2", category: "transporte" },
+        { item: "Teste item 3", value: "R$ 30,00", _id: "3", category: "vestuario" },
+        { item: "Teste item 4", value: "R$ 40,00", _id: "4", category: "alimentacao" },
+        { item: "Teste item 5", value: "R$ 50,00", _id: "5", category: "vestuario" }
+      ],
+      totalInvoice: 150.00
+    },
+
+    {
+      name: "Teste 2",
+      invoices: [
+        { item: "Teste item 1", value: "R$ 10,00", _id: "1", category: "Outros" },
+      ],
+      totalInvoice: 10.00
+    },
+  ]
+};
 
 describe('InvoiceModal', () => {
   let onDismissMock;

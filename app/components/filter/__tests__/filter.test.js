@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, screen, fireEvent } from '@testing-library/react';
-import Filter from '../filter';
+import { Filter } from '../filter';
 import { months, years } from '../../../utils';
 
 describe('Filter component', () => {

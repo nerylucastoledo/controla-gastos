@@ -37,10 +37,10 @@ describe('Login page', () => {
   it('renders login form correctly', () => {
     render(<Providers><Login /></Providers>);
 
-    const emailLabel = screen.getByLabelText("Email");
-    const emailInput = screen.getByRole('textbox', { name: "Email" })
-    const passwordLabel = screen.getByLabelText("Senha");
-    const passwordInput = screen.getByRole('password', { name: "Senha" })
+    const emailLabel = screen.getByTestId("email-label");
+    const emailInput = screen.getByTestId("email")
+    const passwordLabel = screen.getByTestId("password-label");
+    const passwordInput = screen.getByTestId("password")
     const submitForm = screen.getByRole('button', { name: "Acessar" })
     const btnCreateNewAccount = screen.getByRole('link', { href: "/register" })
 
@@ -55,8 +55,8 @@ describe('Login page', () => {
   it('updates email and password fields', () => {
     render(<Providers><Login /></Providers>);
 
-    const emailInput = screen.getByRole('textbox', { name: "Email" })
-    const passwordInput = screen.getByRole('password', { name: "Senha" })
+    const emailInput = screen.getByTestId("email")
+    const passwordInput = screen.getByTestId("password")
 
     expect(emailInput.value).toEqual("")
     expect(passwordInput.value).toEqual("")
@@ -82,8 +82,8 @@ describe('Login page', () => {
 
     render(<Providers><Login /></Providers>);
 
-    const emailInput = screen.getByRole('textbox', { name: "Email" })
-    const passwordInput = screen.getByRole('password', { name: "Senha" })
+    const emailInput = screen.getByTestId("email")
+    const passwordInput = screen.getByTestId("password")
     const submitForm = screen.getByRole('button', { name: "Acessar" })
 
     fireEvent.change(emailInput, { target: { value: "teste@teste.com" }});
@@ -109,8 +109,8 @@ describe('Login page', () => {
     
     render(<Providers><Login /></Providers>);
 
-    const emailInput = screen.getByRole('textbox', { name: "Email" })
-    const passwordInput = screen.getByRole('password', { name: "Senha" })
+    const emailInput = screen.getByTestId("email")
+    const passwordInput = screen.getByTestId("password")
     const submitForm = screen.getByRole('button', { name: "Acessar" })
 
     fireEvent.change(emailInput, { target: { value: "teste@teste.com" }});

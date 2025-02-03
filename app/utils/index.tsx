@@ -90,14 +90,14 @@ export const fetcherPost = async <T, R>(url: string, method: string, body?: T): 
 			},
 			body: JSON.stringify(body),
 		});
-
+		
 		if (!res.ok) {
-			throw new Error('Ocorreu um erro interno! Tente novamente');
+			const result = await res.json();
+			throw new Error(result.message ?? 'Ocorreu um erro interno! Tente novamente');
 		}
 
 		return res.json() as Promise<R>;
 	} catch (err) {
-		console.error(err);
 		throw err;
 	}
 };

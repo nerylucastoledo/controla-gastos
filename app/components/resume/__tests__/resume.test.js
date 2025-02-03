@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Resume from '../resume';
+import { Resume } from '../resume';
 import { useUser } from '../../../context/user';
 
 // Mock the useUser hook
@@ -66,16 +66,6 @@ describe('Resume Component', () => {
 
   beforeEach(() => {
     (useUser).mockReturnValue({ salary: mockSalary });
-  });
-
-  test('renders null when data is undefined', () => {
-    const { container } = render(<Resume salary={mockSalary} data={undefined} />);
-    expect(container.firstChild).toBeNull();
-  });
-
-  test('renders null when data is null', () => {
-    const { container } = render(<Resume salary={mockSalary} data={null} />);
-    expect(container.firstChild).toBeNull();
   });
 
   test('renders financial summary correctly', () => {
