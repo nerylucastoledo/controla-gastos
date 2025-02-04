@@ -2,10 +2,11 @@ import '@testing-library/jest-dom';
 
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import Register from '../../register/page';
+import { useRouter } from 'next/navigation';
 
 // Mock do useRouter
 jest.mock('next/navigation', () => ({
-  useRouter: () => jest.fn(),
+  useRouter: jest.fn(),
 }));
 
 jest.mock('../../../../.env', () => ({
@@ -36,7 +37,6 @@ describe('Register page', () => {
   it('renders register form correctly', () => {
     render(<Register />);
 
-    
     const emailLabel = screen.getByTestId("email-label");
     const emailInput = screen.getByTestId("email")
     const nameLabel = screen.getByTestId("name-label");
@@ -93,8 +93,8 @@ describe('Register page', () => {
       })
     );
     
-    const router = { replace: jest.fn() };
-    jest.spyOn(require('next/navigation'), 'useRouter').mockImplementation(() => router);
+    const mockRouter = { replace: jest.fn() };
+    useRouter.mockImplementation(() => mockRouter);
 
     render(<Register />);
 
@@ -111,7 +111,7 @@ describe('Register page', () => {
     fireEvent.click(submitForm);
 
     await waitFor(() => {
-      expect(router.replace).toHaveBeenCalledWith("/login");
+      expect(mockRouter.replace).toHaveBeenCalledWith("/login");
       expect(screen.getByText('Register successful')).toBeInTheDocument();
     })
   });

@@ -1,13 +1,10 @@
 "use client"
 
-import Link from "next/link";
 import useSWR from "swr";
 import { useState } from "react";
 
 import styles from "../styles/pages/home.module.scss";
 import stylesConfig from "../styles/pages/config.module.scss";
-
-import { IoFastFoodOutline } from "react-icons/io5";
 
 import { useUser } from "../context/user";
 import { fetcher, fetcherPost, formatCurrency } from "../utils";
@@ -91,10 +88,6 @@ export default function Config() {
         <Toast success={toastCustom.error} message={toastCustom.message} />
       )}
       <section className={`container ${styles.container_home} ${stylesConfig.config}`}>
-        <Link href={"/"}>
-          <IoFastFoodOutline size={60}/>
-        </Link>
-
         <div className={`${stylesConfig.content}`}>
           <h2 className="title">Atualize os dados</h2>
           <p className="subtitle">Aqui você mantém total controle das pessoas, cartões e dos eu salário</p>

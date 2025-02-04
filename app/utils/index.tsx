@@ -1,5 +1,3 @@
-import { ENUM_CATEGORYS } from "../components/icon/icons";
-
 export const categorys = [
 	"Alimentação",
 	"Doação",
@@ -16,7 +14,7 @@ export const categorys = [
 	"Transporte",
 	"Vestuário",
 	"Viagens"
-]
+] as const;
 
 export const months = [
 	"Janeiro",
@@ -43,10 +41,6 @@ export const years = [
 	2027,
 	2028,
 ]
-
-export const ENUM_CATEGORYS_DISPLAY = Object.fromEntries(
-  Object.entries(ENUM_CATEGORYS).map(([key, value]) => [value, key])
-);
 
 export const formatCurrency = (value: string) => {
 	value = value.replace(/\D/g, "");

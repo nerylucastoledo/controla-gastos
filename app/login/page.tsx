@@ -34,7 +34,7 @@ export default function Login() {
   const [showToast, setShowToast] = useState(false);
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const { setUsername, setSalary }  = useUser()
-  const common = { alt: 'wallet', width: 216, height: 288, loading: "eager" };
+  const common = { alt: 'Imagem de uma carteira', width: 216, height: 288 };
   
   const handleToast = (error: boolean, message: string) => {
     setToastCustom({ error, message })
@@ -80,7 +80,7 @@ export default function Login() {
         <div className={styles.container_user__info}>
           <picture>
             <source media="(prefers-color-scheme: dark)" srcSet={walletRetina.src} />
-            <Image {...common} src={wallet.src} />
+            <Image {...common} src={wallet.src} alt="Imagem de uma carteira" />
           </picture>
           <p>Entre e visualize como foi seus gastos nos meses anteriores, como está no mês atual e como ficará nos próximos meses.</p>
         </div>

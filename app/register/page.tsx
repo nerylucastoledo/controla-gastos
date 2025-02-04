@@ -31,7 +31,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [showToast, setShowToast] = useState(false);
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
-  const common = { alt: 'wallet', width: 216, height: 288, loading: "eager" };
+  const common = { alt: 'Imagem de uma carteira', width: 216, height: 288 };
 
   const handleToast = (error: boolean, message: string) => {
     setToastCustom({ error, message })
@@ -72,7 +72,7 @@ export default function Register() {
         <div className={styles.container_user__info}>
           <picture>
             <source media="(prefers-color-scheme: dark)" srcSet={walletRetina.src} />
-            <Image {...common} src={wallet.src} />
+            <Image {...common} src={wallet.src} alt="Imagem de uma carteira" />
           </picture>
           <p>Ao se cadastrar você vai conseguir ter maior controle dos seus gastos, visualizar onde você mais está gastando e quanto cada pessoa deve te passar no final do mês, caso você empreste seu cartão.</p>
         </div>

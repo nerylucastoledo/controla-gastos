@@ -1,17 +1,17 @@
 "use client"
 
 import Link from 'next/link'
-import React from 'react'
+import React, { ReactElement } from 'react'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 import styles from "../../styles/components/header.module.scss"
 
-import { IconType } from 'react-icons'
-import { IoFastFoodOutline } from 'react-icons/io5'
+import logo from "../../images/logo.png";
 
 interface IProps {
 	href: string;
-	icon: IconType,
+	icon: ReactElement,
 	name: string;
 }
 interface INavigationProps {
@@ -20,12 +20,13 @@ interface INavigationProps {
 
 export const Navigation: React.FC<INavigationProps> = ({ navLinks }) => {
 	const pathname = usePathname();
+	const common = { alt: 'lOGO', width: 64, height: 64 };
 
   return (
     <header className={styles.header}>
 			<nav>
 				<Link href={"/"}>
-					<IoFastFoodOutline size={60}/>
+					<Image {...common} src={logo.src} alt='Logo ' />
 				</Link>
 
 				<ul>

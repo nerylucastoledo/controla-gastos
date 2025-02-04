@@ -2,12 +2,9 @@
 
 import { useUser } from "../context/user";
 import { useState } from "react";
-import Link from "next/link";
 
 import styles from "../styles/pages/home.module.scss";
 import stylesNewExpense from "../styles/pages/new-expense.module.scss";
-
-import { IoFastFoodOutline } from 'react-icons/io5'
 
 import { Input } from "../components/input/input";
 import { Select } from "../components/select/select";
@@ -70,10 +67,6 @@ export default function NewOption() {
         <Toast message={toastCustom.message} success={toastCustom.error} />
       )}
       <div className={styles.container_home}>
-        <Link href={"/"}>
-					<IoFastFoodOutline size={60}/>
-				</Link>
-
         <form onSubmit={handleSubmit}>
           <h1 className="title">Cadastre a opção</h1>
 

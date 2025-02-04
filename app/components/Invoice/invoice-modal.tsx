@@ -105,7 +105,9 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
         handleToast(true, response.message)
         closeModal();
 
-        if (data.data.length === 1 && onDismiss) {
+        console.log(data.data)
+
+        if (data.data[0].invoices.length === 1 && onDismiss) {
           onDismiss()
           return;
         }

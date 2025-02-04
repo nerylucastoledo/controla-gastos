@@ -2,13 +2,10 @@
 
 import { useUser } from "../context/user";
 import { useState } from "react";
-import Link from "next/link";
 import useSWR from "swr";
 
 import styles from "../styles/pages/home.module.scss";
 import stylesNewExpense from "../styles/pages/new-expense.module.scss";
-
-import { IoFastFoodOutline } from 'react-icons/io5'
 
 import { categorys, fetcher, fetcherPost, formatCurrency, months, years } from "../utils";
 
@@ -66,7 +63,7 @@ export default function NewExpense() {
     setCard("")
     setCategory("")
     setItem("")
-    setValue("")
+    setValue("R$ 0,00")
     setHasInstallment(false)
     setInstallments(1)
   }
@@ -115,10 +112,6 @@ export default function NewExpense() {
         <Toast message={toastCustom.message} success={toastCustom.error} />
       )}
       <div className={styles.container_home}>
-        <Link href={"/"}>
-					<IoFastFoodOutline size={60}/>
-				</Link>
-
         <form onSubmit={handleSubmit}>
           {!cardData.data.length ? (
             <p className={"empty"}>Você precisa cadastrar um cartão para continuar</p>

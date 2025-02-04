@@ -8,54 +8,30 @@ import { GiClothes, GiHealthNormal, GiTakeMyMoney } from "react-icons/gi";
 import { FaBook, FaExclamation, FaQuestion } from "react-icons/fa";
 
 const iconMap = {
-  alimentacao: IoFastFoodOutline,
-  doacao: BiDonateHeart,
-  educacao: FaBook,
-  entretenimento: BiMoviePlay,
-  imposto: GiTakeMyMoney,
-  investimentos: BsGraphUpArrow,
-  lazer: TbBeach,
-  moradia: BsFillHouseDoorFill,
-  nao_previsto: FaExclamation,
-  outros: FaQuestion,
-  saude: GiHealthNormal,
-  tecnologia: IoDesktopSharp,
-  transporte: FaCarSide,
-  vestuario: GiClothes,
-  viagem: IoIosAirplane,
+  "Alimentação": IoFastFoodOutline,
+  "Doação": BiDonateHeart,
+  "Educação": FaBook,
+  "Entretenimento": BiMoviePlay,
+  "Imposto": GiTakeMyMoney,
+  "Investimentos": BsGraphUpArrow,
+  "Lazer": TbBeach,
+  "Moradia": BsFillHouseDoorFill,
+  "Não previsto": FaExclamation,
+  "Outros": FaQuestion,
+  "Saúde": GiHealthNormal,
+  "Tecnologia": IoDesktopSharp,
+  "Transporte": FaCarSide,
+  "Vestuário": GiClothes,
+  "Viagens": IoIosAirplane,
 };
-
-export const ENUM_CATEGORYS = {
-  "Alimentação": "alimentacao",
-  "Doação": "doacao",
-  "Educação": "educacao",
-  "Entretenimento": "entretenimento",
-  "Imposto": "imposto",
-  "Investimentos": "investimentos",
-  "Lazer": "lazer",
-  "Moradia": "moradia",
-  "Não previsto": "nao_previsto",
-  "Outros": "outros",
-  "Saúde": "saude",
-  "Tecnologia": "tecnologia",
-  "Transporte": "transporte",
-  "Vestuário": "vestuario",
-  "Viagens": "viagens"
-}
 
 export type IconName = keyof typeof iconMap;
 
 const Icon = ({ name }: { name: IconName }) => {
   const IconComponent = iconMap[name];
-  // @ts-ignore
-  const FixIconComponent = iconMap[ENUM_CATEGORYS[name]]
 
   if (IconComponent) {
     return <IconComponent data-testid="icon" color="#005B96" size={20} />
-  }
-
-  if (FixIconComponent) {
-    return <FixIconComponent data-testid="icon" color="#005B96" size={20} />
   }
 
   return <FaQuestion data-testid="icon" color="#005B96" size={20} />

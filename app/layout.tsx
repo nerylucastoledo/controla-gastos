@@ -21,12 +21,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     {
       href:"/new-expense",
       icon: <IoIosAddCircle size={24} />,
-      name: "Inserir gasto",
+      name: "Novo gasto",
     },
     {
       href:"/new-option",
       icon: <IoOptionsSharp size={24} />,
-      name: "Cadastrar opção",
+      name: "Nova opção",
     },
     {
       href:"/config",

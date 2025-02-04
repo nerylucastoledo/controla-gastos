@@ -1,8 +1,10 @@
+import { categorys } from ".";
+
 export interface IExpense {
   username: string,
   date: string,
   people: string,
-  category: string,
+  category: typeof categorys[number];
   value: string,
   item: string,
   card: string,

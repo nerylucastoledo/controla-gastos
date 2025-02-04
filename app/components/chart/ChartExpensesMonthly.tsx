@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Chart from "chart.js";
+import Chart, { ChartTooltipItem } from "chart.js";
 import { formatToCurrencyBRL } from "@/app/utils";
 import { IExpenseByYear } from "@/app/utils/types";
 
@@ -23,9 +23,9 @@ const chartConfig = (data: IExpenseByYear[]) => {
         intersect: false,
         backgroundColor: "#005B96",
         callbacks: {
-          label: function(tooltipItem) {
+          label: function(tooltipItem: ChartTooltipItem) {
             const value = tooltipItem.yLabel;
-            return value !== undefined ? formatToCurrencyBRL(value) : '';
+            return value !== undefined ? formatToCurrencyBRL(Number(value)) : '';
           },
         },
       },
@@ -33,7 +33,7 @@ const chartConfig = (data: IExpenseByYear[]) => {
         xAxes: [
           {
             ticks: {
-              callback: function(value) {
+              callback: function(value: string) {
                 return value.substring(0, 3);
               },
             },
@@ -44,7 +44,7 @@ const chartConfig = (data: IExpenseByYear[]) => {
             display: true,
             ticks: {
               beginAtZero: true,
-              callback: function(value) {
+              callback: function(value: number) {
                 return formatToCurrencyBRL(value);
               },
             },
@@ -70,11 +70,18 @@ const chartConfig = (data: IExpenseByYear[]) => {
 
 export const ChartExpensesMonthly = ({ data }: { data: IExpenseByYear[] }) => {
   useEffect(() => {
-    const config = chartConfig(data)
+    const config = chartConfig(data);
 
-    const ctx = document.getElementById("bar-chart").getContext("2d");
-    window.myBar = new Chart(ctx, config);
-    return () => window.myBar.destroy();
+    const canvas = document.getElementById("bar-chart") as HTMLCanvasElement;
+    const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+
+    window.myBar = new Chart(ctx, config as Chart.ChartConfiguration); 
+
+    return () => {
+      if (window.myBar) {
+        window.myBar.destroy();
+      }
+    };
     
   }, [data]);
 

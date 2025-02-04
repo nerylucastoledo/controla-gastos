@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect } from "react";
-import Chart from "chart.js";
+import Chart, { ChartTooltipItem } from "chart.js";
 
 import { IExpense } from "@/app/utils/types";
 import { formatToCurrencyBRL, parseCurrencyString } from "@/app/utils";
@@ -29,9 +29,11 @@ const chartCategorys = (data: ICategoryItem[]) => {
       tooltips: {
         backgroundColor: "#005B96",
         callbacks: {
-          label: function(tooltipItem) {
+          label: function(tooltipItem: ChartTooltipItem) {
             const { index } = tooltipItem;
-            return `${data[index].category}: ${formatToCurrencyBRL(data[index].value)}`;
+            if (index !== undefined) {
+              return `${data[index].category}: ${formatToCurrencyBRL(data[index].value)}`;
+            }
           },
         },
       },
@@ -79,10 +81,15 @@ export const ChartExpensesCategorys = ({ data }: { data: IExpense[] }) => {
     const sortedValue = categorys.sort((a, b) => Number(b.value) - Number(a.value));
     const config = chartCategorys(sortedValue)
 
-    const ctx = document.getElementById("pizza-chart").getContext("2d");
-    window.myDoughnut = new Chart(ctx, config);
-    return () => window.myDoughnut.destroy();
-    
+    const canvas = document.getElementById("pizza-chart") as HTMLCanvasElement;
+    const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+
+    window.myDoughnut = new Chart(ctx, config as Chart.ChartConfiguration);
+    return () => {
+      if (window.myDoughnut) {
+        window.myDoughnut.destroy();
+      }
+    };
   }, [data]);
 
   return (

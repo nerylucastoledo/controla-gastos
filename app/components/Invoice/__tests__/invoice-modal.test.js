@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 
 import React from 'react';
-import { render, fireEvent, waitFor, getByTestId, screen } from '@testing-library/react';
+import { render, fireEvent, waitFor, screen } from '@testing-library/react';
 import { InvoiceModal } from '../invoice-modal';
 import useSWR from 'swr';
 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from "../../styles/components/card.module.scss"
+import styles from "../../../styles/components/card.module.scss"
 
 import { FaCreditCard } from 'react-icons/fa6'
 
