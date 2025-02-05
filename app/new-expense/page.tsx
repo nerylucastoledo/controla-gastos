@@ -1,7 +1,7 @@
 "use client"
 
 import { useUser } from "../context/user";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import useSWR from "swr";
 
 import styles from "../styles/pages/home.module.scss";
@@ -30,10 +30,12 @@ interface IData {
   data: IPeople[] | ICard[]
 }
 
+const date = new Date()
+
 export default function NewExpense() {
-  const [month, setMonth] = useState(months[new Date().getMonth()]);
-  const [year, setYear] = useState(new Date().getFullYear().toString());
   const { username } = useUser();
+  const [month, setMonth] = useState(months[date.getMonth()]);
+  const [year, setYear] = useState(date.getFullYear().toString());
   const [people, setPeople] = useState("");
   const [card, setCard] = useState("");
   const [category, setCategory] = useState("");
@@ -52,13 +54,13 @@ export default function NewExpense() {
     mutateCard()
   }
 
-  const handleToast = (error: boolean, message: string) => {
+  const handleToast = useCallback((error: boolean, message: string) => {
     setToastCustom({ error, message })
     setShowToast(true)
     setTimeout(() => setShowToast(false), 2000);
-  }
+  }, [])
 
-  const resetOptions = () => {
+  const resetOptions = useCallback(() => {
     setPeople("")
     setCard("")
     setCategory("")
@@ -66,7 +68,20 @@ export default function NewExpense() {
     setValue("R$ 0,00")
     setHasInstallment(false)
     setInstallments(1)
+  }, [])
+
+  if (peopleError || cardError ) {
+    return (
+      <div className={styles.container_home}>
+        <div className={styles.container_home_error}>
+          <h1>Tivemos um problema para carregar seus dados! Você pode clicar no botão abaixa e tentar novamente :)</h1>
+          <button className="button" onClick={handleFetch}>Recarregar</button>
+        </div>
+      </div>
+    )
   }
+
+  if (!cardData || !cardData.data || !peopleData || !peopleData.data) return;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -92,19 +107,6 @@ export default function NewExpense() {
       handleToast(false, (err as Error).message);
     }
   }
-
-  if (peopleError || cardError ) {
-    return (
-      <div className={styles.container_home}>
-        <div className={styles.container_home_error}>
-          <h1>Tivemos um problema para carregar seus dados! Você pode clicar no botão abaixa e tentar novamente :)</h1>
-          <button className="button" onClick={handleFetch}>Recarregar</button>
-        </div>
-      </div>
-    )
-  }
-
-  if (!cardData?.data || !peopleData?.data) return;
 
   return (
     <section className={`container ${stylesNewExpense.new_expense}`}>

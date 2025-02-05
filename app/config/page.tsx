@@ -1,7 +1,7 @@
 "use client"
 
 import useSWR from "swr";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import styles from "../styles/pages/home.module.scss";
 import stylesConfig from "../styles/pages/config.module.scss";
@@ -23,7 +23,7 @@ interface IData {
 
 export default function Config() {
   const { username, salary, setSalary } = useUser();
-  const [salaryUpdate, setSalaryUpdate] = useState(salary);
+  const [salaryUpdate, setSalaryUpdate] = useState("R$ 0,00");
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [item, setItem] = useState<IPeople | ICard | null>(null);
@@ -32,6 +32,10 @@ export default function Config() {
 
   const { data: peopleData, error: peopleError, mutate: mutatePeole } = useSWR<IData>(`http://localhost:4000/api/peoples/${username}`, fetcher);
   const { data: cardData, error: cardError, mutate: mutateCard } = useSWR<IData>(`http://localhost:4000/api/cards/${username}`, fetcher);
+
+  useEffect(() => {
+    setSalaryUpdate(salary)
+  }, [salary])
 
   const handleFetch = () => {
     mutatePeole();

@@ -19,9 +19,11 @@ export interface IData {
   data: IExpensesByUsernameAndDate
 }
 
+const date = new Date()
+
 export default function Home() {
-  const [month, setMonth] = useState(months[new Date().getMonth()]);
-  const [year, setYear] = useState(new Date().getFullYear().toString());
+  const [month, setMonth] = useState(months[date.getMonth()]);
+  const [year, setYear] = useState(date.getFullYear().toString());
   const { username, salary } = useUser();
 
   const currentDate = `${month}${year}`

@@ -1,5 +1,4 @@
 .background {
-	background: linear-gradient(269deg, #343A40 0.38%, #2C2C2C 42.01%);
 	position: relative;
 	
 	.container_user {
@@ -12,10 +11,13 @@
 			flex-direction: column;
 			justify-content: center;
 			padding: 0 24px;
-
+			display: none;
+			
 			img {
 				display: block;
 				margin: 0 auto;
+				width: 113px;
+				height: 144px;
 			}
 
 			p {
@@ -27,14 +29,13 @@
 		}
 
 		&__form {
-			background-color: #0F0F1B;
 			width: 100%;
 			min-height: calc(100vh - 369px);
 			padding: 24px;
-			margin-top: 24px;
 			border-radius: 8px 0 0 8px;
 			display: flex;
 			flex-direction: column;
+			margin-top: 24px;
 
 			&.form_register {
 				min-height: calc(100vh - 388px);
@@ -80,18 +81,25 @@
 @media (min-width: 988px) {
 	.background {
 		min-height: 100vh;
+		background: linear-gradient(269deg, #343A40 0.38%, #2C2C2C 42.01%);
 		
 		.container_user {
 			flex-direction: row;
 	
 			&__info {
 				min-width: 60%;
+
+				img {
+					width: 216px;
+					height: 288px;
+				}
 			}
 	
 			&__form, &__form.form_register {
 				padding: 64px 24px;
 				min-height: calc(100vh - 48px);
 				margin-top: 48px;
+				background-color: #0F0F1B;
 
 				form {
 					margin: 0 auto;

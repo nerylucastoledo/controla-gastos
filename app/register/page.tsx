@@ -9,11 +9,11 @@ import styles from "../styles/pages/login.module.scss"
 
 import { Input } from "../components/input/input";
 import { Toast } from "../components/toast/toast";
-import wallet from "../images/wallet.png";
 
 import { fetcherPost, formatCurrency } from "../utils";
 
-import walletRetina from "../images/wallet-retina.png";
+import wallet from "../images/wallet.webp";
+import walletRetina from "../images/wallet-retina.webp";
 
 interface IData {
   email: string;
@@ -72,7 +72,7 @@ export default function Register() {
         <div className={styles.container_user__info}>
           <picture>
             <source media="(prefers-color-scheme: dark)" srcSet={walletRetina.src} />
-            <Image {...common} src={wallet.src} alt="Imagem de uma carteira" />
+            <Image {...common} src={wallet.src} alt="Imagem de uma carteira" priority={true} />
           </picture>
           <p>Ao se cadastrar você vai conseguir ter maior controle dos seus gastos, visualizar onde você mais está gastando e quanto cada pessoa deve te passar no final do mês, caso você empreste seu cartão.</p>
         </div>
@@ -89,7 +89,6 @@ export default function Register() {
               placeholder=""
               onChange={({ target }) => setEmail(target.value)}
               required
-              role="email"
               type="email" 
               value={email}
             />
@@ -101,7 +100,6 @@ export default function Register() {
               placeholder=""
               onChange={({ target }) => setName(target.value)}
               required
-              role="name"
               type="text" 
               value={name}
             />
@@ -113,7 +111,6 @@ export default function Register() {
               placeholder=""
               onChange={({ target }) => setSalary(formatCurrency(target.value))}
               required
-              role="salary"
               type="text" 
               value={salary}
             />
@@ -125,7 +122,6 @@ export default function Register() {
               placeholder=""
               onChange={({ target }) => setPassword(target.value)}
               required
-              role="password"
               type="password" 
               value={password}
             />

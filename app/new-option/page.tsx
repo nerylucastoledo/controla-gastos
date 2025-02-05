@@ -1,7 +1,7 @@
 "use client"
 
 import { useUser } from "../context/user";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 import styles from "../styles/pages/home.module.scss";
 import stylesNewExpense from "../styles/pages/new-expense.module.scss";
@@ -27,17 +27,17 @@ export default function NewOption() {
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);
 
-  const handleToast = (error: boolean, message: string) => {
+  const handleToast = useCallback((error: boolean, message: string) => {
     setToastCustom({ error, message })
     setShowToast(true)
     setTimeout(() => setShowToast(false), 2000);
-  }
+  }, []) 
 
-  const resetOptions = () => {
+  const resetOptions = useCallback(() => {
     setName("")
     setColor("")
-    setName("")
-  }
+    setType("")
+  }, []) 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -1,10 +1,12 @@
+"use client"
+
 import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
 
 interface IUserContextType {
-    username: string;
-    setUsername: (username: string) => void;
-    salary: string;
-    setSalary: (salary: string) => void;
+	username: string;
+	setUsername: (username: string) => void;
+	salary: string;
+	setSalary: (salary: string) => void;
 }
 
 const UserContext = createContext<IUserContextType | undefined>(undefined);

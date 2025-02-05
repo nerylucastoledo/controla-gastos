@@ -26,24 +26,39 @@
       z-index: 10;
       width: 100%;
 
-      a {
-        color: #fff;
-        border-bottom: 1px solid transparent;
-        padding-bottom: 8px;
-        margin-bottom: -9px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 12px;
-
-        span {
-          font-size: 12px;
+      li {
+        &:last-child {
+          display: flex;
         }
 
-        &.active {
-          font-weight: bold;
-          border-bottom: 1px solid #fff;
+        a {
+          color: #fff;
+          border-bottom: 1px solid transparent;
+          padding-bottom: 8px;
+          margin-bottom: -9px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 12px;
+  
+          span {
+            font-size: 12px;
+            text-align: center;
+
+            &:first-child {
+              display: block;
+            }
+  
+            &:last-child {
+              display: none;
+            }
+          }
+  
+          &.active {
+            font-weight: bold;
+            border-bottom: 1px solid #fff;
+          }
         }
       }
     }
@@ -67,36 +82,40 @@
         padding: 0;
         width: max-content;
 
-        a {
-          padding-bottom: unset;
-          margin-bottom: unset;
-          display: block;
-
-          svg {
-            display: none;
-          }
-
-          span {
-            color: #fff;
-            display: block;
-            border-bottom: 1px solid transparent;
-            padding-bottom: 8px;
-            margin-bottom: -9px;
-            font-size: 16px;
-          }
-
-          &.active {
-            border: unset;
-            
-						span {
-              border-bottom: 1px solid #fff;
-            }
-          }
-
-          &:hover {
+        li {
+          a {
+            padding-bottom: unset;
+            margin-bottom: unset;
+            display: flex;
+            flex-direction: row;
+  
             span {
-              border-bottom: 1px solid #fff;
-              transition: 0.2s;
+              color: #fff;
+              display: block;
+              border-bottom: 1px solid transparent;
+              padding-bottom: 8px;
+              margin-bottom: -9px;
+              font-size: 16px;
+              display: none;
+  
+              &:last-child {
+                display: block;
+              }
+            }
+  
+            &.active {
+              border: unset;
+              
+              span {
+                border-bottom: 1px solid #fff;
+              }
+            }
+  
+            &:hover {
+              span {
+                border-bottom: 1px solid #fff;
+                transition: 0.2s;
+              }
             }
           }
         }
