@@ -14,6 +14,7 @@ import { Resume } from "./components/resume/resume";
 import { fetcher, months } from "./utils/index";
 import { IExpensesByUsernameAndDate } from "./utils/types";
 import { useUser } from "./context/user";
+import { Report } from "./components/report/report";
 
 export interface IData {
   data: IExpensesByUsernameAndDate
@@ -71,6 +72,7 @@ export default function Home() {
             date={currentDate}
             username={username}
           />
+          <Report data={data.data.expenses}/>
           <Dashboard
             dataByMonth={data.data.expenses}
             username={username}
