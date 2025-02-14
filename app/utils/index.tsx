@@ -1,3 +1,5 @@
+import { useRouter } from 'next/navigation';
+
 export const categorys = [
 	"Alimentação",
 	"Doação",
@@ -72,7 +74,14 @@ export const fetcher = (url: string) =>
 	fetch(url, {
 	  method: 'GET',
 	  credentials: 'include',
-	}).then((res) => res.json());
+	}).then((res) => {
+		if (res.status !== 403) {
+			return res.json()
+		}
+
+		localStorage.clear()
+		useRouter().push("/login")
+	});
 
 export const fetcherPost = async <T, R>(url: string, method: string, body?: T): Promise<R> => {
 	try {

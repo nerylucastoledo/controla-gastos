@@ -1,13 +1,15 @@
 "use client"
 
 import Link from 'next/link'
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useCallback, useState } from 'react'
 import Image from 'next/image'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 import styles from "../../styles/components/header.module.scss"
 
 import logo from "../../images/logo.webp";
+import { fetcherPost } from '@/app/utils'
+import { Toast } from '../toast/toast'
 
 interface IProps {
 	href: string;
@@ -20,25 +22,54 @@ interface INavigationProps {
 }
 
 export const Navigation: React.FC<INavigationProps> = ({ navLinks }) => {
+	const router = useRouter();
 	const pathname = usePathname();
-	const common = { alt: 'lOGO', width: 64, height: 64 };
+	const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
+	const [showToast, setShowToast] = useState(false);
+	const common = { width: 64, height: 64 };
 	const hiddenNav = pathname === "/register" || pathname === "/login"
+
+	const handleToast = useCallback((error: boolean, message: string) => {
+    setToastCustom({ error, message })
+    setShowToast(true)
+    setTimeout(() => setShowToast(false), 2000);
+  }, [])
 
 	if (hiddenNav) return null;
 
+	const handleLogout = async () => {
+		try {
+
+      const response = await fetcherPost<unknown, { message: string }>(
+        "http://localhost:4000/api/logout", 
+        "POST", 
+      );
+			handleToast(true, response.message)
+			localStorage.clear()
+			setTimeout(() => router.push("/login"), 1000);
+    } catch (err) {
+      handleToast(false, (err as Error).message);
+    }
+	}
+
   return (
     <header className={styles.header}>
+			{showToast && (
+        <Toast message={toastCustom.message} success={toastCustom.error} />
+      )}
+
 			<nav>
 				<Link href={"/"}>
-					<Image {...common} src={logo.src} alt='Logo ' priority={false} />
+					<Image {...common} src={logo.src} alt='Logo' priority={false} />
 				</Link>
 
 				<ul>
-					{navLinks.map((link: IProps) => {
+					{navLinks.map((link: IProps, index: number) => {
 						const isActive = pathname === link.href;
+						const isBtnLogout = navLinks.length - 1 === index
 
 						return (
-							<li key={link.name_mobile}>
+							<li key={link.name_mobile} onClick={() => isBtnLogout ? handleLogout() : {}}>
 								<Link href={link.href} className={isActive ? styles.active : ""} prefetch={true}>
 									{link.icon}
 									<span>{link.name_mobile}</span>
