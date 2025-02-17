@@ -6,7 +6,6 @@ import { Providers } from './providers';
 
 import { IoHomeSharp } from "react-icons/io5";
 import { IoIosAddCircle } from "react-icons/io";
-import { IoOptionsSharp } from "react-icons/io5";
 import { MdOutlineLogout } from "react-icons/md";
 import { PiSealBold } from "react-icons/pi";
 
@@ -16,7 +15,7 @@ const montserrat = Montserrat({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: "Controla gastos | Página inicial",
-  description: "Na página inicial do Controla gastos você irá conseguir entender para onde o seu dinheiro esta indo e ter maior controle sobre ele."
+  description: "Na página inicial do Controla gastos você irá conseguir entender para onde o seu dinheiro esta indo e ter maior controle sobre ele.",
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -55,6 +54,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={montserrat.className}>
+        <link rel="icon" href="/images/favicon.ico" sizes="any" />
+
         <Navigation navLinks={links} />
 
         <Providers>

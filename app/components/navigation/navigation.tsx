@@ -15,7 +15,7 @@ interface IProps {
 	href: string;
 	icon: ReactElement,
 	name_mobile: string;
-	name_desktop: string;
+	name_desktop?: string;
 }
 interface INavigationProps {
   navLinks: IProps[];
@@ -41,7 +41,7 @@ export const Navigation: React.FC<INavigationProps> = ({ navLinks }) => {
 		try {
 
       const response = await fetcherPost<unknown, { message: string }>(
-        "http://localhost:4000/api/logout", 
+        "logout", 
         "POST", 
       );
 			handleToast(true, response.message)

@@ -35,6 +35,7 @@ export default function Home() {
   )
 
   if (error) {
+    console.log(error)
     return (
       <div className={styles.container_home}>
         <div className={styles.container_home_error}>
