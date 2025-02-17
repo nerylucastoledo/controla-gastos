@@ -73,11 +73,13 @@ export const fetcher = (url: string) =>
 	  method: 'GET',
 	  credentials: 'include',
 	}).then((res) => {
-		if (res.status === 403) {
-			throw new Error("forbidden")
+		if (res.ok) { 
+			return res.json()
 		}
-		
-		return res.json()
+
+		throw new Error("Ocorreu um erro interno.")
+	}).catch((err) => {
+		return { error: err.message };
 	});
 
 export const fetcherPost = async <T, R>(url: string, method: string, body?: T): Promise<R> => {

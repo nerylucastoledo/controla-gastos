@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react";
+import { useRouter } from 'next/navigation';
 import useSWR from "swr";
 
 import styles from "./styles/pages/home.module.scss";
@@ -18,6 +19,7 @@ import { Report } from "./components/report/report";
 
 export interface IData {
   data: IExpensesByUsernameAndDate
+  error?: string;
 }
 
 const date = new Date()
@@ -26,16 +28,16 @@ export default function Home() {
   const [month, setMonth] = useState(months[date.getMonth()]);
   const [year, setYear] = useState(date.getFullYear().toString());
   const { username, salary } = useUser();
+  const router = useRouter()
 
   const currentDate = `${month}${year}`
   const { data, error, mutate } = useSWR<IData>(
-    `http://localhost:4000/api/expenses/${username}/${currentDate}`, 
+    `https://controla-gastos-back.onrender.com/api/expenses/${username}/${currentDate}`, 
     fetcher, 
     { refreshInterval: 3000 }
   )
 
   if (error) {
-    console.log(error)
     return (
       <div className={styles.container_home}>
         <div className={styles.container_home_error}>
@@ -46,6 +48,10 @@ export default function Home() {
     )
   }
 
+  if (data && data.error) {
+    router.push("/login")
+  }
+  
   if (!data || !data.data) return;
 
   return (

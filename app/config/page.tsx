@@ -30,8 +30,8 @@ export default function Config() {
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);
 
-  const { data: peopleData, error: peopleError, mutate: mutatePeole } = useSWR<IData>(`http://localhost:4000/api/peoples/${username}`, fetcher);
-  const { data: cardData, error: cardError, mutate: mutateCard } = useSWR<IData>(`http://localhost:4000/api/cards/${username}`, fetcher);
+  const { data: peopleData, error: peopleError, mutate: mutatePeole } = useSWR<IData>(`https://controla-gastos-back.onrender.com/api/peoples/${username}`, fetcher);
+  const { data: cardData, error: cardError, mutate: mutateCard } = useSWR<IData>(`https://controla-gastos-back.onrender.com/api/cards/${username}`, fetcher);
 
   useEffect(() => {
     setSalaryUpdate(salary)
@@ -74,7 +74,7 @@ export default function Config() {
   const upateSalary = async () => {
     try {
       const response = await fetcherPost<{ salary: string }, { message: string }>(
-        `http://localhost:4000/api/users/${username}`, 
+        `https://controla-gastos-back.onrender.com/api/users/${username}`, 
         "PUT", 
         { salary: salaryUpdate }
       );

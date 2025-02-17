@@ -48,7 +48,7 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);
 
-  const { data, error, isLoading, mutate } = useSWR<IData>(`http://localhost:4000/api/expenses/${username}/${date}/${card}`, fetcher)
+  const { data, error, isLoading, mutate } = useSWR<IData>(`https://controla-gastos-back.onrender.com/api/expenses/${username}/${date}/${card}`, fetcher)
 
   useEffect(() => {
     if (!data) return;
@@ -86,7 +86,7 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
     if (isModalEditOpen) {
       try {
         const response = await fetcherPost<IInvoiceItemType, { message: string }>(
-          "http://localhost:4000/api/expenses", 
+          "https://controla-gastos-back.onrender.com/api/expenses", 
           "PUT", 
           itemUpdate
         );
@@ -99,7 +99,7 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
     } else {
       try {
         const response = await fetcherPost<IInvoiceItemType, { message: string }>(
-          `http://localhost:4000/api/expenses/${itemUpdate._id}`, 
+          `https://controla-gastos-back.onrender.com/api/expenses/${itemUpdate._id}`, 
           "DELETE", 
         );
         handleToast(true, response.message)

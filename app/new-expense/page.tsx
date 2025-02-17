@@ -46,8 +46,8 @@ export default function NewExpense() {
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);
 
-  const { data: peopleData, error: peopleError, mutate: mutatePeole } = useSWR<IData>(`http://localhost:4000/api/peoples/${username}`, fetcher);
-  const { data: cardData, error: cardError, mutate: mutateCard } = useSWR<IData>(`http://localhost:4000/api/cards/${username}`, fetcher);
+  const { data: peopleData, error: peopleError, mutate: mutatePeole } = useSWR<IData>(`https://controla-gastos-back.onrender.com/api/peoples/${username}`, fetcher);
+  const { data: cardData, error: cardError, mutate: mutateCard } = useSWR<IData>(`https://controla-gastos-back.onrender.com/api/cards/${username}`, fetcher);
 
   const handleFetch = () => {
     mutatePeole();
@@ -97,7 +97,7 @@ export default function NewExpense() {
         value,
       }
       const response = await fetcherPost<IBody, { message: string }>(
-        "http://localhost:4000/api/expenses", 
+        "https://controla-gastos-back.onrender.com/api/expenses", 
         "POST", 
         body
       );
