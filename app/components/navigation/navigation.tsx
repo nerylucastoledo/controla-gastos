@@ -39,9 +39,8 @@ export const Navigation: React.FC<INavigationProps> = ({ navLinks }) => {
 
 	const handleLogout = async () => {
 		try {
-
       const response = await fetcherPost<unknown, { message: string }>(
-        "logout", 
+        "https://controla-gastos-back.onrender.com/api/logout", 
         "POST", 
       );
 			handleToast(true, response.message)
