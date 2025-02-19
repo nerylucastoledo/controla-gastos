@@ -14,6 +14,7 @@ import { Select } from "../components/select/select";
 import { Toast } from "../components/toast/toast";
 
 import { ICard, IPeople } from "../utils/types";
+import Loading from "./loading";
 
 interface IBody {
   card: string;
@@ -46,8 +47,8 @@ export default function NewExpense() {
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);
 
-  const { data: peopleData, error: peopleError, mutate: mutatePeole } = useSWR<IData>(`https://controla-gastos-back.onrender.com/api/peoples/${username}`, fetcher);
-  const { data: cardData, error: cardError, mutate: mutateCard } = useSWR<IData>(`https://controla-gastos-back.onrender.com/api/cards/${username}`, fetcher);
+  const { data: peopleData, error: peopleError, mutate: mutatePeole, isLoading: loadingPeople } = useSWR<IData>(`https://controla-gastos-back.onrender.com/api/peoples/${username}`, fetcher);
+  const { data: cardData, error: cardError, mutate: mutateCard, isLoading: loadingCard } = useSWR<IData>(`https://controla-gastos-back.onrender.com/api/cards/${username}`, fetcher);
 
   const handleFetch = () => {
     mutatePeole();
@@ -69,6 +70,8 @@ export default function NewExpense() {
     setHasInstallment(false)
     setInstallments(1)
   }, [])
+
+  if (loadingPeople || loadingCard) return <Loading />
 
   if (peopleError || cardError ) {
     return (

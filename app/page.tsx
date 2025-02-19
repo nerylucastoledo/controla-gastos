@@ -15,10 +15,9 @@ import { fetcher, months } from "./utils/index";
 import { IExpensesByUsernameAndDate } from "./utils/types";
 import { useUser } from "./context/user";
 import { Report } from "./components/report/report";
-
+import Loading from "./loading";
 export interface IData {
   data: IExpensesByUsernameAndDate
-  error?: string;
 }
 
 const date = new Date()
@@ -29,10 +28,12 @@ export default function Home() {
   const { username, salary } = useUser();
 
   const currentDate = `${month}${year}`
-  const { data, error, mutate } = useSWR<IData>(
+  const { data, error, mutate, isLoading } = useSWR<IData>(
     `https://controla-gastos-back.onrender.com/api/expenses/${username}/${currentDate}`, 
     fetcher, 
   )
+
+  if (isLoading) return <Loading />
 
   if (error) {
     return (
@@ -44,8 +45,8 @@ export default function Home() {
       </div>
     )
   }
-  
-  if (!data || !data.data) return;
+
+  if (!data) return;
 
   return (
     <div className="container">

@@ -77,9 +77,13 @@ export const fetcher = (url: string) =>
 			return res.json()
 		}
 
+		if (res.status === 403) {
+			throw new Error(res.statusText)
+		}
+
 		throw new Error("Ocorreu um erro interno.")
 	}).catch((err) => {
-		return { error: err.message };
+		throw err;
 	});
 
 export const fetcherPost = async <T, R>(url: string, method: string, body?: T): Promise<R> => {
