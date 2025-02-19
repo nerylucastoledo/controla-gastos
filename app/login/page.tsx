@@ -47,7 +47,7 @@ export default function Login() {
     try {
       const body = { email, password }
       const response = await fetcherPost<IData, IResponse>(
-        "`https://controla-gastos-back.onrender.com/api/login",
+        "https://controla-gastos-back.onrender.com/api/login",
         "POST", 
         body,
       );
