@@ -9,9 +9,9 @@ jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
 
-jest.mock('../../../../.env', () => ({
+jest.mock('../../../.env', () => ({
   __esModule: true,
-  ...jest.requireActual('../../../../.env')
+  ...jest.requireActual('../../../.env')
 }));
 
 describe('Register page', () => {

@@ -2,6 +2,7 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Card } from '../card';
+import { DateProvider } from '../../../context/date';
 
 const mockCards = [
   { id: '1', name: 'Card 1', color: '#28A745', username: 'User1' },
@@ -15,7 +16,7 @@ const mockData = [
 
 describe('Card Component', () => {
   beforeEach(() => {
-    render(<Card cards={mockCards} data={mockData} date="2023-01-01" username="User1" />);
+    render(<DateProvider><Card cards={mockCards} data={mockData} date="2023-01-01" username="User1" /></DateProvider>);
   });
 
   test('should render the title', () => {

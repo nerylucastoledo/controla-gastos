@@ -10,9 +10,9 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock da variável de ambiente
-jest.mock('../../../../.env', () => ({
+jest.mock('../../../.env', () => ({
   __esModule: true,
-  ...jest.requireActual('../../../../.env'),
+  ...jest.requireActual('../../../.env'),
 }));
 
 describe('Login page', () => {
