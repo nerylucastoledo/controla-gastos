@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
 
 import styles from "./styles/pages/home.module.scss";
@@ -16,6 +16,9 @@ import { IExpensesByUsernameAndDate } from "./utils/types";
 import { useUser } from "./context/user";
 import { Report } from "./components/report/report";
 import Loading from "./loading";
+import { Error } from "./components/error/Error";
+import { useDate } from "./context/date";
+
 export interface IData {
   data: IExpensesByUsernameAndDate
 }
@@ -26,27 +29,23 @@ export default function Home() {
   const [month, setMonth] = useState(months[date.getMonth()]);
   const [year, setYear] = useState(date.getFullYear().toString());
   const { username, salary } = useUser();
-
+  const { setCurrentDate } = useDate();
   const currentDate = `${month}${year}`
+
   const { data, error, mutate, isLoading } = useSWR<IData>(
-    `https://controla-gastos-back.onrender.com/api/expenses/${username}/${currentDate}`, 
+    `${process.env.NEXT_PUBLIC_API_URL}/expenses/${username}/${currentDate}`, 
     fetcher, 
   )
 
+  useEffect(() => {
+    setCurrentDate(currentDate);
+  }, [setCurrentDate, mutate, currentDate]);
+
   if (isLoading) return <Loading />
+  if (error) return <Error mutate={mutate} />
+  if (!data) return null;
 
-  if (error) {
-    return (
-      <div className={styles.container_home}>
-        <div className={styles.container_home_error}>
-          <h1>Tivemos um problema para carregar seus dados! Você pode clicar no botão abaixa e tentar novamente :)</h1>
-          <button className="button" onClick={() => mutate()}>Recarregar</button>
-        </div>
-      </div>
-    )
-  }
-
-  if (!data) return;
+  const { expenses, cards } = data.data;
 
   return (
     <div className="container">
@@ -59,23 +58,23 @@ export default function Home() {
             setYear={setYear}
           />
           <Resume
-            data={data.data.expenses}
+            data={expenses}
             salary={salary}
           />
           <LatestExpenses
-            data={data.data.expenses}
+            data={expenses}
           />
         </section>
         <section>
           <Card
-            cards={data.data.cards}
-            data={data.data.expenses}
+            cards={cards}
+            data={expenses}
             date={currentDate}
             username={username}
           />
-          <Report data={data.data.expenses}/>
+          <Report data={expenses}/>
           <Dashboard
-            dataByMonth={data.data.expenses}
+            dataByMonth={expenses}
             username={username}
             year={year}
           />

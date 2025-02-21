@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import useSWR from "swr";
+import useSWR, { useSWRConfig } from "swr";
 
 import styles from "../../styles/components/invoice.module.scss";
 
@@ -14,6 +14,7 @@ import { Toast } from '../toast/toast';
 
 import { categorys, fetcher, fetcherPost, formatCurrency, formatToCurrencyBRL } from '@/app/utils';
 import { Modal } from '../modal/modal';
+import { useDate } from '@/app/context/date';
 
 interface IProps {
   card: string;
@@ -47,18 +48,18 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
   const [itemUpdate, setItemUpdate] = useState<IInvoiceItemType>({ _id: "", category: "", item: "", value: ""})
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);
+  const { currentDate } = useDate()
+  const { mutate: mutateData } = useSWRConfig()
 
-  const { data, error, isLoading, mutate } = useSWR<IData>(`https://controla-gastos-back.onrender.com/api/expenses/${username}/${date}/${card}`, fetcher)
-
+  const { data, error, isLoading, mutate } = useSWR<IData>(`${process.env.NEXT_PUBLIC_API_URL}/expenses/${username}/${date}/${card}`, fetcher)
+  
   useEffect(() => {
     if (!data) return;
     setName(data.data.length ? data.data[0].name : "Eu");
   }, [data]);
   
-  if (!data || error) {
-    return null;
-  }
-
+  if (!data || error) return null;
+  
   const handleToast = (error: boolean, message: string) => {
     setToastCustom({ error, message })
     setShowToast(true)
@@ -70,9 +71,10 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
 
     if (modal === "edit") {
       setIsModalEditOpen(true)
-    } else {
-      setIsModalDeleteOpen(true)
+      return;
     }
+
+    setIsModalDeleteOpen(true)
   };
 
   const closeModal = () => {
@@ -80,26 +82,32 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
     setIsModalDeleteOpen(false)
   };
 
+  const handleMutate = async () => {
+    mutate();
+    mutateData(`${process.env.NEXT_PUBLIC_API_URL}/expenses/${username}/${currentDate}`)
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const URL = `${process.env.NEXT_PUBLIC_API_URL}/expenses`
 
     if (isModalEditOpen) {
       try {
         const response = await fetcherPost<IInvoiceItemType, { message: string }>(
-          "https://controla-gastos-back.onrender.com/api/expenses", 
+          URL, 
           "PUT", 
           itemUpdate
         );
         handleToast(true, response.message)
         closeModal();
-        mutate();
+        handleMutate();
       } catch (err) {
         handleToast(false, (err as Error).message);
       }
     } else {
       try {
         const response = await fetcherPost<IInvoiceItemType, { message: string }>(
-          `https://controla-gastos-back.onrender.com/api/expenses/${itemUpdate._id}`, 
+          `${URL}/${itemUpdate._id}`, 
           "DELETE", 
         );
         handleToast(true, response.message)
@@ -110,7 +118,7 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
           return;
         }
         
-        mutate();
+        handleMutate();
       } catch (err) {
         handleToast(false, (err as Error).message);
       }

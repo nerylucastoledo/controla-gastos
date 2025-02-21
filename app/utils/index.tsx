@@ -76,13 +76,13 @@ export const fetcher = (url: string) =>
 		if (res.ok) { 
 			return res.json()
 		}
-
-		if (res.status === 403) {
-			throw new Error(res.statusText)
+		
+		if (res.status === 403 || res.status === 401) {
+			throw new Error(res.status.toString())
 		}
-
+		
 		throw new Error("Ocorreu um erro interno.")
-	}).catch((err) => {
+	}).catch(async (err) => {
 		throw err;
 	});
 

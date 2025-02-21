@@ -48,7 +48,7 @@ export default function Register() {
       const body = { email, name, salary, password, username }
 
       const response = await fetcherPost<IData, { message: string }>(
-        "https://controla-gastos-back.onrender.com/api/register",
+        `${process.env.NEXT_PUBLIC_API_URL}/register`,
         "POST", 
         body
       );

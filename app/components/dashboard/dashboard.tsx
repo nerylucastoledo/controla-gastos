@@ -23,7 +23,7 @@ interface IProps {
 }
 
 export const Dashboard = ({ dataByMonth, username, year }: IProps) => {
-  const { data, isLoading } = useSWR<IData>(`https://controla-gastos-back.onrender.com/api/expenses/year/${username}/${year}`, fetcher)
+  const { data, isLoading } = useSWR<IData>(`${process.env.NEXT_PUBLIC_API_URL}/expenses/year/${username}/${year}`, fetcher)
 
   const existingData = data?.data && dataByMonth && data.data.length && dataByMonth.length
 

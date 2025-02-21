@@ -40,7 +40,7 @@ export const Navigation: React.FC<INavigationProps> = ({ navLinks }) => {
 	const handleLogout = async () => {
 		try {
       const response = await fetcherPost<unknown, { message: string }>(
-        "https://controla-gastos-back.onrender.com/api/logout", 
+        `${process.env.NEXT_PUBLIC_API_URL}/logout`, 
         "POST", 
       );
 			handleToast(true, response.message)

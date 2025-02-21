@@ -15,6 +15,7 @@ import { Toast } from "../components/toast/toast";
 
 import { ICard, IPeople } from "../utils/types";
 import Loading from "./loading";
+import { Error } from "../components/error/Error";
 
 interface IBody {
   card: string;
@@ -47,8 +48,8 @@ export default function NewExpense() {
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);
 
-  const { data: peopleData, error: peopleError, mutate: mutatePeole, isLoading: loadingPeople } = useSWR<IData>(`https://controla-gastos-back.onrender.com/api/peoples/${username}`, fetcher);
-  const { data: cardData, error: cardError, mutate: mutateCard, isLoading: loadingCard } = useSWR<IData>(`https://controla-gastos-back.onrender.com/api/cards/${username}`, fetcher);
+  const { data: peopleData, error: peopleError, mutate: mutatePeole, isLoading: loadingPeople } = useSWR<IData>(`${process.env.NEXT_PUBLIC_API_URL}/peoples/${username}`, fetcher);
+  const { data: cardData, error: cardError, mutate: mutateCard, isLoading: loadingCard } = useSWR<IData>(`${process.env.NEXT_PUBLIC_API_URL}/cards/${username}`, fetcher);
 
   const handleFetch = () => {
     mutatePeole();
@@ -72,22 +73,12 @@ export default function NewExpense() {
   }, [])
 
   if (loadingPeople || loadingCard) return <Loading />
-
-  if (peopleError || cardError ) {
-    return (
-      <div className={styles.container_home}>
-        <div className={styles.container_home_error}>
-          <h1>Tivemos um problema para carregar seus dados! Você pode clicar no botão abaixa e tentar novamente :)</h1>
-          <button className="button" onClick={handleFetch}>Recarregar</button>
-        </div>
-      </div>
-    )
-  }
-
-  if (!cardData || !cardData.data || !peopleData || !peopleData.data) return;
+  if (peopleError || cardError) return <Error mutate={handleFetch} />
+  if (!peopleData || !cardData) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     try {
       const body = {
         "date": `${month}${year}`,
@@ -99,11 +90,13 @@ export default function NewExpense() {
         username,
         value,
       }
+
       const response = await fetcherPost<IBody, { message: string }>(
-        "https://controla-gastos-back.onrender.com/api/expenses", 
+        `${process.env.NEXT_PUBLIC_API_URL}/expenses`, 
         "POST", 
         body
       );
+      
       handleToast(true, response.message)
       resetOptions()
     } catch (err) {

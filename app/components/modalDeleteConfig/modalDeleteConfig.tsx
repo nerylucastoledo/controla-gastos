@@ -38,8 +38,8 @@ export const ModalConfigDelete = ({ item, onCustomDismiss, mutate }: IProps) => 
       }
       
       const response = await fetcherPost<IPeople | ICard, { message: string }>(
-        `https://controla-gastos-back.onrender.com/api/${url}`, 
-        "DELETE", 
+        `${process.env.NEXT_PUBLIC_API_URL}/${url}`, 
+        "DELETE",
       );
       mutate()
       handleToast(true, response.message)

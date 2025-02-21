@@ -59,7 +59,7 @@ export const ModalEditConfig = ({ item, mutate, onCustomDismiss }: IProps) => {
       }
 
       const response = await fetcherPost<IUpdate, { message: string }>(
-        `https://controla-gastos-back.onrender.com/api/${url}`, 
+        `${process.env.NEXT_PUBLIC_API_URL}/${url}`, 
         "PUT", 
         body
       );

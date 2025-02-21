@@ -50,7 +50,7 @@ export default function NewOption() {
       };
 
       const response = await fetcherPost<IData, { message: string }>(
-        `https://controla-gastos-back.onrender.com/api/${type}`, 
+        `${process.env.NEXT_PUBLIC_API_URL}/${type}`, 
         "POST", 
         body
       );

@@ -17,6 +17,7 @@ import { Toast } from "../components/toast/toast";
 
 import { ICard, IPeople } from "../utils/types";
 import Loading from "./loading";
+import { Error } from "../components/error/Error";
 
 interface IData {
   data: IPeople[] | ICard[]
@@ -31,8 +32,8 @@ export default function Config() {
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);
 
-  const { data: peopleData, error: peopleError, mutate: mutatePeole, isLoading: loadingPeople } = useSWR<IData>(`https://controla-gastos-back.onrender.com/api/peoples/${username}`, fetcher);
-  const { data: cardData, error: cardError, mutate: mutateCard, isLoading: loadingCard } = useSWR<IData>(`https://controla-gastos-back.onrender.com/api/cards/${username}`, fetcher);
+  const { data: peopleData, error: peopleError, mutate: mutatePeole, isLoading: loadingPeople } = useSWR<IData>(`${process.env.NEXT_PUBLIC_API_URL}/peoples/${username}`, fetcher);
+  const { data: cardData, error: cardError, mutate: mutateCard, isLoading: loadingCard } = useSWR<IData>(`${process.env.NEXT_PUBLIC_API_URL}/cards/${username}`, fetcher);
 
 
   useEffect(() => {
@@ -45,28 +46,18 @@ export default function Config() {
   }
 
   if (loadingPeople || loadingCard) return <Loading />
-
-  if (peopleError || cardError ) {
-    return (
-      <div className={styles.container_home}>
-        <div className={styles.container_home_error}>
-          <h1>Tivemos um problema para carregar seus dados! Você pode clicar no botão abaixa e tentar novamente :)</h1>
-          <button className="button" onClick={handleFetch}>Recarregar</button>
-        </div>
-      </div>
-    )
-  }
-
-  if (!peopleData || !cardData || !peopleData.data || !cardData.data) return;
+  if (peopleError || cardError) return <Error mutate={handleFetch} />
+  if (!peopleData || !cardData) return null;
 
   const openModal = (item: IPeople | ICard, method: "PUT" | "DELETE") => {
     setItem(item);
 
     if (method === "PUT") {
       setIsModalEdit(true);
-    } else {
-      setIsModalDelete(true);
+      return;
     }
+    
+    setIsModalDelete(true);
   };
 
   const handleToast = (error: boolean, message: string) => {
@@ -78,7 +69,7 @@ export default function Config() {
   const upateSalary = async () => {
     try {
       const response = await fetcherPost<{ salary: string }, { message: string }>(
-        `https://controla-gastos-back.onrender.com/api/users/${username}`, 
+        `${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, 
         "PUT", 
         { salary: salaryUpdate }
       );
