@@ -12,7 +12,7 @@ import { Toast } from "../components/toast/toast";
 
 import { useUser } from "../context/user";
 
-import { fetcherPost } from "../utils";
+import { fetcherPost, formatCurrency } from "../utils";
 import wallet from "../images/wallet.webp";
 import walletRetina from "../images/wallet-retina.webp";
 
@@ -59,7 +59,7 @@ export default function Login() {
       }
 
       localStorage.setItem("username", username)
-      localStorage.setItem("salary", salary)
+      localStorage.setItem("salary", formatCurrency(salary))
       setUsername(username);
       setSalary( salary)
       handleToast(true, message)

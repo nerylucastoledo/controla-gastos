@@ -10,7 +10,7 @@ import styles from "../styles/pages/login.module.scss"
 import { Input } from "../components/input/input";
 import { Toast } from "../components/toast/toast";
 
-import { fetcherPost, formatCurrency } from "../utils";
+import { fetcherPost, formatCurrency, parseCurrencyString } from "../utils";
 
 import wallet from "../images/wallet.webp";
 import walletRetina from "../images/wallet-retina.webp";
@@ -19,7 +19,7 @@ interface IData {
   email: string;
   name: string;
   password: string;
-  salary: string;
+  salary: number;
   username: string;
 }
 
@@ -45,7 +45,7 @@ export default function Register() {
     try {
       const newiD = Math.random().toString(16).slice(2)
       const username = name.split(" ")[0] + newiD;
-      const body = { email, name, salary, password, username }
+      const body = { email, name, salary: parseCurrencyString(salary), password, username }
 
       const response = await fetcherPost<IData, { message: string }>(
         `${process.env.NEXT_PUBLIC_API_URL}/register`,

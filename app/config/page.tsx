@@ -7,7 +7,7 @@ import styles from "../styles/pages/home.module.scss";
 import stylesConfig from "../styles/pages/config.module.scss";
 
 import { useUser } from "../context/user";
-import { fetcher, fetcherPost, formatCurrency } from "../utils";
+import { fetcher, fetcherPost, formatCurrency, parseCurrencyString } from "../utils";
 
 import { ConfigList } from "../components/configList/list";
 import { Input } from "../components/input/input";
@@ -34,7 +34,6 @@ export default function Config() {
 
   const { data: peopleData, error: peopleError, mutate: mutatePeole, isLoading: loadingPeople } = useSWR<IData>(`${process.env.NEXT_PUBLIC_API_URL}/peoples/${username}`, fetcher);
   const { data: cardData, error: cardError, mutate: mutateCard, isLoading: loadingCard } = useSWR<IData>(`${process.env.NEXT_PUBLIC_API_URL}/cards/${username}`, fetcher);
-
 
   useEffect(() => {
     setSalaryUpdate(salary)
@@ -68,10 +67,10 @@ export default function Config() {
 
   const upateSalary = async () => {
     try {
-      const response = await fetcherPost<{ salary: string }, { message: string }>(
+      const response = await fetcherPost<{ salary: number }, { message: string }>(
         `${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, 
         "PUT", 
-        { salary: salaryUpdate }
+        { salary: parseCurrencyString(salaryUpdate) }
       );
       handleToast(true, response.message)
       localStorage.setItem("salary", salaryUpdate)

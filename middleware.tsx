@@ -14,8 +14,6 @@ export async function middleware(request: NextRequest) {
       const data = await res.json();
       const newToken = data.token;
 
-      console.log("entrei", newToken);
-
       if (newToken.message || newToken === undefined || !newToken.length) {
         throw new Error();
       }
