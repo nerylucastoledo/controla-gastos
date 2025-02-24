@@ -12,13 +12,13 @@ import { Toast } from "../components/toast/toast";
 
 import { useUser } from "../context/user";
 
-import { fetcherPost, formatCurrency } from "../utils";
+import { fetcherPost, formatToCurrencyBRL } from "../utils";
 import wallet from "../images/wallet.webp";
 import walletRetina from "../images/wallet-retina.webp";
 
 interface IResponse {
   message: string,
-  salary: string,
+  salary: number,
   username: string,
 }
 
@@ -58,10 +58,11 @@ export default function Login() {
         throw new Error(message);
       }
 
+
       localStorage.setItem("username", username)
-      localStorage.setItem("salary", formatCurrency(salary))
+      localStorage.setItem("salary", formatToCurrencyBRL(salary))
       setUsername(username);
-      setSalary( salary)
+      setSalary(formatToCurrencyBRL(salary))
       handleToast(true, message)
       router.replace("/");
       
