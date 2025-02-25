@@ -22,7 +22,7 @@ interface IData {
 export default function NewOption() {
   const { username } = useUser();
   const [name, setName] = useState("");
-  const [color, setColor] = useState("");
+  const [color, setColor] = useState("#000000");
   const [type, setType] = useState("");
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
   const [showToast, setShowToast] = useState(false);

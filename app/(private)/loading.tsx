@@ -1,6 +1,6 @@
 import React from 'react';
 
-import styles from "./styles/components/skeleton.module.scss";
+import styles from "../styles/components/skeleton.module.scss";
 
 const Loading = ({ cardCount = 6, lineCount = 4 }) => {
   return (

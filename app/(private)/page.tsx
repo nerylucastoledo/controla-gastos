@@ -15,7 +15,7 @@ import { fetcher, months } from "../utils/index";
 import { IExpensesByUsernameAndDate } from "../utils/types";
 import { useUser } from "../context/user";
 import { Report } from "../components/report/report";
-import Loading from "../loading";
+import Loading from "./loading";
 import { Error } from "../components/error/Error";
 import { useDate } from "../context/date";
 

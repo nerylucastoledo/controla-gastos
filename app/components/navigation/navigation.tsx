@@ -59,7 +59,7 @@ export const Navigation: React.FC<INavigationProps> = ({ navLinks }) => {
 
 			<nav>
 				<Link href={"/"}>
-					<Image {...common} src={logo.src} alt='Logo' priority={false} />
+					<Image {...common} src={logo.src} alt='Logo' priority={true} />
 				</Link>
 
 				<ul>

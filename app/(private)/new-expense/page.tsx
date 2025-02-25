@@ -221,6 +221,7 @@ export default function NewExpense() {
                   data-testid="has-installment"
                   label="Compra possui parcelas?"
                   name="has-installment"
+                  checked={hasInstallment}
                   onChange={() => setHasInstallment(!hasInstallment)}
                   type="checkbox" 
                 />

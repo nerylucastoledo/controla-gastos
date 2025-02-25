@@ -115,7 +115,6 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
 
         if (data.data[0].invoices.length === 1 && onDismiss) {
           onDismiss()
-          return;
         }
         
         handleMutate();
