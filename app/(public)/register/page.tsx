@@ -5,15 +5,15 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image'
 import Link from "next/link";
 
-import styles from "../styles/pages/login.module.scss"
+import styles from "../../styles/pages/login.module.scss"
 
-import { Input } from "../components/input/input";
-import { Toast } from "../components/toast/toast";
+import { Input } from "../../components/input/input";
+import { Toast } from "../../components/toast/toast";
 
-import { fetcherPost, formatCurrency, parseCurrencyString } from "../utils";
+import { fetcherPost, formatCurrency, parseCurrencyString } from "../../utils";
 
-import wallet from "../images/wallet.webp";
-import walletRetina from "../images/wallet-retina.webp";
+import wallet from "../../images/wallet.webp";
+import walletRetina from "../../images/wallet-retina.webp";
 
 interface IData {
   email: string;

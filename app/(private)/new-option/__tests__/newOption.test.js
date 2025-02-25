@@ -2,11 +2,11 @@ import '@testing-library/jest-dom';
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import NewOption from '../page';
-import { Providers } from '../../providers';
+import { Providers } from '../../../providers';
 
 // Mock da função fetcherPost
-jest.mock('../../utils', () => ({
-  ...jest.requireActual('../../utils'),
+jest.mock('../../../utils', () => ({
+  ...jest.requireActual('../../../utils'),
 }));
 
 describe('NewOption Component', () => {

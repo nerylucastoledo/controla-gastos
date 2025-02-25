@@ -3,21 +3,21 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
-import styles from "./styles/pages/home.module.scss";
+import styles from "../styles/pages/home.module.scss";
 
-import { Card } from "./components/card/card";
-import { Dashboard } from "./components/dashboard/dashboard";
-import { Filter } from "./components/filter/filter";
-import { LatestExpenses } from "./components/latest-expenses/latest-expenses";
-import { Resume } from "./components/resume/resume";
+import { Card } from "../components/card/card";
+import { Dashboard } from "../components/dashboard/dashboard";
+import { Filter } from "../components/filter/filter";
+import { LatestExpenses } from "../components/latest-expenses/latest-expenses";
+import { Resume } from "../components/resume/resume";
 
-import { fetcher, months } from "./utils/index";
-import { IExpensesByUsernameAndDate } from "./utils/types";
-import { useUser } from "./context/user";
-import { Report } from "./components/report/report";
-import Loading from "./loading";
-import { Error } from "./components/error/Error";
-import { useDate } from "./context/date";
+import { fetcher, months } from "../utils/index";
+import { IExpensesByUsernameAndDate } from "../utils/types";
+import { useUser } from "../context/user";
+import { Report } from "../components/report/report";
+import Loading from "../loading";
+import { Error } from "../components/error/Error";
+import { useDate } from "../context/date";
 
 export interface IData {
   data: IExpensesByUsernameAndDate

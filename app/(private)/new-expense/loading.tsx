@@ -1,10 +1,10 @@
 import React from 'react';
 
-import styles from "../styles/components/skeleton.module.scss";
+import styles from "../../styles/components/skeleton.module.scss";
 
-const Loading = async ({ cardCount = 1, lineCount = 12 }) => {
+const Loading = ({ cardCount = 1, lineCount = 11 }) => {
   return (
-    <div data-testid="loading-login" className={`${styles.skeleton} ${styles.skeletonRegister}`}>
+    <div data-testid="loading-new-expense" className={`${styles.skeleton} ${styles.skeletonNewExpense}`}>
       <div className={styles.container}>
         {[...Array(cardCount)].map((_, index) => (
           <div className={styles.card} key={index}>

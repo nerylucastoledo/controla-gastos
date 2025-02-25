@@ -1,13 +1,13 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { Providers } from '../../providers';
+import { Providers } from '../../../providers';
 import NewExpense from "../page";
 import useSWR from 'swr';
 
 // Mock SWR globally
 jest.mock('swr');
-jest.mock('../../utils', () => ({
-  ...jest.requireActual('../../utils'),
+jest.mock('../../../utils', () => ({
+  ...jest.requireActual('../../../utils'),
   categorys: ['Teste'],
 }));
 

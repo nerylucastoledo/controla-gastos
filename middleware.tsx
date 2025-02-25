@@ -1,18 +1,33 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-export async function middleware(request: NextRequest) {
-  const cookieStore = await cookies();
-  const token = cookieStore.get('access_token');
+const publicRoutes = ["/login", "/register"]
 
-  if (token) {
+const REDIRECT_URL = "/login"
+
+export async function middleware(request: NextRequest) {
+  const path = request.nextUrl.pathname
+  const publicRoute = publicRoutes.find(route => route === path)
+  const authToken = request.cookies.get("access_token")
+
+  console.log(authToken)
+
+  if (!authToken && publicRoute) {
     return NextResponse.next();
   }
 
-  return NextResponse.redirect(new URL('/login', request.url));
+  if (!authToken && !publicRoute) {
+    const redirectUrl = request.nextUrl.clone()
+    redirectUrl.pathname = REDIRECT_URL
+
+    return NextResponse.redirect(redirectUrl);
+  }
+
+  if (authToken && !publicRoute) {
+    return NextResponse.next();
+  }
 }
 
 export const config = {
-  matcher: ['/', '/new-expense', '/new-option', '/config'],
+  matcher: ['/', '/new-expense', '/new-option', '/config', '/login', '/register'],
 }

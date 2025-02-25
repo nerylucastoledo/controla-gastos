@@ -5,16 +5,16 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image'
 import Link from "next/link";
 
-import styles from "../styles/pages/login.module.scss"
+import styles from "../../styles/pages/login.module.scss"
 
-import { Input } from "../components/input/input";
-import { Toast } from "../components/toast/toast";
+import { Input } from "../../components/input/input";
+import { Toast } from "../../components/toast/toast";
 
-import { useUser } from "../context/user";
+import { useUser } from "../../context/user";
 
-import { fetcherPost, formatToCurrencyBRL } from "../utils";
-import wallet from "../images/wallet.webp";
-import walletRetina from "../images/wallet-retina.webp";
+import { fetcherPost, formatToCurrencyBRL } from "../../utils";
+import wallet from "../../images/wallet.webp";
+import walletRetina from "../../images/wallet-retina.webp";
 
 interface IResponse {
   message: string,
@@ -64,7 +64,7 @@ export default function Login() {
       setUsername(username);
       setSalary(formatToCurrencyBRL(salary))
       handleToast(true, message)
-      router.replace("/");
+      router.push("/");
       
     } catch (err) {
       handleToast(false, (err as Error).message)

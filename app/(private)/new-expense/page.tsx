@@ -1,21 +1,21 @@
 "use client"
 
-import { useUser } from "../context/user";
+import { useUser } from "../../context/user";
 import { useCallback, useState } from "react";
 import useSWR from "swr";
 
-import styles from "../styles/pages/home.module.scss";
-import stylesNewExpense from "../styles/pages/new-expense.module.scss";
+import styles from "../../styles/pages/home.module.scss";
+import stylesNewExpense from "../../styles/pages/new-expense.module.scss";
 
-import { categorys, fetcher, fetcherPost, formatCurrency, months, years } from "../utils";
+import { categorys, fetcher, fetcherPost, formatCurrency, months, years } from "../../utils";
 
-import { Input } from "../components/input/input";
-import { Select } from "../components/select/select";
-import { Toast } from "../components/toast/toast";
+import { Input } from "../../components/input/input";
+import { Select } from "../../components/select/select";
+import { Toast } from "../../components/toast/toast";
 
-import { ICard, IPeople } from "../utils/types";
+import { ICard, IPeople } from "../../utils/types";
 import Loading from "./loading";
-import { Error } from "../components/error/Error";
+import { Error } from "../../components/error/Error";
 
 interface IBody {
   card: string;

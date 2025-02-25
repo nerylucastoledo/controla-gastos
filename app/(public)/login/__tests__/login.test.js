@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
-import Login from '../../login/page';
-import { Providers } from '../../providers';
+import Login from '../page';
+import { Providers } from '../../../providers';
 import { useRouter } from 'next/navigation';
 
 // Mock do useRouter
@@ -10,9 +10,9 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock da variável de ambiente
-jest.mock('../../../.env', () => ({
+jest.mock('../../../../.env', () => ({
   __esModule: true,
-  ...jest.requireActual('../../../.env'),
+  ...jest.requireActual('../../../../.env'),
 }));
 
 describe('Login page', () => {
@@ -78,7 +78,7 @@ describe('Login page', () => {
       })
     );
     
-    const mockRouter = { replace: jest.fn() };
+    const mockRouter = { push: jest.fn() };
     useRouter.mockImplementation(() => mockRouter);
 
     render(<Providers><Login /></Providers>);
@@ -94,7 +94,7 @@ describe('Login page', () => {
     await waitFor(() => {
       expect(localStorage.getItem("username")).toBe('testuser');
       expect(localStorage.getItem("salary")).toBe('R$ 1.000,00');
-      expect(mockRouter.replace).toHaveBeenCalledWith("/");
+      expect(mockRouter.push).toHaveBeenCalledWith("/");
       expect(screen.getByText('Login successful')).toBeInTheDocument();
     });
   });

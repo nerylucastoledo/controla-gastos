@@ -3,21 +3,21 @@
 import useSWR from "swr";
 import { useEffect, useState } from "react";
 
-import styles from "../styles/pages/home.module.scss";
-import stylesConfig from "../styles/pages/config.module.scss";
+import styles from "../../styles/pages/home.module.scss";
+import stylesConfig from "../../styles/pages/config.module.scss";
 
-import { useUser } from "../context/user";
-import { fetcher, fetcherPost, formatCurrency, parseCurrencyString } from "../utils";
+import { useUser } from "../../context/user";
+import { fetcher, fetcherPost, formatCurrency, parseCurrencyString } from "../../utils";
 
-import { ConfigList } from "../components/configList/list";
-import { Input } from "../components/input/input";
-import { ModalEditConfig } from "../components/modalEditConfig/modalEditConfig";
-import { ModalConfigDelete } from "../components/modalDeleteConfig/modalDeleteConfig";
-import { Toast } from "../components/toast/toast";
+import { ConfigList } from "../../components/configList/list";
+import { Input } from "../../components/input/input";
+import { ModalEditConfig } from "../../components/modalEditConfig/modalEditConfig";
+import { ModalConfigDelete } from "../../components/modalDeleteConfig/modalDeleteConfig";
+import { Toast } from "../../components/toast/toast";
 
-import { ICard, IPeople } from "../utils/types";
+import { ICard, IPeople } from "../../utils/types";
 import Loading from "./loading";
-import { Error } from "../components/error/Error";
+import { Error } from "../../components/error/Error";
 
 interface IData {
   data: IPeople[] | ICard[]

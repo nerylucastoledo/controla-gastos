@@ -1,16 +1,16 @@
 "use client"
 
-import { useUser } from "../context/user";
+import { useUser } from "../../context/user";
 import { useCallback, useState } from "react";
 
-import styles from "../styles/pages/home.module.scss";
-import stylesNewExpense from "../styles/pages/new-expense.module.scss";
+import styles from "../../styles/pages/home.module.scss";
+import stylesNewExpense from "../../styles/pages/new-expense.module.scss";
 
-import { Input } from "../components/input/input";
-import { Select } from "../components/select/select";
-import { Toast } from "../components/toast/toast";
+import { Input } from "../../components/input/input";
+import { Select } from "../../components/select/select";
+import { Toast } from "../../components/toast/toast";
 
-import { fetcherPost } from "../utils";
+import { fetcherPost } from "../../utils";
 
 interface IData {
   _id?: string;
