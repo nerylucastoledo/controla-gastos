@@ -20,7 +20,7 @@ export const Filter = ({ currentMonth, currentYear, setMonth, setYear }: IProps)
         label={"mês"} 
         id={"month"}
         data-testid="month-select" 
-        defaultValue={currentMonth} 
+        value={currentMonth} 
         onChange={({ target }) => setMonth(target.value)}
       >
         {months.map((month) => (
@@ -34,7 +34,7 @@ export const Filter = ({ currentMonth, currentYear, setMonth, setYear }: IProps)
         label={"ano"} 
         id={"year"}
         data-testid="year-select" 
-        defaultValue={currentYear}
+        value={currentYear}
         onChange={({ target }) => setYear(target.value)}
       >
         {years.map((year) => (

@@ -17,6 +17,7 @@ interface IProps {
 	name_mobile: string;
 	name_desktop?: string;
 }
+
 interface INavigationProps {
   navLinks: IProps[];
 }
@@ -25,14 +26,12 @@ export const Navigation: React.FC<INavigationProps> = ({ navLinks }) => {
 	const router = useRouter();
 	const pathname = usePathname();
 	const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
-	const [showToast, setShowToast] = useState(false);
 	const common = { width: 64, height: 64 };
 	const hiddenNav = pathname === "/register" || pathname === "/login"
 
-	const handleToast = useCallback((error: boolean, message: string) => {
+	const handleToast = useCallback(async (error: boolean, message: string) => {
     setToastCustom({ error, message })
-    setShowToast(true)
-    setTimeout(() => setShowToast(false), 2000);
+    setTimeout(() => setToastCustom({ error, message: "" }), 2000);
   }, [])
 
 	if (hiddenNav) return null;
@@ -53,9 +52,7 @@ export const Navigation: React.FC<INavigationProps> = ({ navLinks }) => {
 
   return (
     <header className={styles.header}>
-			{showToast && (
-        <Toast message={toastCustom.message} success={toastCustom.error} />
-      )}
+      <Toast message={toastCustom.message} success={toastCustom.error} />
 
 			<nav>
 				<Link href={"/"}>

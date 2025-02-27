@@ -1,6 +1,6 @@
 "use client"
 
-import React, { SetStateAction, useState } from 'react'
+import React, { SetStateAction, useCallback, useState } from 'react'
 
 import { Input } from '@/app/components/input/input'
 import { Modal } from '@/app/components/modal/modal'
@@ -24,16 +24,12 @@ interface IProps {
 export const ModalEditConfig = ({ item, mutate, onCustomDismiss }: IProps) => {
   const [itemUpdated, setItemUpdated] = useState(item);
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
-  const [showToast, setShowToast] = useState(false);
 
-  const handleToast = (error: boolean, message: string) => {
-    setToastCustom({ error, message })
-    setShowToast(true)
-    setTimeout(() => {
+  const handleToast = useCallback(async (error: boolean, message: string) => {
+      setToastCustom({ error, message })
       onCustomDismiss(false)
-      setShowToast(false)
-    }, 1000);
-  }
+      setTimeout(() => setToastCustom({ error, message: "" }), 2000);
+    }, [onCustomDismiss])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,24 +38,20 @@ export const ModalEditConfig = ({ item, mutate, onCustomDismiss }: IProps) => {
 
     try {
       let url = "peoples";
-      let body: IUpdate;
+      let body: IUpdate = {
+        _id: itemUpdated._id,
+        name: itemUpdated.name,
+      };
 
       if ("color" in itemUpdated) {
         url = "cards";
         body = {
-          _id: itemUpdated._id,
-          name: itemUpdated.name,
+          ...body,
           color: itemUpdated.color,
-        };
-      } else {
-        body = {
-          _id: itemUpdated._id,
-          name: itemUpdated.name,
         };
       }
 
-      const response = await fetcherPost<IUpdate, { message: string }>(
-        `${process.env.NEXT_PUBLIC_API_URL}/${url}`, 
+      const response = await fetcherPost<IUpdate, { message: string }>(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, 
         "PUT", 
         body
       );
@@ -72,9 +64,8 @@ export const ModalEditConfig = ({ item, mutate, onCustomDismiss }: IProps) => {
 
   return (
     <>
-      {showToast && (
-        <Toast message={toastCustom.message} success={toastCustom.error} />
-      )}
+      <Toast message={toastCustom.message} success={toastCustom.error} />
+      
       <Modal
         background='#1E1E1E'
         customClass={`modal-form-active modal-form`}

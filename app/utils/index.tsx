@@ -68,23 +68,27 @@ export const formatToCurrencyBRL = (amount: number) => {
 	});
 }
 
-export const fetcher = (url: string) => 
-	fetch(url, {
+export const fetcher = async (url: string) => {
+	return fetch(url, {
 	  method: 'GET',
 	  credentials: 'include',
+		headers: {
+			'Content-Type': 'application/json',
+		},
 	}).then((res) => {
 		if (res.ok) { 
 			return res.json()
 		}
 		
 		if (res.status === 403 || res.status === 401) {
-			throw new Error(res.status.toString())
+			throw new Error("forbidden")
 		}
 		
 		throw new Error("Ocorreu um erro interno.")
 	}).catch(async (err) => {
 		throw err;
 	});
+}
 
 export const fetcherPost = async <T, R>(url: string, method: string, body?: T): Promise<R> => {
 	try {

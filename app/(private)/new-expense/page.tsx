@@ -32,10 +32,8 @@ interface IData {
   data: IPeople[] | ICard[]
 }
 
-const date = new Date()
-
 export default function NewExpense() {
-  const { username } = useUser();
+  const date = new Date()
   const [month, setMonth] = useState(months[date.getMonth()]);
   const [year, setYear] = useState(date.getFullYear().toString());
   const [people, setPeople] = useState("");
@@ -46,20 +44,27 @@ export default function NewExpense() {
   const [hasInstallment, setHasInstallment] = useState(false);
   const [installments, setInstallments] = useState(1)
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
-  const [showToast, setShowToast] = useState(false);
 
-  const { data: peopleData, error: peopleError, mutate: mutatePeole, isLoading: loadingPeople } = useSWR<IData>(`${process.env.NEXT_PUBLIC_API_URL}/peoples/${username}`, fetcher);
-  const { data: cardData, error: cardError, mutate: mutateCard, isLoading: loadingCard } = useSWR<IData>(`${process.env.NEXT_PUBLIC_API_URL}/cards/${username}`, fetcher);
+  const { username } = useUser();
+
+  const { data: peopleData, error: peopleError, mutate: mutatePeople, isLoading: loadingPeople } = useSWR<IData>(
+    username ? `${process.env.NEXT_PUBLIC_API_URL}/peoples/${username}` : null, 
+    fetcher
+  );
+  
+  const { data: cardData, error: cardError, mutate: mutateCard, isLoading: loadingCard } = useSWR<IData>(
+    username ? `${process.env.NEXT_PUBLIC_API_URL}/cards/${username}` : null, 
+    fetcher
+  );
 
   const handleFetch = () => {
-    mutatePeole();
+    mutatePeople()
     mutateCard()
   }
 
-  const handleToast = useCallback((error: boolean, message: string) => {
+  const handleToast = useCallback(async (error: boolean, message: string) => {
     setToastCustom({ error, message })
-    setShowToast(true)
-    setTimeout(() => setShowToast(false), 2000);
+    setTimeout(() => setToastCustom({ error, message: "" }), 2000);
   }, [])
 
   const resetOptions = useCallback(() => {
@@ -91,8 +96,7 @@ export default function NewExpense() {
         value,
       }
 
-      const response = await fetcherPost<IBody, { message: string }>(
-        `${process.env.NEXT_PUBLIC_API_URL}/expenses`, 
+      const response = await fetcherPost<IBody, { message: string }>(`${process.env.NEXT_PUBLIC_API_URL}/expenses`, 
         "POST", 
         body
       );
@@ -106,9 +110,8 @@ export default function NewExpense() {
 
   return (
     <section className={`container ${stylesNewExpense.new_expense}`}>
-      {showToast && (
-        <Toast message={toastCustom.message} success={toastCustom.error} />
-      )}
+      <Toast message={toastCustom.message} success={toastCustom.error} />
+
       <div className={styles.container_home}>
         <form onSubmit={handleSubmit}>
           {!cardData.data.length ? (
@@ -116,11 +119,14 @@ export default function NewExpense() {
           ) : (
             <>
               <h1 className="title">Cadastre o novo gasto</h1>
-              <p className="subtitle">Assim que você inserir o gasto ele irá aparecer na sua tela inicial e você conseguirá entender para onde ele está indo</p>
+              <p className="subtitle">
+                Assim que você inserir o gasto ele irá aparecer na sua tela inicial e você conseguirá entender para onde ele está indo
+              </p>
+              
               <div className={stylesNewExpense.date}>
                 <Select 
                   data-testid="month-select" 
-                  defaultValue={month} 
+                  value={month} 
                   id={"month"}
                   label={"mês"} 
                   onChange={({ target }) => setMonth(target.value)}
@@ -134,7 +140,7 @@ export default function NewExpense() {
 
                 <Select 
                   data-testid="year-select" 
-                  defaultValue={year}
+                  value={year}
                   id={"year"}
                   label={"ano"} 
                   onChange={({ target }) => setYear(target.value)}

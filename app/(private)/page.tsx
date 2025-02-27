@@ -23,29 +23,28 @@ export interface IData {
   data: IExpensesByUsernameAndDate
 }
 
-const date = new Date()
-
 export default function Home() {
+  const date = new Date()
   const [month, setMonth] = useState(months[date.getMonth()]);
   const [year, setYear] = useState(date.getFullYear().toString());
-  const { username, salary } = useUser();
-  const { setCurrentDate } = useDate();
   const currentDate = `${month}${year}`
-
-  const { data, error, mutate, isLoading } = useSWR<IData>(
-    `${process.env.NEXT_PUBLIC_API_URL}/expenses/${username}/${currentDate}`, 
-    fetcher, 
-  )
+  
+  const { setCurrentDate } = useDate();
+  const { username, salary } = useUser();
 
   useEffect(() => {
     setCurrentDate(currentDate);
-  }, [setCurrentDate, mutate, currentDate]);
+  }, [currentDate, setCurrentDate]);
+
+  const { data, error, mutate, isLoading } = useSWR<IData>(
+    username ? `${process.env.NEXT_PUBLIC_API_URL}/expenses/${username}/${currentDate}` : null, 
+    fetcher,
+  )
 
   if (isLoading) return <Loading />
-  if (error) return <Error mutate={mutate} />
-  if (!data) return null;
+  if (error || !data) return <Error mutate={mutate} />
 
-  const { expenses, cards } = data.data;
+  const { cards, expenses } = data.data;
 
   return (
     <div className="container">
@@ -57,10 +56,12 @@ export default function Home() {
             setMonth={setMonth}
             setYear={setYear}
           />
+
           <Resume
             data={expenses}
             salary={salary}
           />
+
           <LatestExpenses
             data={expenses}
           />
@@ -72,7 +73,9 @@ export default function Home() {
             date={currentDate}
             username={username}
           />
-          <Report data={expenses}/>
+
+          <Report data={expenses} />
+
           <Dashboard
             dataByMonth={expenses}
             username={username}

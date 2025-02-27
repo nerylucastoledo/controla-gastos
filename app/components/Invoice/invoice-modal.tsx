@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import useSWR, { useSWRConfig } from "swr";
 
 import styles from "../../styles/components/invoice.module.scss";
@@ -41,51 +41,78 @@ interface IData {
   data: IInvoice[]
 }
 
+type InvoiceAction =
+  | { type: 'SET_ITEM'; payload: string }
+  | { type: 'SET_VALUE'; payload: string }
+  | { type: 'SET_CATEGORY'; payload: string }
+  | { type: 'SET_ALL'; payload: IInvoiceItemType }
+  | { type: 'RESET' };
+
+
+const reducer = (state: IInvoiceItemType, action: InvoiceAction): IInvoiceItemType => {
+  switch (action.type) {
+    case 'SET_ITEM':
+      return { ...state, item: action.payload };
+    case 'SET_VALUE':
+      return { ...state, value: action.payload };
+    case 'SET_CATEGORY':
+      return { ...state, category: action.payload };
+    case 'SET_ALL':
+      return { ...action.payload };
+    case 'RESET':
+      return initialState;
+    default:
+      return state;
+  }
+};
+const initialState: IInvoiceItemType = { _id: "", category: "", item: "", value: "" };
+
 export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username }: IProps) => {
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [name, setName] = useState<string>("");
-  const [itemUpdate, setItemUpdate] = useState<IInvoiceItemType>({ _id: "", category: "", item: "", value: ""})
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
-  const [showToast, setShowToast] = useState(false);
   const { currentDate } = useDate()
+
+  const [itemUpdate, dispatch] = useReducer(reducer, initialState);
   const { mutate: mutateData } = useSWRConfig()
 
-  const { data, error, isLoading, mutate } = useSWR<IData>(`${process.env.NEXT_PUBLIC_API_URL}/expenses/${username}/${date}/${card}`, fetcher)
-  
+  const { data, error, isLoading, mutate } = useSWR<IData>(
+    `${process.env.NEXT_PUBLIC_API_URL}/expenses/${username}/${date}/${card}`,
+    fetcher
+  )
+
   useEffect(() => {
     if (!data) return;
+    if (name.length) return;
+
     setName(data.data.length ? data.data[0].name : "Eu");
-  }, [data]);
-  
-  if (!data || error) return null;
-  
-  const handleToast = (error: boolean, message: string) => {
-    setToastCustom({ error, message })
-    setShowToast(true)
-    setTimeout(() => setShowToast(false), 2000);
-  }
-
-  const openModal = (invoice: IInvoiceItemType, modal: "edit" | "delete") => {
-    setItemUpdate({ _id: invoice._id, category: invoice.category, item: invoice.item, value: invoice.value })
-
-    if (modal === "edit") {
-      setIsModalEditOpen(true)
-      return;
-    }
-
-    setIsModalDeleteOpen(true)
-  };
-
-  const closeModal = () => {
-    setIsModalEditOpen(false);
-    setIsModalDeleteOpen(false)
-  };
+  }, [data, name]);
 
   const handleMutate = async () => {
     mutate();
     mutateData(`${process.env.NEXT_PUBLIC_API_URL}/expenses/${username}/${currentDate}`)
   }
+    
+  const handleToast = useCallback(async (error: boolean, message: string) => {
+    setToastCustom({ error, message })
+    setTimeout(() => setToastCustom({ error, message: "" }), 2000);
+  }, [])
+
+  const openModal = useCallback((invoice: IInvoiceItemType, modal: "edit" | "delete") => {
+    if (modal === "delete") {
+      setIsModalDeleteOpen(true)
+      return;
+    }
+
+    dispatch({ type: 'SET_ALL', payload: invoice });
+    setIsModalEditOpen(true)
+  }, []);
+
+  const closeModal = useCallback(() => {
+    setIsModalEditOpen(false);
+    setIsModalDeleteOpen(false)
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -113,7 +140,7 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
         handleToast(true, response.message)
         closeModal();
 
-        if (data.data[0].invoices.length === 1 && onDismiss) {
+        if (data?.data[0].invoices.length === 1 && onDismiss) {
           onDismiss()
         }
         
@@ -124,20 +151,21 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
     }
   }
 
-  const invoiceByName = data.data.filter((item) => item.name === name)
+  if (error) return null;
+
+  const invoiceByName = data?.data.filter((item) => item.name === name)
   const cardName = card.replace("%20", " ")
 
   return (
     <>
-      {showToast && (
-        <Toast message={toastCustom.message} success={toastCustom.error} />
-      )}
+      <Toast message={toastCustom.message} success={toastCustom.error} />
+
       <Modal background={backgroundColor} onCustomDismiss={onDismiss}>
         {isLoading ? (
           <LoadingIcon />
         ) : (
           <>
-            {data.data.length && invoiceByName.length && (
+            {data?.data.length && invoiceByName?.length && (
               <div className={styles.invoice}>
                 <div className={styles.title}>
                   {cardName}
@@ -185,7 +213,7 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
               data-testid="item"
               label="Item"
               name="item"
-              onChange={({ target }) => setItemUpdate(prev => ({ ...prev, item: target.value }))}
+              onChange={({ target }) => dispatch({ type: 'SET_ITEM', payload: target.value })}
               required
               type="text" 
               value={itemUpdate.item}
@@ -195,7 +223,7 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
               data-testid="value"
               label="Valor (R$)"
               name="value"
-              onChange={({ currentTarget }) => setItemUpdate(prev => ({ ...prev, value: formatCurrency(currentTarget.value) }))}
+              onChange={({ currentTarget }) => dispatch({ type: 'SET_VALUE', payload: formatCurrency(currentTarget.value) })}
               required
               type="text" 
               value={itemUpdate.value}
@@ -206,7 +234,7 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
               label='Categoria' 
               className={"modal-form__select"}
               defaultValue={itemUpdate.category}
-              onChange={({ currentTarget }) => setItemUpdate(prev => ({ ...prev, category: currentTarget.value }))}
+              onChange={({ currentTarget }) => dispatch({ type: 'SET_CATEGORY', payload: currentTarget.value })}
             >
               {categorys.map((category) => <option key={category} value={category}>{category}</option>)}
             </Select>

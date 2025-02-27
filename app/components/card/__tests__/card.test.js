@@ -14,6 +14,12 @@ const mockData = [
   { username: 'User2', date: '2023-01-02', value: '200.00', card: 'Card 2' },
 ];
 
+
+// Mock do useRouter
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(), // Mantém o mock
+}));
+
 describe('Card Component', () => {
   beforeEach(() => {
     render(<DateProvider><Card cards={mockCards} data={mockData} date="2023-01-01" username="User1" /></DateProvider>);

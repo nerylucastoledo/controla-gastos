@@ -1,6 +1,6 @@
 "use client"
 
-import React, { SetStateAction, useState } from 'react'
+import React, { SetStateAction, useCallback, useState } from 'react'
 
 import { Modal } from '@/app/components/modal/modal'
 
@@ -16,16 +16,13 @@ interface IProps {
 
 export const ModalConfigDelete = ({ item, onCustomDismiss, mutate }: IProps) => {
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
-  const [showToast, setShowToast] = useState(false);
 
-  const handleToast = (error: boolean, message: string) => {
+  const handleToast = useCallback(async (error: boolean, message: string) => {
     setToastCustom({ error, message })
-    setShowToast(true)
     onCustomDismiss(false)
-    setTimeout(() => {
-      setShowToast(false)
-    }, 1000);
-  }
+    setTimeout(() => setToastCustom({ error, message: "" }), 2000);
+  }, [onCustomDismiss])
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,9 +47,8 @@ export const ModalConfigDelete = ({ item, onCustomDismiss, mutate }: IProps) => 
 
   return (
     <>
-      {showToast && (
-        <Toast message={toastCustom.message} success={toastCustom.error} />
-      )}
+      <Toast message={toastCustom.message} success={toastCustom.error} />
+      
       <Modal
         background='#1E1E1E'
         customClass={`modal-form-active modal-form`}

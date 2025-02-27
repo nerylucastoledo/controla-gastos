@@ -1,7 +1,7 @@
 "use client"
 
 import useSWR from "swr";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import styles from "../../styles/pages/home.module.scss";
 import stylesConfig from "../../styles/pages/config.module.scss";
@@ -24,31 +24,38 @@ interface IData {
 }
 
 export default function Config() {
-  const { username, salary, setSalary } = useUser();
   const [salaryUpdate, setSalaryUpdate] = useState("R$ 0,00");
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [isModalEdit, setIsModalEdit] = useState(false);
   const [item, setItem] = useState<IPeople | ICard | null>(null);
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
-  const [showToast, setShowToast] = useState(false);
 
-  const { data: peopleData, error: peopleError, mutate: mutatePeole, isLoading: loadingPeople } = useSWR<IData>(`${process.env.NEXT_PUBLIC_API_URL}/peoples/${username}`, fetcher);
-  const { data: cardData, error: cardError, mutate: mutateCard, isLoading: loadingCard } = useSWR<IData>(`${process.env.NEXT_PUBLIC_API_URL}/cards/${username}`, fetcher);
+  const { username, salary, setSalary } = useUser();
 
   useEffect(() => {
     setSalaryUpdate(salary)
   }, [salary])
+
+  const { data: peopleData, error: peopleError, mutate: mutatePeole, isLoading: loadingPeople } = useSWR<IData>(
+    username ? `${process.env.NEXT_PUBLIC_API_URL}/peoples/${username}` : null,
+    fetcher
+  );
+  const { data: cardData, error: cardError, mutate: mutateCard, isLoading: loadingCard } = useSWR<IData>(
+    username ? `${process.env.NEXT_PUBLIC_API_URL}/cards/${username}` : null,
+    fetcher
+  );
+
+  const handleToast = useCallback(async (error: boolean, message: string) => {
+    setToastCustom({ error, message })
+    setTimeout(() => setToastCustom({ error, message: "" }), 2000);
+  }, [])
 
   const handleFetch = () => {
     mutatePeole();
     mutateCard()
   }
 
-  if (loadingPeople || loadingCard) return <Loading />
-  if (peopleError || cardError) return <Error mutate={handleFetch} />
-  if (!peopleData || !cardData) return null;
-
-  const openModal = (item: IPeople | ICard, method: "PUT" | "DELETE") => {
+  const openModal = useCallback((item: IPeople | ICard, method: "PUT" | "DELETE") => {
     setItem(item);
 
     if (method === "PUT") {
@@ -57,13 +64,7 @@ export default function Config() {
     }
     
     setIsModalDelete(true);
-  };
-
-  const handleToast = (error: boolean, message: string) => {
-    setToastCustom({ error, message })
-    setShowToast(true)
-    setTimeout(() => setShowToast(false), 2000);
-  }
+  }, []);
 
   const upateSalary = async () => {
     try {
@@ -80,11 +81,14 @@ export default function Config() {
     }
   }
 
+  if (loadingPeople || loadingCard) return <Loading />
+  if (peopleError || cardError) return <Error mutate={handleFetch} />
+  if (!peopleData || !cardData) return null;
+
   return (
     <>
-      {showToast && (
-        <Toast success={toastCustom.error} message={toastCustom.message} />
-      )}
+      <Toast success={toastCustom.error} message={toastCustom.message} />
+
       <section className={`container ${styles.container_home} ${stylesConfig.config}`}>
         <div className={`${stylesConfig.content}`}>
           <h2 className="title">Atualize os dados</h2>

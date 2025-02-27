@@ -20,18 +20,17 @@ interface IData {
 }
 
 export default function NewOption() {
-  const { username } = useUser();
   const [name, setName] = useState("");
   const [color, setColor] = useState("#000000");
   const [type, setType] = useState("");
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
-  const [showToast, setShowToast] = useState(false);
 
-  const handleToast = useCallback((error: boolean, message: string) => {
+  const { username } = useUser();
+
+  const handleToast = useCallback(async (error: boolean, message: string) => {
     setToastCustom({ error, message })
-    setShowToast(true)
-    setTimeout(() => setShowToast(false), 2000);
-  }, []) 
+    setTimeout(() => setToastCustom({ error, message: "" }), 2000);
+  }, [])
 
   const resetOptions = useCallback(() => {
     setName("")
@@ -49,23 +48,23 @@ export default function NewOption() {
         ...(type === "cards" ? { color } : {})
       };
 
-      const response = await fetcherPost<IData, { message: string }>(
-        `${process.env.NEXT_PUBLIC_API_URL}/${type}`, 
+      const response = await fetcherPost<IData, { message: string }>(`${process.env.NEXT_PUBLIC_API_URL}/${type}`, 
         "POST", 
         body
       );
+
       handleToast(true, response.message)
       resetOptions()
     } catch (err) {
-      handleToast(false, (err as Error).message);
+      const message = (err as Error).message
+      handleToast(false, message)
     }
   }
 
   return (
     <section className={`container ${stylesNewExpense.new_expense}`}>
-      {showToast && (
-        <Toast message={toastCustom.message} success={toastCustom.error} />
-      )}
+      <Toast message={toastCustom.message} success={toastCustom.error} />
+      
       <div className={styles.container_home}>
         <form onSubmit={handleSubmit}>
           <h1 className="title">Cadastre a opção</h1>
@@ -104,6 +103,7 @@ export default function NewOption() {
               value={color}
             />
           )}
+          
           <input type="submit" value="Cadastrar" className="button button__primary" />
         </form>
       </div>

@@ -27,8 +27,18 @@ export const InvoiceItem = ({ data, openModal }: IProps) => {
           <div>
             <p>{invoice.item}</p>
             <div>
-              <button onClick={() => openModal(invoice, 'edit')} data-testid="edit-button"><FaEdit size={16} color='28A745' /></button>
-              <button onClick={() => openModal(invoice, 'delete')} data-testid="delete-button"><MdDeleteForever size={16} color='#DC3545' /></button>
+              <button 
+                onClick={() => openModal(invoice, 'edit')} 
+                data-testid="edit-button"
+              >
+                <FaEdit size={16} color='28A745' />
+              </button>
+              <button 
+                onClick={() => openModal(invoice, 'delete')} 
+                data-testid="delete-button"
+              >
+                <MdDeleteForever size={16} color='#DC3545' />
+              </button>
             </div>
           </div>
           <p>{invoice.value}</p>
