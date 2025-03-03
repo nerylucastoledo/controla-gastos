@@ -63,9 +63,6 @@ cd card-expenses-tracker
 ˋˋˋ
 npm install
 ˋˋˋ
-# ou
-ˋˋˋ
-yarn install
 ˋˋˋ
 
 ### Configure as variáveis de ambiente:
@@ -74,10 +71,6 @@ Crie um arquivo .env.local na raiz do projeto e adicione suas credenciais do ban
 ### Execute o projeto em modo de desenvolvimento:
 ˋˋˋ
 npm run dev
-ˋˋˋ
-# ou
-ˋˋˋ
-yarn dev
 ˋˋˋ
 
 Acesse http://localhost:3000 no navegador.
