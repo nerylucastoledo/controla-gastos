@@ -99,6 +99,7 @@ export const fetcherPost = async <T, R>(url: string, method: string, body?: T): 
 			credentials: 'include',
 			headers: {
 				"Content-Type": "application/json",
+				'Authorization': sessionStorage.getItem('token') || '',
 			},
 			body: JSON.stringify(body),
 		});

@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { UserProvider } from "../context/user";
+import { UserProvider } from "../../context/user";
 
 export const metadata: Metadata = {
   title: "Controla gastos | Acessar",
