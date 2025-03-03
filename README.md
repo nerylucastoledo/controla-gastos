@@ -55,7 +55,7 @@ Controla gastos é um projeto desenvolvido em Next.js que permite o cadastro e g
 ### Clone este repositório:
 
 ˋˋˋ
-git clone https://github.com/seu-usuario/card-expenses-tracker.git
+git clone https://github.com/seu-usuario/controla-gastos-front.git
 cd card-expenses-tracker
 ˋˋˋ
 
