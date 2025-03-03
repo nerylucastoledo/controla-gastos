@@ -20,6 +20,7 @@ interface IResponse {
   message: string,
   salary: number,
   username: string,
+  token: string
 }
 
 interface IData {
@@ -40,9 +41,10 @@ export default function Login() {
     setTimeout(() => setToastCustom({ error, message: "" }), 2000);
   }, [])
 
-  const handleLocalStorage = useCallback((username: string, salary: number) => {
+  const handleLocalStorage = useCallback((username: string, salary: number, token: string) => {
     localStorage.setItem("username", username)
     localStorage.setItem("salary", formatToCurrencyBRL(salary))
+    sessionStorage.setItem("token", token)
   }, [])
 
   const handleState = useCallback((username: string, salary: number) => {
@@ -60,13 +62,13 @@ export default function Login() {
         body,
       );
 
-      const { username, salary, message } = response;
+      const { username, salary, message, token } = response;
 
       if (!response.username || !response.salary) {
         throw new Error("Não foi possível acessar a conta, tente novamente.");
       }
 
-      handleLocalStorage(username, salary)
+      handleLocalStorage(username, salary, token)
       handleState(username, salary)
       await handleToast(true, message)
       router.push("/");

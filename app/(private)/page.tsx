@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
@@ -7,16 +8,17 @@ import styles from "../styles/pages/home.module.scss";
 
 import { Card } from "../components/card/card";
 import { Dashboard } from "../components/dashboard/dashboard";
+import { Error } from "../components/error/Error";
 import { Filter } from "../components/filter/filter";
 import { LatestExpenses } from "../components/latest-expenses/latest-expenses";
 import { Resume } from "../components/resume/resume";
+import { Report } from "../components/report/report";
+
+import Loading from "./loading";
 
 import { fetcher, months } from "../utils/index";
 import { IExpensesByUsernameAndDate } from "../utils/types";
 import { useUser } from "../context/user";
-import { Report } from "../components/report/report";
-import Loading from "./loading";
-import { Error } from "../components/error/Error";
 import { useDate } from "../context/date";
 
 export interface IData {
@@ -29,8 +31,16 @@ export default function Home() {
   const [year, setYear] = useState(date.getFullYear().toString());
   const currentDate = `${month}${year}`
   
+  const router = useRouter()
   const { setCurrentDate } = useDate();
   const { username, salary } = useUser();
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    }
+  }, [username, router]);
 
   useEffect(() => {
     setCurrentDate(currentDate);

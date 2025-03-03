@@ -1,7 +1,8 @@
 "use client"
 
 import { useUser } from "../../context/user";
-import { useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
 
 import styles from "../../styles/pages/home.module.scss";
 import stylesNewExpense from "../../styles/pages/new-expense.module.scss";
@@ -25,7 +26,15 @@ export default function NewOption() {
   const [type, setType] = useState("");
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
 
+  const router = useRouter()
   const { username } = useUser();
+  
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    }
+  }, [username, router]);
 
   const handleToast = useCallback(async (error: boolean, message: string) => {
     setToastCustom({ error, message })

@@ -10,6 +10,9 @@ jest.mock('../../../utils', () => ({
   ...jest.requireActual('../../../utils'),
   categorys: ['Teste'],
 }));
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({ push: jest.fn() }),
+}));
 
 describe('NewExpense page', () => {
   afterEach(() => {

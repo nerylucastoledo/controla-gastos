@@ -1,7 +1,8 @@
 "use client"
 
 import { useUser } from "../../context/user";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import useSWR from "swr";
 
 import styles from "../../styles/pages/home.module.scss";
@@ -9,13 +10,14 @@ import stylesNewExpense from "../../styles/pages/new-expense.module.scss";
 
 import { categorys, fetcher, fetcherPost, formatCurrency, months, years } from "../../utils";
 
+import { Error } from "../../components/error/Error";
 import { Input } from "../../components/input/input";
 import { Select } from "../../components/select/select";
 import { Toast } from "../../components/toast/toast";
 
-import { ICard, IPeople } from "../../utils/types";
 import Loading from "./loading";
-import { Error } from "../../components/error/Error";
+
+import { ICard, IPeople } from "../../utils/types";
 
 interface IBody {
   card: string;
@@ -45,7 +47,15 @@ export default function NewExpense() {
   const [installments, setInstallments] = useState(1)
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
 
+  const router = useRouter()
   const { username } = useUser();
+
+  useEffect(() => {
+      const token = sessionStorage.getItem("token");
+      if (!token) {
+        router.push("/login");
+      }
+    }, [username, router]);
 
   const { data: peopleData, error: peopleError, mutate: mutatePeople, isLoading: loadingPeople } = useSWR<IData>(
     username ? `${process.env.NEXT_PUBLIC_API_URL}/peoples/${username}` : null, 

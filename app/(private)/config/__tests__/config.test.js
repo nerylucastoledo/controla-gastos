@@ -9,8 +9,8 @@ jest.mock('../../../utils', () => ({
   ...jest.requireActual('../../../utils'),
 }));
 jest.mock('next/navigation', () => ({
-  useRouter: () => jest.fn(),
-}));
+  useRouter: () => ({ push: jest.fn() }),
+}));;
 
 const setSalary = jest.fn();
 jest.mock('../../../context/user', () => ({

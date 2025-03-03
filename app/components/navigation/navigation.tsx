@@ -44,6 +44,7 @@ export const Navigation: React.FC<INavigationProps> = ({ navLinks }) => {
       );
 			handleToast(true, response.message)
 			localStorage.clear()
+			sessionStorage.clear()
 			setTimeout(() => router.push("/login"), 1000);
     } catch (err) {
       handleToast(false, (err as Error).message);

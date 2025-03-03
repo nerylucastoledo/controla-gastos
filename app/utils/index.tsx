@@ -74,18 +74,20 @@ export const fetcher = async (url: string) => {
 	  credentials: 'include',
 		headers: {
 			'Content-Type': 'application/json',
+			'Authorization': sessionStorage.getItem('token') || '',
 		},
 	}).then((res) => {
 		if (res.ok) { 
 			return res.json()
 		}
-		
+
 		if (res.status === 403 || res.status === 401) {
 			throw new Error("forbidden")
 		}
 		
 		throw new Error("Ocorreu um erro interno.")
 	}).catch(async (err) => {
+		sessionStorage.clear()
 		throw err;
 	});
 }

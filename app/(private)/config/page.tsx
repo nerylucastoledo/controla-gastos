@@ -2,6 +2,7 @@
 
 import useSWR from "swr";
 import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import styles from "../../styles/pages/home.module.scss";
 import stylesConfig from "../../styles/pages/config.module.scss";
@@ -10,14 +11,15 @@ import { useUser } from "../../context/user";
 import { fetcher, fetcherPost, formatCurrency, parseCurrencyString } from "../../utils";
 
 import { ConfigList } from "../../components/configList/list";
+import { Error } from "../../components/error/Error";
 import { Input } from "../../components/input/input";
 import { ModalEditConfig } from "../../components/modalEditConfig/modalEditConfig";
 import { ModalConfigDelete } from "../../components/modalDeleteConfig/modalDeleteConfig";
 import { Toast } from "../../components/toast/toast";
 
-import { ICard, IPeople } from "../../utils/types";
 import Loading from "./loading";
-import { Error } from "../../components/error/Error";
+
+import { ICard, IPeople } from "../../utils/types";
 
 interface IData {
   data: IPeople[] | ICard[]
@@ -30,7 +32,15 @@ export default function Config() {
   const [item, setItem] = useState<IPeople | ICard | null>(null);
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
 
+  const router = useRouter()
   const { username, salary, setSalary } = useUser();
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    }
+  }, [username, router]);
 
   useEffect(() => {
     setSalaryUpdate(salary)

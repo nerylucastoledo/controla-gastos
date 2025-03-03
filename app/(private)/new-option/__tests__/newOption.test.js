@@ -8,6 +8,9 @@ import { Providers } from '../../../providers';
 jest.mock('../../../utils', () => ({
   ...jest.requireActual('../../../utils'),
 }));
+jest.mock('next/navigation', () => ({
+  useRouter: () => ({ push: jest.fn() }),
+}));
 
 describe('NewOption Component', () => {
   beforeEach(() => {
