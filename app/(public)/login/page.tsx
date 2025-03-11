@@ -64,10 +64,6 @@ export default function Login() {
 
       const { username, salary, message, token } = response;
 
-      if (!response.username || !response.salary) {
-        throw new Error("Não foi possível acessar a conta, tente novamente.");
-      }
-
       handleLocalStorage(username, salary, token)
       handleState(username, salary)
       await handleToast(true, message)

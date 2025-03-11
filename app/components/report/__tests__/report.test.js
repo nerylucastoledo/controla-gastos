@@ -12,7 +12,7 @@ const mockData = [
 describe('Report Component', () => {
   test('renders the component with a title', () => {
     render(<Report data={[]} />);
-    expect(screen.getByText(/fatura pessoal/i)).toBeInTheDocument();
+    expect(screen.getByText(/fatura/i)).toBeInTheDocument();
   });
 
   test('displays empty state when no data is provided', () => {

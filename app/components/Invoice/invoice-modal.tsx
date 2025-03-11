@@ -100,12 +100,13 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
   }, [])
 
   const openModal = useCallback((invoice: IInvoiceItemType, modal: "edit" | "delete") => {
+    dispatch({ type: 'SET_ALL', payload: invoice });
+
     if (modal === "delete") {
       setIsModalDeleteOpen(true)
       return;
     }
 
-    dispatch({ type: 'SET_ALL', payload: invoice });
     setIsModalEditOpen(true)
   }, []);
 

@@ -38,11 +38,10 @@ export const Navigation: React.FC<INavigationProps> = ({ navLinks }) => {
 
 	const handleLogout = async () => {
 		try {
-      const response = await fetcherPost<unknown, { message: string }>(
+      await fetcherPost<void, void>(
         `${process.env.NEXT_PUBLIC_API_URL}/logout`, 
         "POST", 
       );
-			handleToast(true, response.message)
 			localStorage.clear()
 			sessionStorage.clear()
 			setTimeout(() => router.push("/login"), 1000);

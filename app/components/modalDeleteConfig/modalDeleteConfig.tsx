@@ -16,6 +16,7 @@ interface IProps {
 
 export const ModalConfigDelete = ({ item, onCustomDismiss, mutate }: IProps) => {
   const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
+  console.log(item)
 
   const handleToast = useCallback(async (error: boolean, message: string) => {
     setToastCustom({ error, message })

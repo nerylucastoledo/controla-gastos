@@ -38,7 +38,7 @@ export const Report = ({ data }: IProps) => {
   const invoices = getInvoice(data)
   return (
     <div className="content_card">
-      <h1 className='content_card__title'>fatura pessoal</h1>
+      <h1 className='content_card__title'>fatura</h1>
 
       {!data.length ? (
           <div className='empty'>

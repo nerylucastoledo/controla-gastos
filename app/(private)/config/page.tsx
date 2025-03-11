@@ -78,10 +78,10 @@ export default function Config() {
 
   const upateSalary = async () => {
     try {
-      const response = await fetcherPost<{ salary: number }, { message: string }>(
+      const response = await fetcherPost<{ username: string, salary: number }, { message: string }>(
         `${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, 
         "PUT", 
-        { salary: parseCurrencyString(salaryUpdate) }
+        { username, salary: parseCurrencyString(salaryUpdate) }
       );
       handleToast(true, response.message)
       localStorage.setItem("salary", salaryUpdate)

@@ -56,8 +56,7 @@ export default function Register() {
         body
       );
       
-      const { message } = response;
-      await handleToast(true, message)
+      await handleToast(true, response.message)
       router.replace("/login");
       
     } catch (err) {
