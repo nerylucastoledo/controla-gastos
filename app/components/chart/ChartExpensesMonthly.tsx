@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import Chart, { ChartTooltipItem } from "chart.js";
 import { formatToCurrencyBRL } from "@/app/utils";
-import { IExpenseByYear } from "@/app/utils/types";
+import { ExpenseOutputByUsernameAndYear } from "@/app/dto/expenseDTO";
 
-const chartConfig = (data: IExpenseByYear[]) => {
+const chartConfig = (data: ExpenseOutputByUsernameAndYear[]) => {
   return {
     type: "bar",
     options: {
@@ -68,7 +68,7 @@ const chartConfig = (data: IExpenseByYear[]) => {
   }
 }
 
-export const ChartExpensesMonthly = ({ data }: { data: IExpenseByYear[] }) => {
+export const ChartExpensesMonthly = ({ data }: { data: ExpenseOutputByUsernameAndYear[] }) => {
   useEffect(() => {
     const config = chartConfig(data);
 

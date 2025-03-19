@@ -3,11 +3,11 @@ import React from 'react';
 import styles from "../../styles/components/resume.module.scss"
 
 import { formatToCurrencyBRL, parseCurrencyString } from '@/app/utils';
-import { IExpense } from '@/app/utils/types';
+import { Expense } from '@/app/dto/expenseDTO';
 
 interface IProps {
   salary: string;
-  data: IExpense[];
+  data: Expense[];
 }
 
 export const Resume = ({ salary, data }: IProps) => {

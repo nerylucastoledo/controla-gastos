@@ -1,7 +1,7 @@
 "use client"
 
 import Link from 'next/link'
-import React, { ReactElement, useCallback, useState } from 'react'
+import React, { ReactElement, useState } from 'react'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
 
@@ -25,14 +25,9 @@ interface INavigationProps {
 export const Navigation: React.FC<INavigationProps> = ({ navLinks }) => {
 	const router = useRouter();
 	const pathname = usePathname();
-	const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
+	const [toast, setToast] = useState<{ success: boolean; message: string } | null>(null);
 	const common = { width: 64, height: 64 };
 	const hiddenNav = pathname === "/register" || pathname === "/login"
-
-	const handleToast = useCallback(async (error: boolean, message: string) => {
-    setToastCustom({ error, message })
-    setTimeout(() => setToastCustom({ error, message: "" }), 2000);
-  }, [])
 
 	if (hiddenNav) return null;
 
@@ -42,17 +37,26 @@ export const Navigation: React.FC<INavigationProps> = ({ navLinks }) => {
         `${process.env.NEXT_PUBLIC_API_URL}/logout`, 
         "POST", 
       );
+
 			localStorage.clear()
 			sessionStorage.clear()
+			setToast({ success: true, message: "Estamos te redirecionando." })
+
 			setTimeout(() => router.push("/login"), 1000);
     } catch (err) {
-      handleToast(false, (err as Error).message);
+			const message = err instanceof Error ? err.message : "Ocorreu um erro inesperado.";
+      setToast({ success: false, message: message })
     }
 	}
 
   return (
     <header className={styles.header}>
-      <Toast message={toastCustom.message} success={toastCustom.error} />
+      <Toast 
+				success={toast?.success}
+				message={toast?.message}
+				show={toast ? true : false}
+				setShowToast={setToast}
+			/>
 
 			<nav>
 				<Link href={"/"}>

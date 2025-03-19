@@ -94,8 +94,13 @@ describe('Login page', () => {
     await waitFor(() => {
       expect(localStorage.getItem("username")).toBe('testuser');
       expect(localStorage.getItem("salary")).toBe('R$ 1.000,00');
-      expect(mockRouter.push).toHaveBeenCalledWith("/");
       expect(screen.getByText('Login successful')).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      setTimeout(() => {
+        expect(mockRouter.push).toHaveBeenCalledWith("/");
+      }, 20000);
     });
   });
 

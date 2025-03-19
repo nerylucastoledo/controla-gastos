@@ -1,17 +1,17 @@
 "use client"
 
+import { CardOutput } from '@/app/dto/cardDTO';
+import { PeopleOutput } from '@/app/dto/peopleDTO';
 import React from 'react'
 
 import { FaRegEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 
-import { ICard, IPeople } from '@/app/utils/types';
-
-type DataType = IPeople | ICard;
+type DataType = PeopleOutput | CardOutput;
 
 interface IProps {
   data: DataType[];
-  openModal: (item: IPeople | ICard, operation: "PUT" | "DELETE") => void;
+  openModal: (item: PeopleOutput | CardOutput, operation: "PUT" | "DELETE") => void;
 }
 
 export const ConfigList = ({ data, openModal }: IProps) => {

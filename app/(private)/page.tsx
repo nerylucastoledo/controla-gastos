@@ -1,6 +1,5 @@
 "use client"
 
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
@@ -17,13 +16,11 @@ import { Report } from "../components/report/report";
 import Loading from "./loading";
 
 import { fetcher, months } from "../utils/index";
-import { IExpensesByUsernameAndDate } from "../utils/types";
+
 import { useUser } from "../context/user";
 import { useDate } from "../context/date";
-
-export interface IData {
-  data: IExpensesByUsernameAndDate
-}
+import { useAuth } from "../context/auth";
+import { ExpensesByUsernameAndDateOutput } from "../dto/expenseDTO";
 
 export default function Home() {
   const date = new Date()
@@ -31,28 +28,23 @@ export default function Home() {
   const [year, setYear] = useState(date.getFullYear().toString());
   const currentDate = `${month}${year}`
   
-  const router = useRouter()
   const { setCurrentDate } = useDate();
   const { username, salary } = useUser();
 
-  useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    if (!token) {
-      router.push("/login");
-    }
-  }, [username, router]);
+  useAuth();
 
   useEffect(() => {
     setCurrentDate(currentDate);
   }, [currentDate, setCurrentDate]);
 
-  const { data, error, mutate, isLoading } = useSWR<IData>(
+  const { data, error, isLoading, mutate } = useSWR<{ data: ExpensesByUsernameAndDateOutput}>(
     username ? `${process.env.NEXT_PUBLIC_API_URL}/expenses/${username}/${currentDate}` : null, 
     fetcher,
   )
 
   if (isLoading) return <Loading />
-  if (error || !data) return <Error mutate={mutate} />
+  if (error) return <Error mutate={mutate} />
+  if (!data) return null;
 
   const { cards, expenses } = data.data;
 

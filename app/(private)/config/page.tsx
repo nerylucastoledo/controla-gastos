@@ -2,7 +2,6 @@
 
 import useSWR from "swr";
 import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 import styles from "../../styles/pages/home.module.scss";
 import stylesConfig from "../../styles/pages/config.module.scss";
@@ -11,7 +10,7 @@ import { useUser } from "../../context/user";
 import { fetcher, fetcherPost, formatCurrency, parseCurrencyString } from "../../utils";
 
 import { ConfigList } from "../../components/configList/list";
-import { Error } from "../../components/error/Error";
+import { Error as ErrorComponent } from "../../components/error/Error";
 import { Input } from "../../components/input/input";
 import { ModalEditConfig } from "../../components/modalEditConfig/modalEditConfig";
 import { ModalConfigDelete } from "../../components/modalDeleteConfig/modalDeleteConfig";
@@ -19,53 +18,45 @@ import { Toast } from "../../components/toast/toast";
 
 import Loading from "./loading";
 
-import { ICard, IPeople } from "../../utils/types";
+import { useAuth } from "@/app/context/auth";
+import { ResponseErrorOutput, ResponseOutput } from "@/app/dto/fetch";
 
-interface IData {
-  data: IPeople[] | ICard[]
-}
+import { PeopleOutput } from "@/app/dto/peopleDTO";
+import { CardOutput } from "@/app/dto/cardDTO";
+import { UpdateSalaryInput } from "@/app/dto/userDTO";
 
 export default function Config() {
   const [salaryUpdate, setSalaryUpdate] = useState("R$ 0,00");
   const [isModalDelete, setIsModalDelete] = useState(false);
   const [isModalEdit, setIsModalEdit] = useState(false);
-  const [item, setItem] = useState<IPeople | ICard | null>(null);
-  const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
-
-  const router = useRouter()
+  const [item, setItem] = useState<PeopleOutput | CardOutput | null>(null);
+  const [toast, setToast] = useState<{ success: boolean; message: string } | null>(null);
+  
   const { username, salary, setSalary } = useUser();
+  const URL = process.env.NEXT_PUBLIC_API_URL
 
-  useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    if (!token) {
-      router.push("/login");
-    }
-  }, [username, router]);
+  useAuth();
 
   useEffect(() => {
     setSalaryUpdate(salary)
   }, [salary])
 
-  const { data: peopleData, error: peopleError, mutate: mutatePeole, isLoading: loadingPeople } = useSWR<IData>(
-    username ? `${process.env.NEXT_PUBLIC_API_URL}/peoples/${username}` : null,
-    fetcher
-  );
-  const { data: cardData, error: cardError, mutate: mutateCard, isLoading: loadingCard } = useSWR<IData>(
-    username ? `${process.env.NEXT_PUBLIC_API_URL}/cards/${username}` : null,
-    fetcher
-  );
 
-  const handleToast = useCallback(async (error: boolean, message: string) => {
-    setToastCustom({ error, message })
-    setTimeout(() => setToastCustom({ error, message: "" }), 2000);
-  }, [])
+  const { data: peopleData, error: peopleError, mutate: mutatePeole, isLoading: loadingPeople } = useSWR<{ data: PeopleOutput[]}>(
+    username ? `${URL}/peoples/${username}` : null,
+    fetcher
+  );
+  const { data: cardData, error: cardError, mutate: mutateCard, isLoading: loadingCard } = useSWR<{ data: CardOutput[]}>(
+    username ? `${URL}/cards/${username}` : null,
+    fetcher
+  );
 
   const handleFetch = () => {
     mutatePeole();
     mutateCard()
   }
 
-  const openModal = useCallback((item: IPeople | ICard, method: "PUT" | "DELETE") => {
+  const openModal = useCallback((item: PeopleOutput | CardOutput, method: "PUT" | "DELETE") => {
     setItem(item);
 
     if (method === "PUT") {
@@ -78,26 +69,38 @@ export default function Config() {
 
   const upateSalary = async () => {
     try {
-      const response = await fetcherPost<{ username: string, salary: number }, { message: string }>(
+      const response = await fetcherPost<UpdateSalaryInput, ResponseOutput | ResponseErrorOutput>(
         `${process.env.NEXT_PUBLIC_API_URL}/users/${username}`, 
         "PUT", 
         { username, salary: parseCurrencyString(salaryUpdate) }
       );
-      handleToast(true, response.message)
-      localStorage.setItem("salary", salaryUpdate)
+
+      if ("error" in response) {
+        throw new Error(response.message)
+      }
+
+      setToast({ success: true, message: response.message })
       setSalary(salaryUpdate)
+      localStorage.setItem("salary", salaryUpdate)
+      
     } catch (err) {
-      handleToast(false, (err as Error).message);
+      const message = err instanceof Error ? err.message : "Ocorreu um erro inesperado.";
+      setToast({ success: false, message: message })
     }
   }
 
   if (loadingPeople || loadingCard) return <Loading />
-  if (peopleError || cardError) return <Error mutate={handleFetch} />
+  if (peopleError || cardError) return <ErrorComponent mutate={handleFetch} />
   if (!peopleData || !cardData) return null;
 
   return (
     <>
-      <Toast success={toastCustom.error} message={toastCustom.message} />
+      <Toast 
+        success={toast?.success}
+        message={toast?.message}
+        show={toast ? true : false}
+        setShowToast={setToast}
+      />
 
       <section className={`container ${styles.container_home} ${stylesConfig.config}`}>
         <div className={`${stylesConfig.content}`}>

@@ -71,9 +71,9 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
   const [isModalEditOpen, setIsModalEditOpen] = useState(false);
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   const [name, setName] = useState<string>("");
-  const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
+  const [toast, setToast] = useState<{ success: boolean; message: string } | null>(null);
+  
   const { currentDate } = useDate()
-
   const [itemUpdate, dispatch] = useReducer(reducer, initialState);
   const { mutate: mutateData } = useSWRConfig()
 
@@ -93,11 +93,6 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
     mutate();
     mutateData(`${process.env.NEXT_PUBLIC_API_URL}/expenses/${username}/${currentDate}`)
   }
-    
-  const handleToast = useCallback(async (error: boolean, message: string) => {
-    setToastCustom({ error, message })
-    setTimeout(() => setToastCustom({ error, message: "" }), 2000);
-  }, [])
 
   const openModal = useCallback((invoice: IInvoiceItemType, modal: "edit" | "delete") => {
     dispatch({ type: 'SET_ALL', payload: invoice });
@@ -126,11 +121,17 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
           "PUT", 
           itemUpdate
         );
-        handleToast(true, response.message)
-        closeModal();
+
+        if ("error" in response) {
+          throw new Error(response.message)
+        }
+
+        setToast({ success: true, message: response.message })
         handleMutate();
+        closeModal()
       } catch (err) {
-        handleToast(false, (err as Error).message);
+        const message = err instanceof Error ? err.message : "Ocorreu um erro inesperado.";
+        setToast({ success: false, message: message })
       }
     } else {
       try {
@@ -138,16 +139,21 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
           `${URL}/${itemUpdate._id}`, 
           "DELETE", 
         );
-        handleToast(true, response.message)
-        closeModal();
+
+        if ("error" in response) {
+          throw new Error(response.message)
+        }
+
+        setToast({ success: true, message: response.message })
+        closeModal()
+        handleMutate();
 
         if (data?.data[0].invoices.length === 1 && onDismiss) {
           onDismiss()
         }
-        
-        handleMutate();
       } catch (err) {
-        handleToast(false, (err as Error).message);
+        const message = err instanceof Error ? err.message : "Ocorreu um erro inesperado.";
+        setToast({ success: false, message: message })
       }
     }
   }
@@ -159,7 +165,12 @@ export const InvoiceModal = ({  card, backgroundColor, date, onDismiss, username
 
   return (
     <>
-      <Toast message={toastCustom.message} success={toastCustom.error} />
+      <Toast 
+        success={toast?.success}
+        message={toast?.message}
+        show={toast ? true : false}
+        setShowToast={setToast}
+      />
 
       <Modal background={backgroundColor} onCustomDismiss={onDismiss}>
         {isLoading ? (

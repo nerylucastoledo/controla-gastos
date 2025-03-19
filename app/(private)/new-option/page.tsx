@@ -1,8 +1,7 @@
 "use client"
 
 import { useUser } from "../../context/user";
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 import styles from "../../styles/pages/home.module.scss";
 import stylesNewExpense from "../../styles/pages/new-expense.module.scss";
@@ -12,34 +11,19 @@ import { Select } from "../../components/select/select";
 import { Toast } from "../../components/toast/toast";
 
 import { fetcherPost } from "../../utils";
-
-interface IData {
-  _id?: string;
-  color?: string;
-  name: string;
-  username: string;
-}
+import { useAuth } from "@/app/context/auth";
+import { ResponseErrorOutput, ResponseOutput } from "@/app/dto/fetch";
+import { NewOptionInput } from "@/app/dto/newOptionDTO";
 
 export default function NewOption() {
   const [name, setName] = useState("");
   const [color, setColor] = useState("#000000");
   const [type, setType] = useState("");
-  const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
+  const [toast, setToast] = useState<{ success: boolean; message: string } | null>(null);
 
-  const router = useRouter()
   const { username } = useUser();
   
-  useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    if (!token) {
-      router.push("/login");
-    }
-  }, [username, router]);
-
-  const handleToast = useCallback(async (error: boolean, message: string) => {
-    setToastCustom({ error, message })
-    setTimeout(() => setToastCustom({ error, message: "" }), 2000);
-  }, [])
+  useAuth()
 
   const resetOptions = useCallback(() => {
     setName("")
@@ -51,28 +35,37 @@ export default function NewOption() {
     e.preventDefault();
 
     try {
-      const body: IData = {
+      const body: NewOptionInput = {
         username,
         name,
         ...(type === "cards" ? { color } : {})
       };
 
-      const response = await fetcherPost<IData, { message: string }>(`${process.env.NEXT_PUBLIC_API_URL}/${type}`, 
+      const response = await fetcherPost<NewOptionInput, ResponseOutput | ResponseErrorOutput>(`${process.env.NEXT_PUBLIC_API_URL}/${type}`, 
         "POST", 
         body
       );
 
-      handleToast(true, response.message)
+      if ("error" in response) {
+        throw new Error(response.message)
+      }
+
+      setToast({ success: true, message: response.message })
       resetOptions()
     } catch (err) {
-      const message = (err as Error).message
-      handleToast(false, message)
+      const message = err instanceof Error ? err.message : "Ocorreu um erro inesperado.";
+      setToast({ success: false, message: message })
     }
   }
 
   return (
     <section className={`container ${stylesNewExpense.new_expense}`}>
-      <Toast message={toastCustom.message} success={toastCustom.error} />
+      <Toast 
+        success={toast?.success}
+        message={toast?.message}
+        show={toast ? true : false}
+        setShowToast={setToast}
+      />
       
       <div className={styles.container_home}>
         <form onSubmit={handleSubmit}>

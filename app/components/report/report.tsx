@@ -2,11 +2,11 @@ import React, { useCallback } from 'react';
 
 import styles from "../../styles/components/report.module.scss"
 
-import { IExpense } from '@/app/utils/types';
 import { formatToCurrencyBRL, parseCurrencyString } from '@/app/utils';
+import { Expense } from '@/app/dto/expenseDTO';
 
 interface IProps {
-  data: IExpense[];
+  data: Expense[];
 }
 
 interface IInvoice {
@@ -16,7 +16,7 @@ interface IInvoice {
 
 export const Report = ({ data }: IProps) => {
   
-  const getInvoice = useCallback((data: IExpense[]) => {
+  const getInvoice = useCallback((data: Expense[]) => {
     const result = data.reduce<IInvoice[]>((acc, expense) => {
       const people = expense.people;
       const value = parseCurrencyString(expense.value);

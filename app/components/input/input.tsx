@@ -5,7 +5,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 	name: string;
 }
 
-export const Input: FC<InputProps> = ({ label, name, ...props }) => {
+const Component: FC<InputProps> = ({ label, name, ...props }) => {
   return (
     <div className='form-control'>
 			<input 
@@ -17,3 +17,5 @@ export const Input: FC<InputProps> = ({ label, name, ...props }) => {
 		</div>
   )
 }
+
+export const Input = React.memo(Component);

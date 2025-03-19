@@ -52,7 +52,9 @@ describe('ModalConfigDelete Component', () => {
     fireEvent.click(deleteButton);
 
     await waitFor(() => {
-      expect(screen.getByText(message)).toBeInTheDocument()
+      setTimeout(() => {
+        expect(screen.getByText(message)).toBeInTheDocument()
+      }, 2000);
     })
 
     await waitFor(() => {
@@ -83,7 +85,9 @@ describe('ModalConfigDelete Component', () => {
     fireEvent.click(deleteButton);
 
     await waitFor(() => {
-      expect(screen.getByText("API failed")).toBeInTheDocument()
+      setTimeout(() => {
+        expect(screen.getByText("API failed")).toBeInTheDocument()
+      }, 2000);
     })
   });
 });

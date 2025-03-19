@@ -3,10 +3,10 @@ import React from 'react';
 import styles from "../../styles/components/latest-expenses.module.scss"
 
 import Icon from '../icon/icons';
-import { IExpense } from '@/app/utils/types';
+import { Expense } from '@/app/dto/expenseDTO';
 
 interface IProps {
-  data: IExpense[];
+  data: Expense[];
 }
 
 export const LatestExpenses = ({ data }: IProps) => {

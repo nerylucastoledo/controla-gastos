@@ -9,15 +9,15 @@ import { ChartExpensesMonthly } from '../chart/ChartExpensesMonthly';
 import { ChartExpensesCategorys } from '../chart/ChartExpensesCategorys';
 import { LoadingIcon } from '../loading/loadingIcon';
 
-import { IExpense, IExpenseByYear } from '@/app/utils/types';
 import { fetcher } from '@/app/utils';
+import { Expense, ExpenseOutputByUsernameAndYear } from '@/app/dto/expenseDTO';
 
 interface IData {
-  data: IExpenseByYear[]
+  data: ExpenseOutputByUsernameAndYear[]
 }
 
 interface IProps {
-  dataByMonth: IExpense[]
+  dataByMonth: Expense[]
   username: string;
   year: string
 }

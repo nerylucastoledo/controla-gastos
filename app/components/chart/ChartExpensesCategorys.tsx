@@ -3,8 +3,8 @@
 import React, { useEffect } from "react";
 import Chart, { ChartTooltipItem } from "chart.js";
 
-import { IExpense } from "@/app/utils/types";
 import { formatToCurrencyBRL, parseCurrencyString } from "@/app/utils";
+import { Expense } from "@/app/dto/expenseDTO";
 
 interface ICategoryItem {
   category: string,
@@ -56,7 +56,7 @@ const chartCategorys = (data: ICategoryItem[]) => {
   }
 };
 
-const groupCategories = (data: IExpense[]): ICategoryItem[] => {
+const groupCategories = (data: Expense[]): ICategoryItem[] => {
   return data.reduce((acc: ICategoryItem[], expense) => {
     const categoryName = expense.category.toLowerCase();
     const value = parseCurrencyString(expense.value);
@@ -74,7 +74,7 @@ const groupCategories = (data: IExpense[]): ICategoryItem[] => {
 };
 
 
-export const ChartExpensesCategorys = ({ data }: { data: IExpense[] }) => {
+export const ChartExpensesCategorys = ({ data }: { data: Expense[] }) => {
   useEffect(() => {
     const dataFiltred = data.filter((expense) => parseCurrencyString(expense.value) > 0 && expense.people === "Eu")
     const categorys = groupCategories(dataFiltred)

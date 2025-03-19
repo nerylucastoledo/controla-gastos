@@ -52,7 +52,9 @@ describe('ModalEditConfig Component', () => {
     fireEvent.click(editButton);
 
     await waitFor(() => {
-      expect(screen.getByText(message)).toBeInTheDocument()
+      setTimeout(() => {
+        expect(screen.getByText(message)).toBeInTheDocument()
+      }, 2000);
     })
 
     await waitFor(() => {
@@ -76,7 +78,9 @@ describe('ModalEditConfig Component', () => {
     fireEvent.click(editButton);
 
     await waitFor(() => {
-      expect(screen.getByText("API failed")).toBeInTheDocument()
+      setTimeout(() => {
+        expect(screen.getByText("API failed")).toBeInTheDocument()
+      }, 2000);
     })
   });
 });

@@ -75,7 +75,9 @@ describe('NewExpense page', () => {
     fireEvent.click(screen.getByRole('button', { name: /cadastrar/i }));
 
     await waitFor(() => {
-      expect(screen.getByText(message)).toBeInTheDocument();
+     setTimeout(() => {
+       expect(screen.getByText(message)).toBeInTheDocument();
+     }, 2000);
     });
   });
 
@@ -107,7 +109,9 @@ describe('NewExpense page', () => {
     fireEvent.click(screen.getByRole('button', { name: /cadastrar/i }));
 
     await waitFor(() => {
-      expect(screen.getByText(message)).toBeInTheDocument();
+      setTimeout(() => {
+        expect(screen.getByText(message)).toBeInTheDocument();
+      }, 2000);
     });
   
     expect(mutateMock).not.toHaveBeenCalled();

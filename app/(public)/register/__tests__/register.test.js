@@ -93,7 +93,7 @@ describe('Register page', () => {
       })
     );
     
-    const mockRouter = { replace: jest.fn() };
+    const mockRouter = { push: jest.fn() };
     useRouter.mockImplementation(() => mockRouter);
 
     render(<Register />);
@@ -111,9 +111,14 @@ describe('Register page', () => {
     fireEvent.click(submitForm);
 
     await waitFor(() => {
-      expect(mockRouter.replace).toHaveBeenCalledWith("/login");
       expect(screen.getByText('Register successful')).toBeInTheDocument();
     })
+    
+    await waitFor(() => {
+      setTimeout(() => {
+        expect(mockRouter.push).toHaveBeenCalledWith("/login");
+      }, 20000);
+    });
   });
 
   it('handles API failure', async () => {

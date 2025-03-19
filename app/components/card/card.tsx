@@ -6,18 +6,19 @@ import styles from "../../styles/components/card.module.scss"
 
 import { InvoiceModal } from '../Invoice/invoice-modal';
 
-import { ICardData, IExpense } from '@/app/utils/types';
 import { formatToCurrencyBRL, parseCurrencyString } from '@/app/utils';
 import { CardItem } from './cardItem/cardItem';
+import { CardOutput } from '@/app/dto/cardDTO';
+import { Expense } from '@/app/dto/expenseDTO';
 
 interface IProps {
-  cards: ICardData[],
-  data: IExpense[],
+  cards: CardOutput[],
+  data: Expense[],
   date: string,
   username: string,
 }
 
-interface ICardList extends ICardData { 
+interface ICardList extends CardOutput { 
   invoice: number;
 }
 
@@ -35,13 +36,13 @@ export const Card = ({ cards, data, date, username }: IProps) => {
   const [cardList, setCardList] = useState<ICardList[]>([]);
   const [cardSelected, setCardSelect] = useState<ICardSelected>({ name: "", color: "" });
 
-  const filterByUniqueCards = (dataByMonth: IExpense[]) => {
+  const filterByUniqueCards = (dataByMonth: Expense[]) => {
     const cardSet = new Set<string>();
     dataByMonth.forEach((item) => cardSet.add(item.card));
     return Array.from(cardSet);
   };
 
-  const totalInvoice = (dataByMonth: IExpense[]) => {
+  const totalInvoice = (dataByMonth: Expense[]) => {
     const result = dataByMonth.reduce<IInvoice[]>((acc, expense) => {
       const cardName = expense.card;
       const value = parseCurrencyString(expense.value);
@@ -61,11 +62,11 @@ export const Card = ({ cards, data, date, username }: IProps) => {
 
   const getCardsFilteredMonth = useCallback((cardList: string[]) => {
     const newList = cardList.map((item) => cards.find((card) => card.name === item)); 
-    const filteredList = newList.filter((card): card is ICardData => card !== undefined);
+    const filteredList = newList.filter((card): card is CardOutput => card !== undefined);
     return filteredList;
   }, [cards]);
 
-  const addInvoice = useCallback((cardList: ICardData[], total: IInvoice[]) => {
+  const addInvoice = useCallback((cardList: CardOutput[], total: IInvoice[]) => {
     const newCardList = cardList.map((card) => {
       const invoiceCard = total.find((invoice) => invoice.card === card.name)
       return {...card, invoice: invoiceCard?.value || 0}

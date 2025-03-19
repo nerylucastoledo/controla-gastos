@@ -6,14 +6,14 @@ import styles from "../../../styles/toast.module.scss";
 
 describe('Toast Component', () => {
   it('renders success message with success class', () => {
-    render(<Toast success={true} message={"Test message"} />);
+    render(<Toast success={true} message={"Test message"} setShowToast={() => {}} show={true} />);
     const toastElement = screen.getByText("Test message");
     expect(toastElement).toBeInTheDocument();
     expect(toastElement.parentElement).toHaveClass(styles.toast_success);
   });
 
   it('renders error message with error class', () => {
-    render(<Toast success={false} message={"Failed message"} />);
+    render(<Toast success={false} message={"Failed message"} setShowToast={() => {}} show={true} />);
     const toastElement = screen.getByText("Failed message");
     expect(toastElement).toBeInTheDocument();
     expect(toastElement.parentElement).toHaveClass(styles.toast_error);

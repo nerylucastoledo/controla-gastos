@@ -1,29 +1,23 @@
 "use client"
 
-import React, { SetStateAction, useCallback, useState } from 'react'
+import React, { SetStateAction, useState } from 'react'
 
 import { Modal } from '@/app/components/modal/modal'
 
 import { fetcherPost } from '@/app/utils';
-import { ICard, IPeople } from '@/app/utils/types';
 import { Toast } from '../toast/toast';
+import { PeopleOutput } from '@/app/dto/peopleDTO';
+import { CardOutput } from '@/app/dto/cardDTO';
+import { ResponseErrorOutput, ResponseOutput } from '@/app/dto/fetch';
 
 interface IProps {
-  item: IPeople | ICard | null
+  item: PeopleOutput | CardOutput | null
   mutate: () => void;
   onCustomDismiss: (value: SetStateAction<boolean>) => void;
 }
 
 export const ModalConfigDelete = ({ item, onCustomDismiss, mutate }: IProps) => {
-  const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
-  console.log(item)
-
-  const handleToast = useCallback(async (error: boolean, message: string) => {
-    setToastCustom({ error, message })
-    onCustomDismiss(false)
-    setTimeout(() => setToastCustom({ error, message: "" }), 2000);
-  }, [onCustomDismiss])
-
+  const [toast, setToast] = useState<{ success: boolean; message: string } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,20 +29,33 @@ export const ModalConfigDelete = ({ item, onCustomDismiss, mutate }: IProps) => 
         url = `cards/${item?._id}`;
       }
       
-      const response = await fetcherPost<IPeople | ICard, { message: string }>(
+      const response = await fetcherPost<PeopleOutput | CardOutput, ResponseOutput | ResponseErrorOutput>(
         `${process.env.NEXT_PUBLIC_API_URL}/${url}`, 
         "DELETE",
       );
+      
+      if ("error" in response) {
+        throw new Error(response.message)
+      }
+      
+      setToast({ success: true, message: response.message })
       mutate()
-      handleToast(true, response.message)
     } catch (err) {
-      handleToast(false, (err as Error).message);
+      const message = err instanceof Error ? err.message : "Ocorreu um erro inesperado.";
+      setToast({ success: false, message: message })
+    } finally {
+      onCustomDismiss(false)
     }
   }
 
   return (
     <>
-      <Toast message={toastCustom.message} success={toastCustom.error} />
+      <Toast 
+        success={toast?.success}
+        message={toast?.message}
+        show={toast ? true : false}
+        setShowToast={setToast}
+      />
       
       <Modal
         background='#1E1E1E'

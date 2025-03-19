@@ -10,29 +10,16 @@ import stylesNewExpense from "../../styles/pages/new-expense.module.scss";
 
 import { categorys, fetcher, fetcherPost, formatCurrency, months, years } from "../../utils";
 
-import { Error } from "../../components/error/Error";
+import { Error as ErrorComponent } from "../../components/error/Error";
 import { Input } from "../../components/input/input";
 import { Select } from "../../components/select/select";
 import { Toast } from "../../components/toast/toast";
 
 import Loading from "./loading";
-
-import { ICard, IPeople } from "../../utils/types";
-
-interface IBody {
-  card: string;
-  category: string;
-  date: string;
-  installments: number;
-  item: string;
-  people: string;
-  username: string;
-  value: string;
-}
-
-interface IData {
-  data: IPeople[] | ICard[]
-}
+import { PeopleOutput } from "@/app/dto/peopleDTO";
+import { CardOutput } from "@/app/dto/cardDTO";
+import { Expense } from "@/app/dto/expenseDTO";
+import { ResponseErrorOutput, ResponseOutput } from "@/app/dto/fetch";
 
 export default function NewExpense() {
   const date = new Date()
@@ -45,24 +32,24 @@ export default function NewExpense() {
   const [item, setItem] = useState("")
   const [hasInstallment, setHasInstallment] = useState(false);
   const [installments, setInstallments] = useState(1)
-  const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
+  const [toast, setToast] = useState<{ success: boolean; message: string } | null>(null);
 
   const router = useRouter()
   const { username } = useUser();
 
   useEffect(() => {
-      const token = sessionStorage.getItem("token");
-      if (!token) {
-        router.push("/login");
-      }
-    }, [username, router]);
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      router.push("/login");
+    }
+  }, [router]);
 
-  const { data: peopleData, error: peopleError, mutate: mutatePeople, isLoading: loadingPeople } = useSWR<IData>(
+  const { data: peopleData, error: peopleError, mutate: mutatePeople, isLoading: loadingPeople } = useSWR<{ data: PeopleOutput[]}>(
     username ? `${process.env.NEXT_PUBLIC_API_URL}/peoples/${username}` : null, 
     fetcher
   );
   
-  const { data: cardData, error: cardError, mutate: mutateCard, isLoading: loadingCard } = useSWR<IData>(
+  const { data: cardData, error: cardError, mutate: mutateCard, isLoading: loadingCard } = useSWR<{ data: CardOutput[]}>(
     username ? `${process.env.NEXT_PUBLIC_API_URL}/cards/${username}` : null, 
     fetcher
   );
@@ -71,11 +58,6 @@ export default function NewExpense() {
     mutatePeople()
     mutateCard()
   }
-
-  const handleToast = useCallback(async (error: boolean, message: string) => {
-    setToastCustom({ error, message })
-    setTimeout(() => setToastCustom({ error, message: "" }), 2000);
-  }, [])
 
   const resetOptions = useCallback(() => {
     setPeople("")
@@ -88,7 +70,7 @@ export default function NewExpense() {
   }, [])
 
   if (loadingPeople || loadingCard) return <Loading />
-  if (peopleError || cardError) return <Error mutate={handleFetch} />
+  if (peopleError || cardError) return <ErrorComponent mutate={handleFetch} />
   if (!peopleData || !cardData) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -106,21 +88,31 @@ export default function NewExpense() {
         value,
       }
 
-      const response = await fetcherPost<IBody, { message: string }>(`${process.env.NEXT_PUBLIC_API_URL}/expenses`, 
+      const response = await fetcherPost<Expense, ResponseOutput | ResponseErrorOutput>(`${process.env.NEXT_PUBLIC_API_URL}/expenses`, 
         "POST", 
         body
       );
+
+      if ("error" in response) {
+        throw new Error(response.message)
+      }
       
-      handleToast(true, response.message)
+      setToast({ success: true, message: response.message })
       resetOptions()
     } catch (err) {
-      handleToast(false, (err as Error).message);
+      const message = err instanceof Error ? err.message : "Ocorreu um erro inesperado.";
+      setToast({ success: false, message: message })
     }
   }
 
   return (
     <section className={`container ${stylesNewExpense.new_expense}`}>
-      <Toast message={toastCustom.message} success={toastCustom.error} />
+      <Toast 
+        success={toast?.success}
+        message={toast?.message}
+        show={toast ? true : false}
+        setShowToast={setToast}
+      />
 
       <div className={styles.container_home}>
         <form onSubmit={handleSubmit}>

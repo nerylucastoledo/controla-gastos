@@ -1,13 +1,14 @@
 "use client"
 
-import React, { SetStateAction, useCallback, useState } from 'react'
+import React, { SetStateAction, useState } from 'react'
 
 import { Input } from '@/app/components/input/input'
 import { Modal } from '@/app/components/modal/modal'
 
 import { fetcherPost } from '@/app/utils';
-import { ICard, IPeople } from '@/app/utils/types';
 import { Toast } from '../toast/toast';
+import { PeopleOutput } from '@/app/dto/peopleDTO';
+import { CardOutput } from '@/app/dto/cardDTO';
 
 interface IUpdate {
   _id: string;
@@ -16,20 +17,14 @@ interface IUpdate {
 }
 
 interface IProps {
-  item: IPeople | ICard | null;
+  item: PeopleOutput | CardOutput | null;
   mutate: () => void;
   onCustomDismiss: (value: SetStateAction<boolean>) => void;
 }
 
 export const ModalEditConfig = ({ item, mutate, onCustomDismiss }: IProps) => {
   const [itemUpdated, setItemUpdated] = useState(item);
-  const [toastCustom, setToastCustom] = useState({ error: true, message: ""});
-
-  const handleToast = useCallback(async (error: boolean, message: string) => {
-      setToastCustom({ error, message })
-      onCustomDismiss(false)
-      setTimeout(() => setToastCustom({ error, message: "" }), 2000);
-    }, [onCustomDismiss])
+  const [toast, setToast] = useState<{ success: boolean; message: string } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,16 +50,29 @@ export const ModalEditConfig = ({ item, mutate, onCustomDismiss }: IProps) => {
         "PUT", 
         body
       );
+
+      if ("error" in response) {
+        throw new Error(response.message)
+      }
+
+      setToast({ success: true, message: response.message })
       mutate()
-      handleToast(true, response.message)
     } catch (err) {
-      handleToast(false, (err as Error).message);
+      const message = err instanceof Error ? err.message : "Ocorreu um erro inesperado.";
+      setToast({ success: false, message: message })
+    } finally {
+      onCustomDismiss(false)
     }
   }
 
   return (
     <>
-      <Toast message={toastCustom.message} success={toastCustom.error} />
+      <Toast 
+        success={toast?.success}
+        message={toast?.message}
+        show={toast ? true : false}
+        setShowToast={setToast}
+      />
       
       <Modal
         background='#1E1E1E'

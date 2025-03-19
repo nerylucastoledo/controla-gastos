@@ -25,6 +25,7 @@ export const DateProvider: React.FC<IDateProviderProps> = ({ children }) => {
 
 export const useDate = () => {
   const context = useContext(DateContext);
+  
   if (!context) {
     throw new Error('useDate must be used within a DateProvider');
   }

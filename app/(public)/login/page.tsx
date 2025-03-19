@@ -15,31 +15,17 @@ import { useUser } from "../../context/user";
 import { fetcherPost, formatToCurrencyBRL } from "../../utils";
 import wallet from "../../images/wallet.webp";
 import walletRetina from "../../images/wallet-retina.webp";
-
-interface IResponse {
-  message: string,
-  salary: number,
-  username: string,
-  token: string
-}
-
-interface IData {
-  email: string;
-  password: string;
-}
+import { LoginInput, LoginOutput } from "@/app/dto/authDTO";
+import { ResponseErrorOutput } from "@/app/dto/fetch";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [toastCustom, setToastCustom] = useState({ error: true, message: "" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [toast, setToast] = useState<{ success: boolean; message: string } | null>(null);
 
   const router = useRouter()
   const { setUsername, setSalary }  = useUser()
-
-  const handleToast = useCallback(async (error: boolean, message: string) => {
-    setToastCustom({ error, message })
-    setTimeout(() => setToastCustom({ error, message: "" }), 2000);
-  }, [])
 
   const handleLocalStorage = useCallback((username: string, salary: number, token: string) => {
     localStorage.setItem("username", username)
@@ -54,30 +40,41 @@ export default function Login() {
   
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsSubmitting(true)
 
     try {
       const body = { email, password }
-      const response = await fetcherPost<IData, IResponse>(`${process.env.NEXT_PUBLIC_API_URL}/login`,
+
+      const response = await fetcherPost<LoginInput, LoginOutput | ResponseErrorOutput>(
+        `${process.env.NEXT_PUBLIC_API_URL}/login`,
         "POST", 
         body,
       );
 
-      const { username, salary, message, token } = response;
+      if ("error" in response) {
+        throw new Error(response.message)
+      }
 
-      handleLocalStorage(username, salary, token)
-      handleState(username, salary)
-      await handleToast(true, message)
-      router.push("/");
-      
+      handleLocalStorage(response.username, response.salary, response.token)
+      handleState(response.username, response.salary)
+      setToast({ success: true, message: response.message })
+      setTimeout(() => router.push("/"), 1000);
+
     } catch (err) {
-      const message = (err as Error).message
-      handleToast(false, message)
+      const message = err instanceof Error ? err.message : "Ocorreu um erro inesperado.";
+      setToast({ success: false, message: message })
+      setIsSubmitting(false)
     }
   }
 
   return (
     <div className={styles.background}>
-      <Toast success={toastCustom.error} message={toastCustom.message} />
+      <Toast 
+        success={toast?.success}
+        message={toast?.message}
+        show={toast ? true : false}
+        setShowToast={setToast}
+      />
 
       <div className={styles.container_user}>
         <div className={styles.container_user__info}>
@@ -126,6 +123,7 @@ export default function Login() {
               type="submit" 
               value="Acessar" 
               className="button button__primary"
+              disabled={isSubmitting}
             />
           </form>
 
