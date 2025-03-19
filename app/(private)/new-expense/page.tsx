@@ -27,7 +27,7 @@ export default function NewExpense() {
   const [year, setYear] = useState(date.getFullYear().toString());
   const [people, setPeople] = useState("");
   const [card, setCard] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState<typeof categorys[number] | undefined>(undefined);
   const [value, setValue] = useState("R$ 0,00");
   const [item, setItem] = useState("")
   const [hasInstallment, setHasInstallment] = useState(false);
@@ -62,7 +62,7 @@ export default function NewExpense() {
   const resetOptions = useCallback(() => {
     setPeople("")
     setCard("")
-    setCategory("")
+    setCategory(undefined)
     setItem("")
     setValue("R$ 0,00")
     setHasInstallment(false)
@@ -80,7 +80,7 @@ export default function NewExpense() {
       const body = {
         "date": `${month}${year}`,
         card,
-        category,
+        category: category as typeof categorys[number],
         item,
         installments,
         people,
@@ -195,9 +195,9 @@ export default function NewExpense() {
                 data-testid="category-select" 
                 id='category' 
                 label='Categoria' 
-                onChange={({ target }) => setCategory(target.value)}
+                onChange={({ target }) => setCategory(target.value as typeof categorys[number])}
                 required
-                value={category}
+                value={category as typeof categorys[number]}
               >
                 <option value={""} disabled>Selecione a categoria</option>
                 {categorys.map((category) => <option key={category} value={category}>{category}</option>)}

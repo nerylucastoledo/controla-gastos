@@ -1,10 +1,11 @@
+import { categorys } from "../utils";
 import { CardOutput } from "./cardDTO";
 
 export interface Expense {
   username: string;
   date: string;
   people: string;
-  category: string;
+  category: typeof categorys[number];
   value: string;
   item: string;
   card: string;
