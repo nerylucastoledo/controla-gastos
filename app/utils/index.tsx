@@ -93,24 +93,29 @@ export const fetcher = async (url: string) => {
 }
 
 export const fetcherPost = async <T, R>(url: string, method: string, body?: T): Promise<R> => {
-	try {
-		const res = await fetch(url, {
-			method,
-			credentials: 'include',
-			headers: {
-				"Content-Type": "application/json",
-				'Authorization': sessionStorage.getItem('token') || '',
-			},
-			body: JSON.stringify(body),
-		});
-		
-		if (!res.ok) {
-			const result = await res.json();
-			throw new Error(result.message ?? 'Ocorreu um erro interno! Tente novamente');
+	const request = await fetch(url, {
+		method,
+		credentials: 'include',
+		headers: {
+			"Content-Type": "application/json",
+			'Authorization': sessionStorage.getItem('token') || '',
+		},
+		body: JSON.stringify(body),
+	}).then(async (res) => {
+		const response = await res.json();
+
+		if (res.ok) {
+			return response;
 		}
 
-		return res.json() as Promise<R>;
-	} catch (err) {
-		throw err;
-	}
+		throw new Error(response.message);
+	}).catch(async (err) => {
+		return {
+			error: true,
+			message: err.message
+		}
+	});
+
+	const response = await request;
+	return response;
 };
