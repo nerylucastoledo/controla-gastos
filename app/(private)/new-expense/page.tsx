@@ -1,8 +1,7 @@
 "use client"
 
 import { useUser } from "../../context/user";
-import { useCallback, useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useCallback, useState } from "react";
 import useSWR from "swr";
 
 import styles from "../../styles/pages/home.module.scss";
@@ -20,6 +19,7 @@ import { PeopleOutput } from "@/app/dto/peopleDTO";
 import { CardOutput } from "@/app/dto/cardDTO";
 import { Expense } from "@/app/dto/expenseDTO";
 import { ResponseErrorOutput, ResponseOutput } from "@/app/dto/fetch";
+import { useAuth } from "@/app/context/auth";
 
 export default function NewExpense() {
   const date = new Date()
@@ -27,22 +27,15 @@ export default function NewExpense() {
   const [year, setYear] = useState(date.getFullYear().toString());
   const [people, setPeople] = useState("");
   const [card, setCard] = useState("");
-  const [category, setCategory] = useState<typeof categorys[number] | undefined>(undefined);
+  const [category, setCategory] = useState<typeof categorys[number] | "">("");
   const [value, setValue] = useState("R$ 0,00");
   const [item, setItem] = useState("")
   const [hasInstallment, setHasInstallment] = useState(false);
   const [installments, setInstallments] = useState(1)
   const [toast, setToast] = useState<{ success: boolean; message: string } | null>(null);
 
-  const router = useRouter()
   const { username } = useUser();
-
-  useEffect(() => {
-    const token = sessionStorage.getItem("token");
-    if (!token) {
-      router.push("/login");
-    }
-  }, [router]);
+  useAuth();
 
   const { data: peopleData, error: peopleError, mutate: mutatePeople, isLoading: loadingPeople } = useSWR<{ data: PeopleOutput[]}>(
     username ? `${process.env.NEXT_PUBLIC_API_URL}/peoples/${username}` : null, 
@@ -62,7 +55,7 @@ export default function NewExpense() {
   const resetOptions = useCallback(() => {
     setPeople("")
     setCard("")
-    setCategory(undefined)
+    setCategory("")
     setItem("")
     setValue("R$ 0,00")
     setHasInstallment(false)
@@ -197,7 +190,7 @@ export default function NewExpense() {
                 label='Categoria' 
                 onChange={({ target }) => setCategory(target.value as typeof categorys[number])}
                 required
-                value={category as typeof categorys[number]}
+                value={category as typeof categorys[number] ?? ""}
               >
                 <option value={""} disabled>Selecione a categoria</option>
                 {categorys.map((category) => <option key={category} value={category}>{category}</option>)}

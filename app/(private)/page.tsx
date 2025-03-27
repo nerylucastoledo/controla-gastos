@@ -30,7 +30,6 @@ export default function Home() {
   
   const { setCurrentDate } = useDate();
   const { username, salary } = useUser();
-
   useAuth();
 
   useEffect(() => {

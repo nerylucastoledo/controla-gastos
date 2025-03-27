@@ -22,7 +22,6 @@ export default function NewOption() {
   const [toast, setToast] = useState<{ success: boolean; message: string } | null>(null);
 
   const { username } = useUser();
-  
   useAuth()
 
   const resetOptions = useCallback(() => {
@@ -41,7 +40,8 @@ export default function NewOption() {
         ...(type === "cards" ? { color } : {})
       };
 
-      const response = await fetcherPost<NewOptionInput, ResponseOutput | ResponseErrorOutput>(`${process.env.NEXT_PUBLIC_API_URL}/${type}`, 
+      const response = await fetcherPost<NewOptionInput, ResponseOutput | ResponseErrorOutput>(
+        `${process.env.NEXT_PUBLIC_API_URL}/${type}`, 
         "POST", 
         body
       );
