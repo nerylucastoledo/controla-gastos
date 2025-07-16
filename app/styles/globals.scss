@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 * {
 	margin: 0;
 	padding: 0;
@@ -7,167 +9,81 @@
 }
 
 body {
-	background-color: #121212;
-	margin-bottom: 95px;
+	background-color: #121417;
+	font-family: "Montserrat", sans-serif;
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
 }
 
 .title {
-	text-align: center;
-	color: #FFD700;
+	color: #fff;
+	font-size: 2rem;
+	margin-bottom: 16px;
 }
 
 .subtitle {
+	color: #b0b0b0;
+	font-size: 16px;
+	margin-bottom: 42px;
 	text-align: center;
-	color: #B0B0B0;
 }
 
-// Modal form
-.modal-form {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
-	background-color: rgba(0, 0, 0, 0.5);
-	z-index: 1000;
-	
-	.button {
-		display: block;
-		margin: 0 auto;
-	}
-
-	form {
-	  display: flex;
-	  flex-direction: column;
-	  gap: 24px;	
-	  background-color: #1b1b1b;
-	  padding: 24px;
-	  width: 100%;
-	  max-width: 600px;
-	  border-radius: 12px;
-	}
-  
-	> div {
-	  border-radius: 12px;
-	  position: fixed;
-	  display: flex;
-	  align-items: center;
-	  justify-content: center;
-	  height: 100%;
-	  max-width: 648px;
-	  width: calc(100% - 32px);
-  
-	  > div {
-			padding: 48px 24px;
-			display: flex;
-			align-items: center;
-			border-radius: 12px;
-
-			button {
-				margin-top: -44px;
-				margin-right: -32px;
-			}
-	  }
-	}
+.error {
+	color: rgb(193, 65, 65);
+	font-size: 12px;
+	text-align: center;
+	font-weight: bold;
 }
 
-.button {
-	max-width: 342px;
+table {
 	width: 100%;
-	height: 56px;
-	text-align: center;
-	border-radius: 24px;
-	border: unset;
-	cursor: pointer;
+	border-collapse: collapse;
+	background-color: #2B3640;
+	border-radius: 12px;
+	overflow: auto;
+	height: 350px;
 	display: block;
-	margin: 0 auto;
 
-	&:disabled {
-		opacity: 0.5;
-		cursor: not-allowed;
+	&::-webkit-scrollbar {
+		width: 0px;
 	}
 
-	&__primary {
-		background: #007BFF;
-		box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-		color: #fff;
+	thead {
+		border-bottom: 1px solid #ddd;
 	}
-}
 
-input, select {
-	border: unset;
-	width: 100%;
-	padding: 16px 0;
-	order: 1;
-	background-color: #2A2A2A;
-	border: 1px solid #3E3E3E;
-	color: #FFFFFF;
-
-	&:focus-visible {
-		outline: unset;
-	}
-}
-
-.form-control {
-	display: flex;
-	flex-direction: column;
-	gap: 8px;
-
-	label {
+	thead, tbody {
 		display: block;
+	}
+
+	tr {
+		display: flex;
+
+		&:nth-child(even) {
+			background-color: #3C4755;
+		}
+	}
+
+	th, td {
+		text-align: left;
 		color: #fff;
-		order: 0;
-		color: #FFFFFF;
-		cursor: pointer;
-		width: max-content;
+		flex: 1;
 	}
 
-	input {
-		border-radius: 8px;
-		height: 56px;
-		padding: 0 16px;
-		font-size: 16px;
+	th {
+		padding: 16px;
 	}
-}
 
-.container {
-	padding: 0 24px;
-}
+	td {
+		padding: 24px;
+		display: flex;
+		align-items: center;
+		gap: 8px;
 
-.content_card {
-	padding: 16px;
-	border-radius: 8px;
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
-	background-color: #1E1E1E;
-	flex: 1;
-	flex-grow: 1;
-	min-width: 320px;
-
-	&__title {
-		font-size: 24px;
-		color: #FFD700;
+		svg {
+			width: 20px;
+			height: 20px;
+		}
 	}
-}
-
-.wrapper-chart {
-	height: 272px;
-	width: 272px;
-}
-
-.empty {
-	color: #fff;
-	display: flex;
-	height: 100%;
-	align-items: center;
-	justify-content: center;
-	padding: 24px 0;
-}
-
-
-@media (min-width: 988px) {
-	body {
-    margin-bottom: 0;
-  }
 }

@@ -1,8 +1,5 @@
-export interface ResponseErrorOutput {
-  message: string;
-  error: boolean;
-}
-
-export interface ResponseOutput {
-  message: string;
+export type ResponseAPIOutput = {
+  ok: boolean;
+  error: string;
+  data: null;
 }

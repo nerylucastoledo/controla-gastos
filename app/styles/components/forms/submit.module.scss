@@ -1,0 +1,45 @@
+.button {
+  background-color: #4096F5;
+  border: unset;
+  padding: 16px;
+  max-width: 342px;
+  width: 100%;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  display: block;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+
+  &:hover {
+    background-color: #296cb4;
+  }
+
+  &:disabled {
+    background-color: #8b8787;
+    cursor: not-allowed;
+
+    svg {
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@media (min-width: 988px) {
+  .button {
+    max-width: 540px;
+  }
+}

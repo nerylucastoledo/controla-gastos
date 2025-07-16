@@ -1,65 +1,34 @@
-import '../styles/globals.scss';
+import { Metadata } from "next";
 
-import { Montserrat } from 'next/font/google'
-import { Navigation } from '../components/navigation/navigation';
-import { Providers } from '../providers';
+import { HeaderPrivate } from "../components/header/header-private";
 
-import { IoHomeSharp } from "react-icons/io5";
-import { IoIosAddCircle } from "react-icons/io";
-import { MdOutlineLogout } from "react-icons/md";
-import { PiSealBold } from "react-icons/pi";
+import { UserContextProvider } from "@/context/user-context";
+import { DateContextProvider } from "@/context/date-context";
 
-import { Metadata } from 'next';
- 
-const montserrat = Montserrat({ subsets: ['latin'] })
+import styles from "../styles/pages/private.module.scss";
 
 export const metadata: Metadata = {
-  title: "Controla gastos | Página inicial",
-  description: "Na página inicial do Controla gastos você irá conseguir entender para onde o seu dinheiro esta indo e ter maior controle sobre ele.",
+  title: "Controla gastos | Acessar",
+  description: "Acesse o Controla gastos para conseguir entender para onde o seu dinheiro esta indo e ter maior controle sobre ele."
 }
 
-export default function LayoutPrivate({ children }: { children: React.ReactNode }) {
-  const links = [
-    {
-      href:"/",
-      icon: <IoHomeSharp size={20} />,
-      name_mobile: "Ínicio",
-      name_desktop: "Ínicio",
-    },
-    {
-      href:"/new-expense",
-      icon: <IoIosAddCircle size={20} />,
-      name_mobile: "Gasto",
-      name_desktop: "Novo gasto",
-    },
-    {
-      href:"/new-option",
-      icon: <IoIosAddCircle size={20} />,
-      name_mobile: "Opção",
-      name_desktop: "Novo opção",
-    },
-    {
-      href:"/config",
-      icon: <PiSealBold size={20} />,
-      name_mobile: "Perfil",
-      name_desktop: "Perfil",
-    },
-    {
-      href:"#",
-      icon: <MdOutlineLogout size={24} />,
-      name_mobile: "",
-    },
-  ]
-
+export default function PrivateLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
   return (
-    <div className={montserrat.className}>
-      <link rel="icon" href="/images/favicon.ico" sizes="any" />
+    <html lang="en">
+      <body>
+        <UserContextProvider>
+          <DateContextProvider>
+            <>
+              <HeaderPrivate />
 
-      <Navigation navLinks={links} />
-
-      <Providers>
-        { children }
-      </Providers>
-    </div>
+              <div className={styles.private}>
+                { children }
+              </div>
+            </>
+          </DateContextProvider>
+        </UserContextProvider>
+        
+      </body>
+    </html>
   );
 }

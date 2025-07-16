@@ -1,0 +1,22 @@
+.public {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  flex: 1;
+  margin-top: 32px;
+
+  a {
+    color: #fff;
+    text-decoration: underline;
+    text-align: center;
+    margin-top: 16px;
+  }
+}
+
+@media (min-width: 988px) {
+  .public {
+    margin-top: 0;
+  }
+}

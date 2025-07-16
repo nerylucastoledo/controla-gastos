@@ -1,48 +1,38 @@
-import React, { Dispatch, SetStateAction } from 'react';
+"use client";
 
-import { Select } from '../select/select';
+import React from 'react'
 
-import { months, years } from "../../utils/index"
+import { Select } from '../forms/select'
 
-interface IProps {
-  currentMonth: string,
-  currentYear: string
-  setMonth: Dispatch<SetStateAction<string>>;
-  setYear: Dispatch<SetStateAction<string>>;
-}
+import styles from "../../styles/components/filter/filter.module.scss";
 
-export const Filter = ({ currentMonth, currentYear, setMonth, setYear }: IProps) => {
+import { months, years } from '@/app/utils';
+import { useDate } from '@/context/date-context';
+
+export const Filter = () => {
+  const { date, setDate } = useDate();
+
+  const handleChangeMonth = (value: string) => {
+    setDate((prev) => ({ ...prev, month: value }));
+  }
+
+  const handleChangeYear = (value: string) => {
+    setDate((prev) => ({ ...prev, year: value }));
+  }
+
   return (
-    <div className="content_card">
-      <h1 className='content_card__title'>filtro</h1>
+    <div className={styles.filter}>
+      <Select 
+        options={months} 
+        defaultValue={date?.month} 
+        handleChange={handleChangeMonth} 
+      />
 
       <Select 
-        label={"mês"} 
-        id={"month"}
-        data-testid="month-select" 
-        value={currentMonth} 
-        onChange={({ target }) => setMonth(target.value)}
-      >
-        {months.map((month) => (
-          <option key={month} value={month}>
-            {month === "Marco" ? "Março" : month}
-          </option>
-        ))}
-      </Select>
-
-      <Select 
-        label={"ano"} 
-        id={"year"}
-        data-testid="year-select" 
-        value={currentYear}
-        onChange={({ target }) => setYear(target.value)}
-      >
-        {years.map((year) => (
-          <option key={year} value={year}>
-            {year}
-          </option>
-        ))}
-      </Select>
+        options={years} 
+        defaultValue={date?.year} 
+        handleChange={handleChangeYear} 
+      />
     </div>
-  );
+  )
 }

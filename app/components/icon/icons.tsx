@@ -27,14 +27,14 @@ const iconMap = {
 
 export type IconName = keyof typeof iconMap;
 
-const Icon = ({ name }: { name: IconName }) => {
+const Icon = ({ name, color = "#fff" }: { name: IconName, color?: string }) => {
   const IconComponent = iconMap[name];
 
   if (IconComponent) {
-    return <IconComponent data-testid="icon" color="#005B96" size={20} />
+    return <IconComponent data-testid="icon" color={color} size={20} />
   }
 
-  return <FaQuestion data-testid="icon" color="#005B96" size={20} />
+  return <FaQuestion data-testid="icon" color={color} size={20} />
 }
 
 export default Icon

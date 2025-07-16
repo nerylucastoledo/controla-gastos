@@ -1,0 +1,53 @@
+.budget {
+  h1 {
+    margin-bottom: 20px;
+  }
+
+  .container {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    .item {
+      background-color: #2B3640;
+      border-radius: 12px;
+      padding: 16px;
+      flex: 1;
+
+      h2, p {
+        color: #fff;
+      }
+
+      h2 {
+        font-size: 16px;
+        margin-bottom: 8px;
+      }
+
+      p {
+        font-size: 16px;
+
+        &.positive {
+          color: #00B37E;
+        }
+
+        &.negative {
+          color: #F75A68;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 988px) {
+  .budget {
+    .container {
+      .item {
+        padding: 24px;
+        
+        p {
+          font-size: 24px;
+        }
+      }
+    }
+  }
+}
