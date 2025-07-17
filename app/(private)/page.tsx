@@ -1,8 +1,7 @@
-import React, { Suspense } from 'react'
+import React from 'react'
 import { Metadata } from 'next';
 
-import HomePage from '../pages/home';
-import Loading from './loading';
+import HomePage from '@/components/home/home';
 
 export const metadata: Metadata = {
   title: "Controla gastos | Ínicio",
@@ -11,10 +10,6 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   return (
-    <>
-      <Suspense fallback={<Loading />}>
-        <HomePage />
-      </Suspense>
-    </>
+    <HomePage />
   )
 }

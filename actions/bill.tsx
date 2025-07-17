@@ -1,8 +1,9 @@
 "use server";
 
-import { FETCH_EXPENSES_DATA } from "@/app/api";
-import apiError from "@/app/utils/api-error";
+import { FETCH_EXPENSES_DATA } from "@/utils/api";
+import apiError from "../utils/api-error";
 
+// Funcao generica que recebe a tipage
 export default async function bill(url: string) {
   try {
     const response = await FETCH_EXPENSES_DATA(url);
@@ -12,11 +13,7 @@ export default async function bill(url: string) {
       throw new Error(data.message);
     }
 
-    return {
-      ok: true,
-      error: "",
-      data: data.data,
-    }
+    return data.data;
   } catch (error: unknown) {
     return apiError(error);
   }

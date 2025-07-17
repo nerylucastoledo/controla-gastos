@@ -1,9 +1,9 @@
 "use server";
 
-import { TOKEN_POST } from "@/app/api";
-import { RegisterInput } from "@/app/dto/authDTO";
-import { parseCurrencyString } from "@/app/utils";
-import apiError from "@/app/utils/api-error";
+import { TOKEN_POST } from "../utils/api";
+import { RegisterInput } from "../dto/authDTO";
+import { parseCurrencyString } from "../utils";
+import apiError from "../utils/api-error";
 import login from "./login";
 import { redirect } from "next/navigation";
 
@@ -62,9 +62,13 @@ export default async function register(state: {}, formData: FormData) {
     if (!ok) {
       throw new Error("Erro ao fazer login, tente novamente.");
     }
+
+    return {
+      ok: true,
+      error: '',
+      data: data,
+    }
   } catch (error: unknown) {
     return apiError(error);
   }
-
-  redirect("/");
 };

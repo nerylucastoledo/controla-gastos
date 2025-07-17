@@ -1,0 +1,17 @@
+export enum Category {
+  "Alimentação",
+  "Doação",
+  "Educação",
+  "Entretenimento",
+  "Imposto",
+  "Investimentos",
+  "Lazer",
+  "Moradia",
+  "Não previsto",
+  "Outros",
+  "Saúde",
+  "Tecnologia",
+  "Transporte",
+  "Vestuário",
+  "Viagens",
+};

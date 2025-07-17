@@ -3,9 +3,9 @@
 import { redirect } from 'next/navigation'
 import { cookies } from "next/headers";
 
-import { TOKEN_POST } from "@/app/api";
-import { LoginInput } from "@/app/dto/authDTO";
-import apiError from "@/app/utils/api-error";
+import { TOKEN_POST } from "@/utils/api";
+import { LoginInput } from "../dto/authDTO";
+import apiError from "@/utils/api-error";
 
 const setCookie = async (name: string, value: string) => {
   const cookieStore = await cookies();
@@ -34,9 +34,12 @@ export default async function login(state: {}, formData: FormData) {
     }
     
     await setCookie("token", data.token);
+    return {
+      ok: true,
+      error: '',
+      data: data,
+    }
   } catch (error: unknown) {
     return apiError(error);
   }
-
-  redirect("/");
 };

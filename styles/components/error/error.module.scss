@@ -1,0 +1,37 @@
+.error {
+  text-align: center;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+
+  img {
+    border-radius: 12px;
+    margin-bottom: 24px;
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  p {
+    margin-bottom: 24px;
+    max-width: 480px;
+    display: block;
+    margin: 0 auto 24px;
+  }
+
+  button {
+    background-color: transparent;
+    color: #fff;
+    background-color: #293038;
+    padding: 16px;
+    border: unset;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+}

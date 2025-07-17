@@ -1,6 +1,6 @@
 "use client";
 
-import { months } from "@/app/utils";
+import { months } from "@/utils";
 import { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
 
 type Date = {

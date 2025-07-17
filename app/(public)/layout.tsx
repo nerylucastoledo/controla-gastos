@@ -1,6 +1,6 @@
-import { HeaderPublic } from "@/app/components/header/header-public";
+import { HeaderPublic } from "@/components/header/header-public";
 
-import styles from "../styles/pages/public.module.scss";
+import styles from "../../styles/pages/public.module.scss";
 
 export default function PublicLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
   return (
@@ -8,9 +8,9 @@ export default function PublicLayout({ children }: Readonly<{ children: React.Re
       <body>
         <HeaderPublic />
         
-        <div className={styles.public}>
+        <main className={styles.public}>
           { children }
-        </div>
+        </main>
       </body>
     </html>
   );

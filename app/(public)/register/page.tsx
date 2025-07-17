@@ -1,4 +1,4 @@
-import CreateAccountForm from '@/app/components/login/create-account';
+import CreateAccountForm from '@/components/login/create-account';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {

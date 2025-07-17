@@ -1,0 +1,59 @@
+.skeletonHomepage {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeletonRow {
+  display: flex;
+  gap: 16px;
+}
+
+.skeletonSelect {
+  width: 240px;
+  height: 46px;
+  background-color: #e0e0e0;
+  border-radius: 12px;
+}
+
+.skeletonBox {
+  background-color: #e0e0e0;
+  border-radius: 8px;
+}
+
+.title {
+  width: 25%;
+  height: 24px;
+}
+
+.cards .card {
+  width: 404px;
+  height: 104px;
+  border-radius: 16px;
+}
+
+.table {
+  height: 400px;
+  width: 100%;
+  border-radius: 16px;
+}
+
+.chart {
+  height: 159px;
+  width: 100%;
+  border-radius: 16px;
+}
+
+/* Animação Pulse */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}
