@@ -1,8 +1,7 @@
+import { BillDTO } from "./bill";
+import { CardDTO } from "./cardDTO";
+
 export type Expense = {
-  data: [
-    {
-      month: string;
-      value: number;
-    }
-  ]
+  expenses: BillDTO[];
+  cards: CardDTO[];
 }

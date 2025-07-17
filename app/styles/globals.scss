@@ -39,18 +39,18 @@ body {
 table {
 	width: 100%;
 	border-collapse: collapse;
-	background-color: #2B3640;
 	border-radius: 12px;
 	overflow: auto;
 	height: 350px;
 	display: block;
+	border: 1px solid #3B4754;
 
 	&::-webkit-scrollbar {
 		width: 0px;
 	}
 
 	thead {
-		border-bottom: 1px solid #ddd;
+		background-color: #1C2126;
 	}
 
 	thead, tbody {
@@ -59,20 +59,19 @@ table {
 
 	tr {
 		display: flex;
+		border-bottom: 1px solid #fff;
 
-		&:nth-child(even) {
-			background-color: #3C4755;
-		}
 	}
 
 	th, td {
 		text-align: left;
-		color: #fff;
 		flex: 1;
 	}
 
 	th {
 		padding: 16px;
+		color: #fff;
+		font-weight: normal;
 	}
 
 	td {
@@ -80,10 +79,25 @@ table {
 		display: flex;
 		align-items: center;
 		gap: 8px;
+		color: #9CABBA;
 
 		svg {
 			width: 20px;
 			height: 20px;
 		}
+	}
+}
+
+.charts {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+@media (min-width: 988px) {
+	.charts {
+		flex-direction: row;
+		align-items: center;
+		gap: 32px;
 	}
 }

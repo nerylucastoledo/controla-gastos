@@ -19,12 +19,11 @@ export async function FETCH_EXPENSES_DATA(url: string ) {
   const cookieStore = await cookies();
   const token = cookieStore.get('token');
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/expenses/year/${url}`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/expenses/${url}`, {
     method: "GET",
     headers: {
       "Authorization": `${token?.value}`
     }
   });
-  await new Promise((resolve) => setTimeout(resolve, 10000)); // Simulate a delay
   return response;
 }

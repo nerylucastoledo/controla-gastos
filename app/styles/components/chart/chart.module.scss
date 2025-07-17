@@ -1,14 +1,12 @@
 .chart {
+  flex: 1;
+
   h1 {
     margin-bottom: 20px;
   }
 
   .container {
-    background-color: #2B3640;
-    padding: 16px;
     border-radius: 12px;
+    height: 400px;
   }
-}
-
-@media (min-width: 988px) {
 }

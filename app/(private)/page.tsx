@@ -11,8 +11,10 @@ export const metadata: Metadata = {
 
 export default async function Home() {
   return (
-    <Suspense fallback={<Loading />}>
-      <HomePage />
-    </Suspense>
+    <>
+      <Suspense fallback={<Loading />}>
+        <HomePage />
+      </Suspense>
+    </>
   )
 }

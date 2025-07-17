@@ -1,67 +1,27 @@
 import React from 'react'
 
 import styles from "../../styles/components/recent-transaction/recent-transaction.module.scss"
-import Icon from '../icon/icons'
+import Icon from '../icon/icon'
+import { BillDTO } from '@/app/dto/bill'
 
-export default function RecentTransaction() {
+export default function RecentTransaction({ data }: { data: BillDTO[] }) {
+  const lastTransactions = data.reverse().slice(0, 10);
+
   return (
     <div className={styles.recentTransaction}>
       <h1 className='title'>Transações recentes</h1>
 
       <div className={styles.container}>
-        <div className={styles.item}>
-          <Icon name={"Alimentação"} color='#000' />
-          <div>
-            <h2>Almoço no restaurante Almoço no restaurante</h2>
-            <p>R$ 50,00</p>
-            <p>Alessa</p>
+        {lastTransactions.map((transaction, index) => (
+          <div key={index} className={styles.item}>
+            <Icon name={transaction.category} color="#9CABBA" />
+            <div>
+              <h2>{transaction.item}</h2>
+              <p>{transaction.value}</p>
+              <p>{transaction.people}</p>
+            </div>
           </div>
-        </div>
-
-        <div className={styles.item}>
-          <Icon name={"Alimentação"} color='#000' />
-          <div>
-            <h2>Almoço no restaurante</h2>
-            <p>R$ 50,00</p>
-            <p>Alessa</p>
-          </div>
-        </div>
-
-        <div className={styles.item}>
-          <Icon name={"Alimentação"} color='#000' />
-          <div>
-            <h2>Almoço no restaurante</h2>
-            <p>R$ 50,00</p>
-            <p>Alessa</p>
-          </div>
-        </div>
-
-        <div className={styles.item}>
-          <Icon name={"Alimentação"} color='#000' />
-          <div>
-            <h2>Almoço no restaurante</h2>
-            <p>R$ 50,00</p>
-            <p>Alessa</p>
-          </div>
-        </div>
-
-        <div className={styles.item}>
-          <Icon name={"Alimentação"} color='#000' />
-          <div>
-            <h2>Almoço no restaurante</h2>
-            <p>R$ 50,00</p>
-            <p>Alessa</p>
-          </div>
-        </div>
-
-        <div className={styles.item}>
-          <Icon name={"Alimentação"} color='#000' />
-          <div>
-            <h2>Almoço no restaurante</h2>
-            <p>R$ 50,00</p>
-            <p>Alessa</p>
-          </div>
-        </div>
+        ))}
       </div>
 
       <table>
@@ -74,54 +34,14 @@ export default function RecentTransaction() {
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><Icon name={"Alimentação"} /> Alimentação</td>
-            <td>Almoço no restaurante</td>
-            <td>R$ 50,00</td>
-            <td>Alessa</td>
-          </tr>
-          <tr>
-            <td><Icon name={"Alimentação"} /> Alimentação</td>
-            <td>Almoço no restaurante</td>
-            <td>R$ 50,00</td>
-            <td>Alessa</td>
-          </tr>
-          <tr>
-            <td><Icon name={"Alimentação"} /> Alimentação</td>
-            <td>Almoço no restaurante</td>
-            <td>R$ 50,00</td>
-            <td>Alessa</td>
-          </tr>
-          <tr>
-            <td><Icon name={"Alimentação"} /> Alimentação</td>
-            <td>Almoço no restaurante</td>
-            <td>R$ 50,00</td>
-            <td>Alessa</td>
-          </tr>
-          <tr>
-            <td><Icon name={"Alimentação"} /> Alimentação</td>
-            <td>Almoço no restaurante</td>
-            <td>R$ 50,00</td>
-            <td>Alessa</td>
-          </tr>
-          <tr>
-            <td><Icon name={"Alimentação"} /> Alimentação</td>
-            <td>Almoço no restaurante</td>
-            <td>R$ 50,00</td>
-            <td>Alessa</td>
-          </tr>
-          <tr>
-            <td><Icon name={"Alimentação"} /> Alimentação</td>
-            <td>Almoço no restaurante</td>
-            <td>R$ 50,00</td>
-            <td>Alessa</td>
-          </tr>
-          <tr>
-            <td><Icon name={"Alimentação"} /> Alimentação</td>
-            <td>Almoço no restaurante</td>
-            <td>R$ 50,00</td>
-            <td>Alessa</td>
-          </tr>
+          {lastTransactions.map((transaction, index) => (
+            <tr key={index}>
+              <td><Icon name={transaction.category} color="#9CABBA" /> {transaction.category}</td>
+              <td>{transaction.item}</td>
+              <td>{transaction.value}</td>
+              <td>{transaction.people}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </div>
