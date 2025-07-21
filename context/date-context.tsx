@@ -1,6 +1,6 @@
 "use client";
 
-import { months } from "@/utils";
+import { currentDate } from "@/utils";
 import { createContext, Dispatch, SetStateAction, useContext, useState } from "react";
 
 type Date = {
@@ -26,9 +26,7 @@ export const useDate = () => {
 }
 
 export function DateContextProvider({ children }: { children: React.ReactNode }) {
-  const date = new Date();
-  const currentMonth = months[date.getMonth()];
-  const currentYear = date.getFullYear().toString();
+  const { month: currentMonth, year: currentYear } = currentDate();
 
   const [dateState, setDateState] = useState<Date>({ month: currentMonth, year: currentYear });
 

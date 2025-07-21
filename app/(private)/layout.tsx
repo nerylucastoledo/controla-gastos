@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description: "Acesse o Controla gastos para conseguir entender para onde o seu dinheiro esta indo e ter maior controle sobre ele."
 }
 
-export default function PrivateLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
+export default function PrivateLayout({ children, modal }: Readonly<{ children: React.ReactNode; modal: React.ReactNode; }>) {
   return (
     <html lang="en">
       <body>
@@ -19,8 +19,11 @@ export default function PrivateLayout({ children }: Readonly<{ children: React.R
           <>
             <HeaderPrivate />
 
-            <div className={styles.private}>
+            <main className={styles.private}>
               { children }
+            </main>
+            <div>
+              { modal }
             </div>
           </>
         </DateContextProvider>

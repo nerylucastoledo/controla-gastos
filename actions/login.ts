@@ -1,6 +1,5 @@
 "use server";
 
-import { redirect } from 'next/navigation'
 import { cookies } from "next/headers";
 
 import { TOKEN_POST } from "@/utils/api";
@@ -12,7 +11,7 @@ const setCookie = async (name: string, value: string) => {
 
   cookieStore.set(name, value, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: true,
     sameSite: "strict",
   });
 }
@@ -21,13 +20,11 @@ export default async function login(state: {}, formData: FormData) {
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;
 
-  let data;
-
   try {
     const body: LoginInput = { email, password };
 
-    const response = await TOKEN_POST("login", body)
-    data = await response.json();
+    const response = await TOKEN_POST("login", body);
+    const data = await response.json();
 
     if (!response.ok) {
       throw new Error(data.message);

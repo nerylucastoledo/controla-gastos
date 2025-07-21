@@ -1,6 +1,8 @@
+"use server";
+
 import { ResponseAPIOutput } from "../dto/apiDTO";
 
-export default function apiError(error: unknown): ResponseAPIOutput {
+export default async function apiError(error: unknown): Promise<ResponseAPIOutput> {
   if (error instanceof Error) {
     return {
       ok: false,

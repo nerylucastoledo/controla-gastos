@@ -5,7 +5,7 @@ import { TooltipItem } from 'chart.js';
 
 import bill from '@/actions/bill';
 
-import styles from "../../styles/components/chart/chart.module.scss";
+import styles from "../../../styles/components/chart/chart.module.scss";
 
 import { useDate } from '@/context/date-context';
 import { formatToCurrencyBRL } from '@/utils';
@@ -14,10 +14,10 @@ import { BillByYear } from '@/dto/billDTO';
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
 const handleTooltip = (value: number) => {
-  const referenceValue = 6800;
+  const referenceValue = localStorage.getItem("salary");
   let trend = "";
 
-  if (Number(value) > referenceValue) {
+  if (Number(value) > Number(referenceValue)) {
     trend = " ↑";
   } else {
     trend = " ↓";
@@ -92,7 +92,13 @@ export default function ExpenseByMonth() {
       <div className={styles.container}>
         <h1 className='title'>Gasto por mês</h1>
 
-        <Bar data={dataChart} options={options} />
+        {!data || !data.length ? (
+          <div className="empty">
+            <p className='subtitle'>Gráfico indisponível.</p>
+          </div>
+        ) : (
+          <Bar data={dataChart} options={options} />
+        )}
       </div>
     </div>
   );

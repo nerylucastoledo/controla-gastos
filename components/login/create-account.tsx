@@ -1,16 +1,16 @@
 "use client";
 
 import { useActionState, useEffect, useState } from 'react';
+import { redirect } from 'next/navigation';
 
 import { Input } from '@/components/forms/input';
 import { Submit } from '@/components/forms/submit';
-import ErrorMessage from '@/components/error-message/error-message';
+import ErrorMessage from '@/components/forms/error-message';
 
 import register from '@/actions/register';
 import { formatCurrency } from '@/utils';
 
 import styles from "../../styles/components/forms/form.module.scss";
-import { redirect } from 'next/navigation';
 
 export default function CreateAccountForm() {
   const [salary, setSalary] = useState('R$ 0,00');

@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, TooltipItem } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 
-import styles from "../../styles/components/chart/chart.module.scss";
+import styles from "../../../styles/components/chart/chart.module.scss";
 
 import { formatToCurrencyBRL, parseCurrencyString } from '@/utils';
 import { Bill } from '@/dto/billDTO';
@@ -31,7 +31,23 @@ export default function ExpenseByMonth({ data }: { data: Bill[]}) {
     datasets: [{
       label: "",
       data: Object.values(expenses),
-      backgroundColor: ["#293038", "#1C2126"],
+      backgroundColor: [
+        "#4A8E4A",
+        "#FFD700",
+        "#1E90FF",
+        "#FFB6C1",
+        "#A9A9A9",
+        "#98FB98",
+        "#F0E68C",
+        "#B0C4DE",
+        "#808080",
+        "#6A5ACD",
+        "#FF7F50",
+        "#20B2AA",
+        "#778899",
+        "#FFB347",
+        "#DDA0DD"
+      ],
       borderColor: "#757575",
       borderWidth: 1,
     }]
@@ -63,7 +79,14 @@ export default function ExpenseByMonth({ data }: { data: Bill[]}) {
     <div className={styles.chart}>
       <div className={styles.container}>
         <h1 className='title'>Gasto por categoria</h1>
-        <Pie data={dataChart} options={options} />
+
+        {!data || !data.length ? (
+          <div className="empty">
+            <p className='subtitle'>Gráfico indisponível.</p>
+          </div>
+        ) : (
+          <Pie data={dataChart} options={options} />
+        )}
       </div>
     </div>
   );

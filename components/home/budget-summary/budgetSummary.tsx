@@ -1,6 +1,8 @@
+"use client";
+
 import React, { useMemo } from 'react'
 
-import styles from "../../styles/components/budget-summary/budget-summary.module.scss"
+import styles from "../../../styles/components/budget-summary/budget-summary.module.scss"
 
 import { formatToCurrencyBRL, parseCurrencyString } from '@/utils';
 import { Bill } from '@/dto/billDTO';
@@ -21,12 +23,10 @@ const totalInvoice = (expenses: Bill[] | null) => {
 };
 
 export const BudgetSummary = ({ data }: { data: Bill[] | null }) => {
-  const salary = Number(localStorage.getItem("salary"));
+  const salary = Number(localStorage.getItem("salary") ?? 0);
   const total = useMemo(() => totalInvoice(data), [data]);
   const remaining = salary - total;
-
-  if (!data || !data.length) return null;
-
+  
   return (
     <div className={styles.budget}>
       <h1 className='title'>Resumo</h1>

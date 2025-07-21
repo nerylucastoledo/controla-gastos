@@ -67,3 +67,14 @@ export const formatToCurrencyBRL = (amount: number) => {
 		maximumFractionDigits: 2
 	});
 }
+
+export const currentDate = () => {
+	const date = new Date();
+  const currentMonth = months[date.getMonth()];
+  const currentYear = date.getFullYear().toString();
+
+	return {
+		month: currentMonth,
+		year: currentYear
+	}
+}

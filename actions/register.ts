@@ -5,7 +5,6 @@ import { RegisterInput } from "../dto/authDTO";
 import { parseCurrencyString } from "../utils";
 import apiError from "../utils/api-error";
 import login from "./login";
-import { redirect } from "next/navigation";
 
 const generateUsername = (name: string): string => {
   const randomNumber = Math.floor(Math.random() * 1000);
@@ -57,7 +56,7 @@ export default async function register(state: {}, formData: FormData) {
       throw new Error(data.message);
     }
     
-    const { ok } = await login(state, formData);
+    const { ok, data: dataLogin } = await login(state, formData);
     
     if (!ok) {
       throw new Error("Erro ao fazer login, tente novamente.");
@@ -66,7 +65,7 @@ export default async function register(state: {}, formData: FormData) {
     return {
       ok: true,
       error: '',
-      data: data,
+      data: dataLogin,
     }
   } catch (error: unknown) {
     return apiError(error);

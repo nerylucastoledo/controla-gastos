@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 
-import styles from "../../styles/components/credit-card/credit-card.module.scss"
+import styles from "../../../styles/components/credit-card/credit-card.module.scss"
 
 import Card from './card';
 
@@ -9,6 +9,7 @@ import { parseCurrencyString } from '@/utils';
 import { Expense } from '@/dto/expenseDTO';
 import { Bill } from '@/dto/billDTO';
 import { Card as CardDTO } from '@/dto/cardDTO';
+import Link from 'next/link';
 
 type InvoiceCard = {
   name: string;
@@ -37,7 +38,7 @@ const invoiceByCard = (expenses: Bill[], cards: CardDTO[]) => {
   return Object.values(invoice);
 };
 
-export default function CreditCard({ data }: { data: Expense }) {
+export default function CreditCard({ data, date }: { data: Expense, date: { month: string, year: string} }) {
   const { cards, expenses } = data;
 
   const invoices = useMemo(() => invoiceByCard(expenses, cards), [expenses, cards]);
@@ -47,11 +48,20 @@ export default function CreditCard({ data }: { data: Expense }) {
       <h1 className='title'>Cartões</h1>
 
       {!cards.length ? (
-        <p className={styles.empty}>Nenhum cartão cadastrado</p>
+        <div className="empty">
+          <p className='subtitle'>Nenhum cartão encontrado.</p>
+        </div>
       ) : (
         <div className={styles.container}>
           {invoices.map((card, index) => (
-            <Card key={index} name={card.name} color={card.color} totalInvoice={card.total} />
+            <Link 
+              key={index} 
+              href={`/invoice/${card.name}/${date.month}${date.year}`} 
+              scroll={false}
+              prefetch={false}
+            >
+              <Card name={card.name} color={card.color} totalInvoice={card.total} />
+            </Link>
           ))}
         </div>
       )}

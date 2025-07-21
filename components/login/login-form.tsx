@@ -3,13 +3,13 @@
 import login from '@/actions/login'
 import { useActionState, useEffect, } from 'react';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
 
 import { Input } from '@/components/forms/input';
 import { Submit } from '@/components/forms/submit';
 
 import styles from "../../styles/components/forms/form.module.scss";
-import ErrorMessage from '@/components/error-message/error-message';
-import { redirect } from 'next/navigation';
+import ErrorMessage from '@/components/forms/error-message';
 
 export default function LoginForm() {
   const [state, action] = useActionState(login, { ok: false, error: '', data: null })
@@ -45,7 +45,6 @@ export default function LoginForm() {
         />
 
         <ErrorMessage error={state.error} />
-
 
         <Submit>Entrar</Submit>
       </form>

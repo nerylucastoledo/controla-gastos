@@ -45,19 +45,25 @@ export const HeaderPrivate = () => {
           
           <p>Controla Gastos</p>
 
-          <button onClick={handleLogout}>
+          <button onClick={handleLogout} aria-label="Sair da conta">
             <MdOutlineLogout size={24} />
           </button>
         </div>
 
         <ul>
           {links.map(link => (
-            <li key={link.href} className={`${pathName === link.href ? styles.active : ''}`}>
-              <Link href={link.href}> {link.icon} <span>{link.label}</span></Link>
+            <li 
+              key={link.href} 
+              className={`${pathName === link.href ? styles.active : ''}`}
+            >
+              <Link href={link.href}>
+                { link.icon} <span>{link.label}
+              </span></Link>
             </li>
           ))}
+          
           <li>
-            <button onClick={handleLogout}  aria-label="Sair da conta">
+            <button onClick={handleLogout} aria-label="Sair da conta">
               <MdOutlineLogout size={24} />
             </button>
           </li>

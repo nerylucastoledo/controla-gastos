@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 
-import styles from "../../styles/components/person-expense/person-expense.module.scss"
+import styles from "../../../styles/components/person-expense/person-expense.module.scss"
+
 import { Bill } from '@/dto/billDTO'
 import { formatToCurrencyBRL, parseCurrencyString } from '@/utils';
 
@@ -35,22 +36,28 @@ export default function PersonExpense({ data }: { data: Bill[] }) {
     <div className={styles.personExpense}>
       <h1 className='title'>Gasto por pessoa</h1>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Pessoa</th>
-            <th>Valor</th>
-          </tr>
-        </thead>
-        <tbody>
-          {invoices.map((invoice) => (
-            <tr key={invoice.name}>
-              <td>{invoice.name}</td>
-              <td>{formatToCurrencyBRL(invoice.total)}</td>
+      {!invoices.length ? (
+        <div className="empty">
+          <p className='subtitle'>Nenhum gasto encontrado.</p>
+        </div>
+      ) : (
+        <table>
+          <thead>
+            <tr>
+              <th>Pessoa</th>
+              <th>Valor</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {invoices.map((invoice) => (
+              <tr key={invoice.name}>
+                <td>{invoice.name}</td>
+                <td>{formatToCurrencyBRL(invoice.total)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
     </div>
   )
 }

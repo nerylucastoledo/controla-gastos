@@ -2,14 +2,14 @@
 
 import React, { useEffect, useState } from 'react'
 
-import { Filter } from '../../components/filter/filter';
+import { Filter } from './filter/filter';
 
-import { BudgetSummary } from '../../components/budget-summary/budgetSummary';
-import CreditCard from '../../components/credit-card/creditCard';
-import RecentTransaction from '../../components/recent-transactions/recentTransaction';
-import PersonExpense from '../../components/person-expense/personExpense';
-import ExpenseByMonth from '../../components/chart/expenseByMonth';
-import ExpenseByCategory from '../../components/chart/expenseByCategory';
+import { BudgetSummary } from './budget-summary/budgetSummary';
+import CreditCard from './credit-card/creditCard';
+import RecentTransaction from './recent-transactions/recentTransaction';
+import PersonExpense from './person-expense/personExpense';
+import ExpenseByMonth from './chart/expenseByMonth';
+import ExpenseByCategory from './chart/expenseByCategory';
 
 import { useDate } from '@/context/date-context';
 import bill from '@/actions/bill';
@@ -34,15 +34,15 @@ export default function HomePage() {
   }, [date]);
 
   if (loading) return <SkeletonHomePage />;
-  if (!data) return <ErrorScreen />;
-  
+  if (!data || !data.expenses) return <ErrorScreen />;
+
   return (
     <>
       <Filter />
 
       <BudgetSummary data={data.expenses} />
       <RecentTransaction data={data.expenses} />
-      <CreditCard data={data} />
+      <CreditCard data={data} date={date} />
       <PersonExpense data={data.expenses} />
       <section className='charts'>
         <ExpenseByCategory data={data.expenses} />

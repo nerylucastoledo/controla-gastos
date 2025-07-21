@@ -29,6 +29,7 @@ export const HeaderPublic = () => {
             height={64}
             src={logo.src} 
             alt='Logo'
+            priority
           />
           
           <p>Controla Gastos</p>
