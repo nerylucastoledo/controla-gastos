@@ -6,8 +6,7 @@ import Card from './card';
 
 import { parseCurrencyString } from '@/utils';
 
-import { Expense } from '@/dto/expenseDTO';
-import { Bill } from '@/dto/billDTO';
+import { Bill, Expense } from '@/dto/billDTO';
 import { Card as CardDTO } from '@/dto/cardDTO';
 import Link from 'next/link';
 

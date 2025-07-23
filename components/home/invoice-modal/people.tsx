@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from "../../../styles/components/invoice-modal/invoice-modal.module.scss"
+import styles from "../../../styles/components/modal/invoice-modal.module.scss"
 
 type PeopleProps = {
   names: string[];
@@ -10,7 +10,6 @@ type PeopleProps = {
 
 export default function People({ names, nameActive, setNameActive }: PeopleProps) {
   const uniqueNames = Array.from(new Set(names));
-  const WithOutMe = uniqueNames.filter(name => name !== 'Eu');
 
   const handleNameClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     const name = event.currentTarget.textContent;
@@ -19,13 +18,7 @@ export default function People({ names, nameActive, setNameActive }: PeopleProps
 
   return (
     <div className={styles.people}>
-      <button 
-        className={nameActive === 'Eu' ? styles.active : ''}
-        onClick={handleNameClick}
-      >
-        Eu
-      </button>
-      {WithOutMe.map(name => (
+      {uniqueNames.map(name => (
         <button 
           key={name}
           className={nameActive === name ? styles.active : ''}

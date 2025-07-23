@@ -1,11 +1,16 @@
 import React from 'react'
 
-import styles from "../../../styles/components/invoice-modal/invoice-modal.module.scss"
+import styles from "../../../styles/components/modal/invoice-modal.module.scss"
 
-import { BillByCard } from '@/dto/billDTO'
+import { BillByCard, Invoice } from '@/dto/billDTO'
 
+type ModalActionType = {
+  show: boolean;
+  type: "edit" | "delete" | null;
+  item: Invoice | null;
+}
 
-export default function Item({ data }: { data: BillByCard[]}) {
+export default function Item({ data, setShowModalAction }: { data: BillByCard[], setShowModalAction: React.Dispatch<React.SetStateAction<ModalActionType>> }) {
 
   if (!data || data.length === 0) {
     return (
@@ -14,6 +19,14 @@ export default function Item({ data }: { data: BillByCard[]}) {
   }
 
   const { invoices } = data[0];
+
+  const handleEdit = (item: Invoice) => {
+    setShowModalAction({ show: true, type: "edit", item });
+  };
+
+  const handleDelete = (item: Invoice) => {
+    setShowModalAction({ show: true, type: "delete", item });
+  };
 
   return (
     <div className={styles.item}>
@@ -25,8 +38,8 @@ export default function Item({ data }: { data: BillByCard[]}) {
           </div>
 
           <div className={styles.actions}>
-            <button>Editar</button>
-            <button>Deletar</button>
+            <button onClick={() => handleEdit(item)}>Editar</button>
+            <button onClick={() => handleDelete(item)}>Deletar</button>
           </div>
         </div>
       ))}

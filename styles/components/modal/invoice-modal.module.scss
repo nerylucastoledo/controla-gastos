@@ -1,0 +1,152 @@
+.invoice {
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    h2, p {
+      font-size: 20px;
+      color: #fff;
+      margin-bottom: 24px;
+      font-weight: bold;
+    }
+  }
+  
+  .content {
+    display: flex;
+    gap: 16px;
+    height: calc(100% - 53px);
+
+    .people {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      overflow: auto;
+
+      &::-webkit-scrollbar {
+        width: 0px;
+      }
+
+      button {
+        border-radius: 12px;
+        border: unset;
+        padding: 12px;
+        background-color: #2B3641;
+        color: white;
+        cursor: pointer;
+        min-width: 100px;
+
+
+        &.active {
+          background-color: #3B4754;
+          border: 1px solid #fff;
+        }
+
+        &:hover {
+          background-color: #3B4754;
+        }
+      }
+    }
+
+    .empty {
+      text-align: center;
+      height: max-content;
+    }
+
+    .item {
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      overflow: auto;
+
+      &::-webkit-scrollbar {
+        width: 0px;
+      }
+
+      .details {
+        border-radius: 12px;
+        padding: 8px;
+        display: flex;
+        flex-direction: column;
+        background-color: #1b2026;
+        border: 1px solid #3B4754;
+        gap: 24px;
+
+        .info {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 16px;
+          color: #fff;
+
+          p {
+            font-size: 14px;
+
+            &:last-child {
+              white-space: nowrap;
+              font-size: 16px;
+            }
+          }
+        }
+
+        .actions {
+          display: flex;
+          justify-content: space-between;
+          gap: 16px;
+
+          button {
+            background-color: #3B4754;
+            border: unset;
+            width: max-content;
+            height: max-content;
+            padding: 8px;
+            border-radius: 12px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            flex: 1;
+            max-width: 342px;
+
+            &:first-child {
+              background-color: #4caf50;
+            }
+
+            &:last-child {
+              background-color: #e53935;
+
+              &:hover {
+                background-color: #c62828;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (min-width: 988px) {
+  .invoice {
+    .container {
+      max-width: 1232px;
+      margin: 0 auto;
+      left: 0;
+      right: 0;
+    }
+  }
+}

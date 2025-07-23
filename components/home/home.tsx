@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 
 import { Filter } from './filter/filter';
 
@@ -13,28 +13,16 @@ import ExpenseByCategory from './chart/expenseByCategory';
 
 import { useDate } from '@/context/date-context';
 import bill from '@/actions/bill';
-import { Expense } from '../../dto/expenseDTO';
 import ErrorScreen from '../../components/error/error';
 import SkeletonHomePage from '@/app/(private)/loading';
+import useSWR from 'swr';
 
 export default function HomePage() {
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState<Expense | null>(null)
-  
   const { date } = useDate();
+  const { data, error, isLoading } = useSWR(`${date.month}${date.year}`, bill);
 
-  useEffect(() => {
-    const getData = async () => {
-      const response = await bill(`${date.month}${date.year}`)
-      setData(response);
-      setLoading(false);
-    };
-
-    getData();
-  }, [date]);
-
-  if (loading) return <SkeletonHomePage />;
-  if (!data || !data.expenses) return <ErrorScreen />;
+  if (isLoading) return <SkeletonHomePage />;
+  if (error || !data || !data.expenses) return <ErrorScreen />;
 
   return (
     <>

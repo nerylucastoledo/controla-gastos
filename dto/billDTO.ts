@@ -1,3 +1,4 @@
+import { Card } from "./cardDTO";
 import { Category } from "./categoryDTO";
 
 export type Bill = {
@@ -8,6 +9,11 @@ export type Bill = {
   item: string;
   people: string;
   value: string;
+}
+
+export type Expense = {
+  expenses: Bill[];
+  cards: Card[];
 }
 
 export type BillByYear = {
@@ -27,3 +33,4 @@ export type BillByCard = {
   invoices: Invoice[];
   totalInvoice: number;
 }
+
