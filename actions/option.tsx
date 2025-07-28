@@ -5,7 +5,7 @@ import apiError from "../utils/api-error";
 import { PeopleDTOInput } from "@/dto/peopleDTO";
 import { CardDTOInput } from "@/dto/cardDTO";
 
-export async function peopleCardPost(state: {}, formData: FormData) {
+export async function optionPost(state: {}, formData: FormData) {
   const name = formData.get("name") as string;
   const color = formData.get("color") as string;
 

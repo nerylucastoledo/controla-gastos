@@ -6,13 +6,13 @@ import { Input } from '../forms/input'
 import styles from "../../styles/components/new-option/new-option.module.scss"
 
 import { toast } from 'react-hot-toast';
-import { peopleCardPost } from '@/actions/peopleCard'
+import { optionPost } from '@/actions/option'
 
 export default function NewOptionForm() {
   const [type, setType] = useState<"people" | "card">("people");
   const [color, setColor] = useState<string>("#222");
 
-  const [state, action] = useActionState(peopleCardPost, { ok: false, error: '', data: null });
+  const [state, action] = useActionState(optionPost, { ok: false, error: '', data: null });
 
   useEffect(() => {
     if (state.ok) {
