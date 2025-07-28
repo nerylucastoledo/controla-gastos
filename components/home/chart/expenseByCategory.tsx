@@ -5,11 +5,11 @@ import { Pie } from 'react-chartjs-2';
 import styles from "../../../styles/components/chart/chart.module.scss";
 
 import { formatToCurrencyBRL, parseCurrencyString } from '@/utils';
-import { Bill } from '@/dto/billDTO';
+import { BillOutput } from '@/dto/billDTO';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
-const groupByCategory = (data: Bill[]) => {
+const groupByCategory = (data: BillOutput[]) => {
   const result = data.reduce((acc, bill) => {
     if (!acc[bill.category]) {
       acc[bill.category] = parseCurrencyString(bill.value);
@@ -23,7 +23,7 @@ const groupByCategory = (data: Bill[]) => {
   return result;
 }
 
-export default function ExpenseByMonth({ data }: { data: Bill[]}) {
+export default function ExpenseByMonth({ data }: { data: BillOutput[]}) {
   const expenses = useMemo(() => groupByCategory(data), [data]);
 
   const dataChart = {

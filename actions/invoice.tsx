@@ -1,12 +1,33 @@
 "use server";
 
-import { FETCH_EDIT } from "@/utils/api";
-import apiError from "@/utils/api-error";
-import { EditInvoiceInput } from "@/dto/invoiceDTO";
 import { Category } from "@/dto/categoryDTO";
+import { EditInvoiceInput } from "@/dto/invoiceDTO";
+import { FETCH_DELETE, FETCH_EDIT } from "@/utils/api";
+import apiError from "@/utils/api-error";
 import { revalidateTag } from "next/cache";
 
-export default async function editInvoice(state: {}, formData: FormData) {
+export async function deleteInvoice(url: string) {
+  try {
+    const response = await FETCH_DELETE(url);
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+
+    revalidateTag("collection")
+
+    return {
+      ok: true,
+      error: '',
+      data: {},
+    }
+  } catch (error: unknown) {
+    return apiError(error);
+  }
+};
+
+export async function editInvoice(state: {}, formData: FormData) {
   const _id = formData.get("id") as string;
   const item = formData.get("item") as string;
   const value = formData.get("value") as string;

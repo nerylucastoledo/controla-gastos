@@ -107,6 +107,10 @@ table {
 	border-radius: 12px;
 	color: #B0B0B0;
 	flex: 1;
+
+	p {
+		margin-bottom: 0;
+	}
 }
 
 .charts {
@@ -143,6 +147,29 @@ table {
     overflow: auto;
     animation: slideUp 0.3s ease-out;
 	}
+}
+
+button {
+  border: unset;
+  padding: 16px;
+  max-width: 342px;
+  width: 100%;
+  border-radius: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  justify-content: center;
+
+  &:disabled {
+    background-color: #8b8787;
+    cursor: not-allowed;
+
+    svg {
+      animation: spin 1s linear infinite;
+    }
+  }
 }
 
 @media (min-width: 988px) {

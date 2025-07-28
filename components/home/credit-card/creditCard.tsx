@@ -6,8 +6,8 @@ import Card from './card';
 
 import { parseCurrencyString } from '@/utils';
 
-import { Bill, Expense } from '@/dto/billDTO';
-import { Card as CardDTO } from '@/dto/cardDTO';
+import { BillOutput, Expense } from '@/dto/billDTO';
+import { CardDTOOutput as CardDTO } from '@/dto/cardDTO';
 import Link from 'next/link';
 
 type InvoiceCard = {
@@ -16,7 +16,7 @@ type InvoiceCard = {
   total: number;
 }
 
-const invoiceByCard = (expenses: Bill[], cards: CardDTO[]) => {
+const invoiceByCard = (expenses: BillOutput[], cards: CardDTO[]) => {
   const invoice = expenses.reduce((acc, expense) => {
     if (!acc[expense.card]) {
       const color = cards.find(card => card.name === expense.card)

@@ -8,7 +8,8 @@ import { Invoice } from '@/dto/billDTO';
 import { IoIosCloseCircle } from "react-icons/io";
 import { useDate } from '@/context/date-context';
 import { mutate } from 'swr';
-import deleteInvoice from '@/actions/delete-invoice';
+import toast from 'react-hot-toast';
+import { deleteInvoice } from '@/actions/invoice';
 
 type ModalDeleteProps = {
   handleCloseModal: () => void;
@@ -21,13 +22,19 @@ export default function ModalDelete({ handleCloseModal, modalAction }: ModalDele
   if (!modalAction) return null;
 
   const handleDelete = async () => {
-    const { _id } = modalAction;
-    const { ok } = await deleteInvoice(`/expenses/${_id}`);
+    const state = await deleteInvoice(`/expenses/${modalAction._id}`);
+    const error = !state.ok && state.data !== null;
 
-    if (!ok) return;
+    if (error) {
+      toast.error("Erro ao deletar despesa. Tente novamente!");
+      return;
+    }
 
-    handleCloseModal();
-    mutate(`${date.month}${date.year}`);
+    if (state.ok) {
+      toast.success("Despesa deletada com sucesso!");
+      handleCloseModal();
+      mutate(`expenses/${date.month}${date.year}`);
+    }
   }
 
   return (

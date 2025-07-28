@@ -2,7 +2,6 @@ import { Card } from "./cardDTO";
 import { Category } from "./categoryDTO";
 
 export type Bill = {
-  id: string;
   card: string;
   category: Category;
   date: string;
@@ -11,8 +10,16 @@ export type Bill = {
   value: string;
 }
 
+export type BillInput = Bill & {
+  installments: number;
+}
+
+export type BillOutput = Bill & {
+  id: string;
+}
+
 export type Expense = {
-  expenses: Bill[];
+  expenses: BillOutput[];
   cards: Card[];
 }
 

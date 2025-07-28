@@ -3,9 +3,9 @@ import React from 'react'
 import styles from "../../../styles/components/recent-transaction/recent-transaction.module.scss"
 
 import Icon from '../../icon/icon'
-import { Bill } from '@/dto/billDTO';
+import { BillOutput } from '@/dto/billDTO';
 
-export default function RecentTransaction({ data }: { data: Bill[] }) {
+export default function RecentTransaction({ data }: { data: BillOutput[] }) {
   const lastTransactions = data.reverse().slice(0, 10);
 
   return (

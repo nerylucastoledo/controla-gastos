@@ -5,9 +5,9 @@ import React, { useMemo } from 'react'
 import styles from "../../../styles/components/budget-summary/budget-summary.module.scss"
 
 import { formatToCurrencyBRL, parseCurrencyString } from '@/utils';
-import { Bill } from '@/dto/billDTO';
+import { BillOutput } from '@/dto/billDTO';
 
-const totalInvoice = (expenses: Bill[] | null) => {
+const totalInvoice = (expenses: BillOutput[] | null) => {
   if (!expenses) return 0;
 
   const invoice = expenses.reduce((acc, expense) => {
@@ -22,7 +22,7 @@ const totalInvoice = (expenses: Bill[] | null) => {
   return invoice;
 };
 
-export const BudgetSummary = ({ data }: { data: Bill[] | null }) => {
+export const BudgetSummary = ({ data }: { data: BillOutput[] | null }) => {
   const salary = Number(localStorage.getItem("salary") ?? 0);
   const total = useMemo(() => totalInvoice(data), [data]);
   const remaining = salary - total;

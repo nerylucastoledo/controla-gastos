@@ -16,13 +16,28 @@ export async function TOKEN_POST(url: string, body: LoginInput | RegisterInput )
   return response;
 }
 
-export async function FETCH_EXPENSES_DATA(url: string) {
+export async function FETCH_POST<T>(url: string, body: T) {
   const cookieStore = await cookies();
   const token = cookieStore.get('token');
 
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/expenses/${url}`, {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `${token?.value}`
+    },
+    body: JSON.stringify(body)
+  });
+  return response;
+}
+
+export async function FETCH_GET(url: string, tags: string[] = []) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get('token');
+
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
     method: "GET",
-    next: { tags: ["collection"] },
+    next: { tags },
     headers: {
       "Authorization": `${token?.value}`
     }

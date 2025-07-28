@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from 'react';
+import { useActionState, useEffect } from 'react';
 import { redirect } from 'next/navigation';
 
 import { Input } from '@/components/forms/input';
@@ -13,7 +13,6 @@ import { formatCurrency } from '@/utils';
 import styles from "../../styles/components/forms/form.module.scss";
 
 export default function CreateAccountForm() {
-  const [salary, setSalary] = useState('R$ 0,00');
   const [state, action] = useActionState(register, { ok: false, error: '', data: null})
 
   useEffect(() => {
@@ -25,7 +24,7 @@ export default function CreateAccountForm() {
 
   const handleSalary = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
-    setSalary(formatCurrency(value));
+    e.target.value = formatCurrency(value);
   }
 
   return (
@@ -55,7 +54,6 @@ export default function CreateAccountForm() {
         id='salary'
         placeholder='Digite o seu salário'
         name='salary'
-        value={salary}
         type='text'
         autoComplete='salary'
         required

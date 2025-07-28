@@ -31,4 +31,30 @@
       -webkit-text-fill-color: #fff;
     }
   }
+
+  &:has(input[type="checkbox"]) {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    label {
+      order: 2;
+      cursor: pointer;
+    }
+
+    input {
+      width: 20px;
+      height: 20px;
+      margin-right: 8px;
+      vertical-align: middle;
+      order: 1;
+      margin: 0;
+      cursor: pointer;
+
+      &:checked {
+        background-color: #4096F5;
+        border: 1px solid #4096F5;
+      }
+    }
+  }
 }

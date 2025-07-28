@@ -23,7 +23,7 @@ export const HeaderPrivate = () => {
   const links = [
     { href: "/", label: "Ínicio", icon: <IoHomeSharp size={20} /> },
     { href: "/new-expense", label: "Transação", icon: <RiListCheck size={20} /> },
-    { href: "/new-card", label: "Novo", icon: <IoIosAddCircle size={20} /> },
+    { href: "/new-option", label: "Novo", icon: <IoIosAddCircle size={20} /> },
     { href: "/account", label: "Conta", icon: <MdAccountCircle size={20} /> },
   ]
 

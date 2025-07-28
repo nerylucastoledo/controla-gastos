@@ -12,14 +12,14 @@ import ExpenseByMonth from './chart/expenseByMonth';
 import ExpenseByCategory from './chart/expenseByCategory';
 
 import { useDate } from '@/context/date-context';
-import bill from '@/actions/bill';
+import { bill } from '@/actions/bill';
 import ErrorScreen from '../../components/error/error';
 import SkeletonHomePage from '@/app/(private)/loading';
 import useSWR from 'swr';
 
 export default function HomePage() {
   const { date } = useDate();
-  const { data, error, isLoading } = useSWR(`${date.month}${date.year}`, bill);
+  const { data, error, isLoading } = useSWR(`expenses/${date.month}${date.year}`, bill);
 
   if (isLoading) return <SkeletonHomePage />;
   if (error || !data || !data.expenses) return <ErrorScreen />;

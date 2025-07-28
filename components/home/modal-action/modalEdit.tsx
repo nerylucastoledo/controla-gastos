@@ -9,10 +9,11 @@ import styles from "../../../styles/components/modal/modal-action.module.scss"
 import { Input } from '@/components/forms/input';
 import { Select } from '@/components/forms/select';
 
-import editInvoice from '@/actions/edit-invoice';
+import { editInvoice } from '@/actions/invoice';
 import { useDate } from '@/context/date-context';
 import { categorys, formatCurrency } from '@/utils';
 import { Invoice } from '@/dto/billDTO';
+import toast from 'react-hot-toast';
 
 type ModalEditProps = {
   handleCloseModal: () => void;
@@ -25,10 +26,19 @@ export default function ModalEdit({ handleCloseModal, modalAction }: ModalEditPr
   const [state, actionForm] = useActionState(editInvoice, { ok: false, error: '', data: null });
 
   useEffect(() => {
-    if (!state.ok) return;
+    const error = !state.ok && state.data !== null;
 
-    handleCloseModal();
-    mutate(`${date.month}${date.year}`);
+    if (error) {
+      toast.error("Erro ao editar a despesa. Tente novamente!");
+      return;
+    };
+
+    if (state.ok) {
+      toast.success("Despesa atualizada com sucesso!");
+      handleCloseModal();
+      mutate(`expenses/${date.month}${date.year}`);
+    }
+
   }, [date, state, handleCloseModal]);
 
   const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {

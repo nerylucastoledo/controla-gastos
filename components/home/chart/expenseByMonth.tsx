@@ -3,7 +3,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearSca
 import { Bar } from 'react-chartjs-2';
 import { TooltipItem } from 'chart.js';
 
-import bill from '@/actions/bill';
+import { bill } from '@/actions/bill';
 
 import styles from "../../../styles/components/chart/chart.module.scss";
 
@@ -32,7 +32,7 @@ export default function ExpenseByMonth() {
   const { date } = useDate();
   useEffect(() => {
     const getData = async () => {
-      const result = await bill(`year/${date.year}`);
+      const result = await bill(`expenses/year/${date.year}`);
       setData(result);
     };
 
