@@ -3,19 +3,20 @@
 import { CardDTOOutput } from '@/dto/cardDTO';
 import { PeopleDTOOutput } from '@/dto/peopleDTO';
 import React, { useActionState, useCallback, useEffect, useState } from 'react'
-import Input from '../forms/input';
-import { formatCurrency, formatToCurrencyBRL, parseCurrencyString } from '@/utils';
+import toast from 'react-hot-toast';
 
 import { MdOutlineEmojiPeople } from "react-icons/md";
 import { FaCreditCard } from "react-icons/fa6";
 
-import Item from './item/item';
+import { formatCurrency, formatToCurrencyBRL, parseCurrencyString } from '@/utils';
+import { salaryUpdate } from '@/actions/account';
 
 import styles from "../../styles/components/account/account.module.scss";
+
+import Item from './item/item';
+import Input from '../forms/input';
 import ModalEdit from './modal-action/modalEdit';
 import ModalDelete from './modal-action/modalDelete';
-import { salaryUpdate } from '@/actions/account';
-import toast from 'react-hot-toast';
 import Submit from '../forms/submit';
 
 type AccountProps = {
@@ -46,7 +47,9 @@ export default function Account({ cards, peoples }: AccountProps) {
   useEffect(() => {
     if (state.ok) {
       localStorage.setItem('salary', parseCurrencyString(salary).toString());
+
       setModalAction({ show: false, type: null, item: null });
+      
       toast.success(state.data.message || "Salário atualizado com sucesso!");
     } else if (state.error) {
       toast.error(state.error || "Erro ao atualizar. Tente novamente!");
@@ -54,7 +57,7 @@ export default function Account({ cards, peoples }: AccountProps) {
   }, [state, salary]);
   
   const handleCloseModalAction = useCallback(() => {
-    setModalAction({ show: false, type: null, item: null });
+    setModalAction({ show: false, type: null,  item: null });
   }, []);
 
   const handleSalary = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

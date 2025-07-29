@@ -6,8 +6,8 @@ import transaction from '@/actions/transactions';
 import Account from '@/components/account/account';
 
 export const metadata: Metadata = {
-  title: "Controla gastos | Adicionar cartão ou pessoa",
-  description: "Verifique suas informações no Controla gastos para conseguir entender para onde o seu dinheiro esta indo e ter maior controle sobre ele."
+  title: "Controla gastos | Suas informações",
+  description: "Confira suas informações no Controla Gastos para entender melhor como seu dinheiro está sendo utilizado. Com esses dados, você pode tomar decisões mais conscientes e melhorar seu controle financeiro."
 }
 
 export default async function Page() {

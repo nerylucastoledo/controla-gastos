@@ -3,7 +3,7 @@ import apiError from "@/utils/api-error";
 
 export default async function transaction(url: string) {
   try {
-    const response = await FETCH_GET(url);
+    const response = await FETCH_GET(url, ["user"]);
     const data = await response.json();
 
     if (!response.ok) {

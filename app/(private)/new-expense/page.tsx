@@ -9,7 +9,7 @@ import transaction from '@/actions/transactions';
 
 export const metadata: Metadata = {
   title: "Controla gastos | Adicionar gasto",
-  description: "Adicionar um gasto no Controla gastos para conseguir entender para onde o seu dinheiro esta indo e ter maior controle sobre ele."
+  description: "Registre seus gastos no Controla Gastos e obtenha insights valiosos sobre como você está utilizando seu dinheiro. Com essas informações, você pode tomar decisões mais conscientes e melhorar o controle financeiro."
 }
 
 export default async function Page() {

@@ -8,3 +8,9 @@ export interface CardDTOOutput {
   name: string;
   color: string;
 }
+
+export interface CardDTOUpdate {
+  _id: string;
+  name: string;
+  color: string;
+}

@@ -12,30 +12,30 @@ import { useDate } from '@/context/date-context';
 import ModalAction from '@/components/modal-action/modalAction';
 import { CardDTOOutput } from '@/dto/cardDTO';
 import { PeopleDTOOutput } from '@/dto/peopleDTO';
-import { billEdit } from '@/actions/bill';
+import { editPeopleOrCard } from '@/actions/account';
 
 type ModalEditProps = {
   handleCloseModal: () => void;
-  item: CardDTOOutput | PeopleDTOOutput | null;
+  item: CardDTOOutput | PeopleDTOOutput;
 }
 
 export default function ModalEdit({ handleCloseModal, item }: ModalEditProps) {
   const { date } = useDate();
 
-  const [color, setColor] = useState(null);
+  const [color, setColor] = useState<string>("color" in item ? item.color : "#222");
 
-  const [state, actionForm] = useActionState(billEdit, { ok: false, error: '', data: null });
+  const [state, actionForm] = useActionState(editPeopleOrCard, { ok: false, error: '', data: null });
 
   useEffect(() => {
     const error = !state.ok && state.data !== null;
 
     if (error) {
-      toast.error("Erro ao editar a despesa. Tente novamente!");
+      toast.error("Erro ao editar. Tente novamente!");
       return;
     };
 
     if (state.ok) {
-      toast.success("Despesa atualizada com sucesso!");
+      toast.success("Editado com sucesso!");
       handleCloseModal();
       mutate(`expenses/${date.month}${date.year}`);
     }
@@ -64,12 +64,12 @@ export default function ModalEdit({ handleCloseModal, item }: ModalEditProps) {
           required
         />
 
-        {false && (
+        {"color" in item && (
           <Input
             id="color"
             name='color'
             label="Cor do cartão"
-            value={item.color}
+            value={color}
             onChange={(e) => setColor(e.target.value)}
             style={{ backgroundColor: color }}
             type="color"

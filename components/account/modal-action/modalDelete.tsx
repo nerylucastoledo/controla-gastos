@@ -1,40 +1,37 @@
 "use client"
 
 import React from 'react'
-import { mutate } from 'swr';
 import toast from 'react-hot-toast';
 
 import styles from "../../../styles/components/modal/modal-action.module.scss"
 
-import { useDate } from '@/context/date-context';
 import ModalAction from '@/components/modal-action/modalAction';
 import { CardDTOOutput } from '@/dto/cardDTO';
 import { PeopleDTOOutput } from '@/dto/peopleDTO';
-import { billDelete } from '@/actions/bill';
+import { deletePeopleOrCard } from '@/actions/account';
 
 type ModalDeleteProps = {
   handleCloseModal: () => void;
-  item: CardDTOOutput | PeopleDTOOutput | null;
+  item: CardDTOOutput | PeopleDTOOutput;
 }
 
 export default function ModalDelete({ handleCloseModal, item }: ModalDeleteProps) {
-  const { date } = useDate();
-
   if (!item) return null;
 
   const handleDelete = async () => {
-    const state = await billDelete(`/expenses/${item._id}`);
+    const endpoint = 'color' in item ? 'cards' : 'peoples';
+    const state = await deletePeopleOrCard(`/${endpoint}/${item._id}`);
+
     const error = !state.ok && state.data !== null;
 
     if (error) {
-      toast.error("Erro ao deletar despesa. Tente novamente!");
+      toast.error("Erro ao deletar. Tente novamente!");
       return;
     }
 
     if (state.ok) {
-      toast.success("Despesa deletada com sucesso!");
+      toast.success("A remoção foi feita com sucesso!");
       handleCloseModal();
-      mutate(`expenses/${date.month}${date.year}`);
     }
   }
 
