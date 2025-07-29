@@ -36,12 +36,14 @@ export const HeaderPrivate = () => {
     <header className={`${styles.header} ${styles.private}`}>
       <nav className={styles.container}>
         <div className={styles.container_logo}>
-          <Image 
-            width={64}
-            height={64}
-            src={logo.src} 
-            alt='Logo'
-          />
+          <Link href="/">
+            <Image 
+              src={logo.src} 
+              alt="Controla Gastos" 
+              width={50} 
+              height={50} 
+            />
+          </Link>
           
           <p>Controla Gastos</p>
 

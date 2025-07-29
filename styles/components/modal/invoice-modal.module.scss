@@ -5,7 +5,7 @@
     justify-content: space-between;
     
     h2, p {
-      font-size: 20px;
+      font-size: 16px;
       color: #fff;
       margin-bottom: 24px;
       font-weight: bold;
@@ -80,11 +80,11 @@
           color: #fff;
 
           p {
-            font-size: 14px;
+            font-size: 12px;
 
             &:last-child {
               white-space: nowrap;
-              font-size: 16px;
+              font-size: 14px;
             }
           }
         }
@@ -130,11 +130,28 @@
 
 @media (min-width: 988px) {
   .invoice {
+    .header {
+      h2, p {
+        font-size: 20px;
+      }
+    }
+
     .container {
       max-width: 1232px;
       margin: 0 auto;
       left: 0;
       right: 0;
+    }
+
+    .content .item .details .info {
+      p {
+        font-size: 14px;
+
+        &:last-child {
+          white-space: nowrap;
+          font-size: 16px;
+        }
+      }
     }
   }
 }

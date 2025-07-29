@@ -3,7 +3,7 @@ import React from 'react'
 import styles from "../../styles/components/error/error.module.scss";
 import Image from 'next/image';
 
-import errorImage from "../../images/error-image.jpg";
+import errorImage from "../../images/error-image.webp";
 
 export default function ErrorScreen() {
   return (

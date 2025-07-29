@@ -24,13 +24,15 @@ export const HeaderPublic = () => {
     <header className={`${styles.header} ${styles.public}`}>
       <nav className={styles.container}>
         <div className={styles.container_logo}>
-          <Image 
-            width={64}
-            height={64}
-            src={logo.src} 
-            alt='Logo'
-            priority
-          />
+          <Link href="/">
+            <Image 
+              width={64}
+              height={64}
+              src={logo.src} 
+              alt='Logo'
+              priority
+            />
+          </Link>
           
           <p>Controla Gastos</p>
         </div>

@@ -29,6 +29,7 @@
 
       h2 {
         margin-bottom: 8px;
+        font-size: 20px;
       }
 
       p {
@@ -38,10 +39,6 @@
       &.headerDelete {
         h2 {
           margin-bottom: 24px;
-        }
-
-        p {
-          font-size: 16px;
         }
       }
     }
@@ -75,6 +72,22 @@
 
         &.edit {
           background-color: #4caf50;
+        }
+      }
+    }
+  }
+}
+
+@media (min-width: 988px) {
+  .modalAction {
+    .container {
+      .header {
+        h2 {
+          font-size: 24px;
+        }
+
+        p {
+          font-size: 16px;
         }
       }
     }
