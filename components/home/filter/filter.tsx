@@ -2,14 +2,14 @@
 
 import React from 'react'
 
-import { Select } from '../../forms/select'
+import Select from '../../forms/select'
 
 import styles from "../../../styles/components/filter/filter.module.scss";
 
 import { months, years } from '@/utils';
 import { useDate } from '@/context/date-context';
 
-export const Filter = () => {
+export default function Filter() {
   const { date, setDate } = useDate();
 
   const handleChangeMonth = (value: string) => {

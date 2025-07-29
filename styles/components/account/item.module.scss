@@ -1,0 +1,31 @@
+.item {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  
+  .info {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+
+    svg {
+      padding: 4px;
+      border-radius: 12px;
+    }
+
+    h3 {
+      color: #fff;
+    }
+  }
+
+  .actions {
+    display: flex;
+    gap: 16px;
+
+    button {
+      background-color: transparent;
+      padding: 8px;
+    }
+  }
+}

@@ -11,7 +11,7 @@ type SelectProps = React.ComponentProps<"select"> & {
   handleChange: (value: string) => void;
 };
 
-export const Select = ({ options, defaultValue, label, id, className, handleChange, ...props }: SelectProps) => {
+export default function Select({ options, defaultValue, label, id, className, handleChange, ...props }: SelectProps) {
   return (
     <div className={`${styles.select} ${className}`}>
       <label htmlFor={id} className={styles.label}>

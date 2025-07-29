@@ -1,6 +1,6 @@
 import React from "react"
 
-import styles from "../../styles/pages/skeleton/home.module.scss";
+import styles from "../../../styles/pages/skeleton/home.module.scss";
 
 export default function SkeletonHomePage() {
   return (

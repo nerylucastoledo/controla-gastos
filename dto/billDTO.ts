@@ -1,43 +1,41 @@
-import { Card } from "./cardDTO";
 import { Category } from "./categoryDTO";
 
-export type Bill = {
-  card: string;
-  category: Category;
-  date: string;
+export interface Bill {
   item: string;
-  people: string;
   value: string;
+  category: Category;
 }
 
-export type BillInput = Bill & {
+export interface BillDTOInput extends Bill {
+  date: string;
+  people: string;
+  card: string;
   installments: number;
 }
 
-export type BillOutput = Bill & {
-  id: string;
-}
-
-export type Expense = {
-  expenses: BillOutput[];
-  cards: Card[];
-}
-
-export type BillByYear = {
-  month: string;
-  value: number;
-}
-
-export type Invoice = {
+export interface BillDTOUpdate extends Bill {
   _id: string;
-  item: string;
-  value: string;
-  category: Category;
 }
 
-export type BillByCard = {
+export interface BillDTOOutput extends Bill {
+  id: string;
+  date: string;
+  people: string;
+  card: string;
+}
+
+export interface BillDTOOutputByYear {
+  month: string;
+  value: string;
+}
+
+export interface BillDTOInputByDateAndCard {
   name: string;
-  invoices: Invoice[];
+  invoices: {
+    _id: string;
+    item: string;
+    value: string;
+    category: Category;
+  }[];
   totalInvoice: number;
 }
-

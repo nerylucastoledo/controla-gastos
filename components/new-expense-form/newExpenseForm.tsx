@@ -1,11 +1,12 @@
 "use client"
 
-import { categorys, formatCurrency, months, years } from '@/utils'
 import React, { ChangeEvent, useActionState, useEffect, useState } from 'react'
-import { Select } from '../forms/select'
-import { Input } from '../forms/input'
+
+import Select from '../forms/select'
+import Input from '../forms/input'
+
+import { categorys, formatCurrency, months, years } from '@/utils'
 import { PeopleDTOOutput } from '@/dto/peopleDTO'
-import { CardDTO } from '@/dto/cardDTO'
 
 import styles from "../../styles/components/new-expense/new-expense.module.scss"
 
@@ -13,10 +14,11 @@ import { useDate } from '@/context/date-context'
 import { billPost } from '@/actions/bill'
 
 import { toast } from 'react-hot-toast';
+import { CardDTOOutput } from '@/dto/cardDTO'
 
 type NewExpenseFormProps = {
   peoples: PeopleDTOOutput[];
-  cards: CardDTO[];
+  cards: CardDTOOutput[];
 }
 
 export default function NewExpenseForm({ peoples, cards }: NewExpenseFormProps) {

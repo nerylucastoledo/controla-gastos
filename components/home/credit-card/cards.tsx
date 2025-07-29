@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import Link from 'next/link';
 
 import styles from "../../../styles/components/credit-card/credit-card.module.scss"
 
@@ -6,9 +7,13 @@ import Card from './card';
 
 import { parseCurrencyString } from '@/utils';
 
-import { BillOutput, Expense } from '@/dto/billDTO';
-import { CardDTOOutput as CardDTO } from '@/dto/cardDTO';
-import Link from 'next/link';
+import { BillDTOOutput } from '@/dto/billDTO';
+import { CardDTOOutput } from '@/dto/cardDTO';
+
+type DataDTO = {
+  expenses: BillDTOOutput[];
+  cards: CardDTOOutput[];
+}
 
 type InvoiceCard = {
   name: string;
@@ -16,7 +21,7 @@ type InvoiceCard = {
   total: number;
 }
 
-const invoiceByCard = (expenses: BillOutput[], cards: CardDTO[]) => {
+const invoiceByCard = (expenses: BillDTOOutput[], cards: CardDTOOutput[]) => {
   const invoice = expenses.reduce((acc, expense) => {
     if (!acc[expense.card]) {
       const color = cards.find(card => card.name === expense.card)
@@ -37,7 +42,7 @@ const invoiceByCard = (expenses: BillOutput[], cards: CardDTO[]) => {
   return Object.values(invoice);
 };
 
-export default function CreditCard({ data, date }: { data: Expense, date: { month: string, year: string} }) {
+export default function Cards({ data, date }: { data: DataDTO, date: { month: string, year: string} }) {
   const { cards, expenses } = data;
 
   const invoices = useMemo(() => invoiceByCard(expenses, cards), [expenses, cards]);
@@ -59,7 +64,7 @@ export default function CreditCard({ data, date }: { data: Expense, date: { mont
               scroll={false}
               prefetch={false}
             >
-              <Card name={card.name} color={card.color} totalInvoice={card.total} />
+              <Card name={card.name} color={card.color} total={card.total} />
             </Link>
           ))}
         </div>

@@ -5,8 +5,8 @@ import { useActionState, useEffect, } from 'react';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 
-import { Input } from '@/components/forms/input';
-import { Submit } from '@/components/forms/submit';
+import Input from '@/components/forms/input';
+import Submit from '@/components/forms/submit';
 
 import styles from "../../styles/components/forms/form.module.scss";
 import ErrorMessage from '@/components/forms/error-message';
@@ -46,7 +46,7 @@ export default function LoginForm() {
 
         <ErrorMessage error={state.error} />
 
-        <Submit>Entrar</Submit>
+        <Submit message="Acessando...">Entrar</Submit>
       </form>
 
       <Link href={"/forgot-password"}>Perdeu a senha?</Link>

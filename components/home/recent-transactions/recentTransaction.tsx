@@ -3,10 +3,10 @@ import React from 'react'
 import styles from "../../../styles/components/recent-transaction/recent-transaction.module.scss"
 
 import Icon from '../../icon/icon'
-import { BillOutput } from '@/dto/billDTO';
+import { BillDTOOutput } from '@/dto/billDTO';
 
-export default function RecentTransaction({ data }: { data: BillOutput[] }) {
-  const lastTransactions = data.reverse().slice(0, 10);
+export default function RecentTransaction({ data }: { data: BillDTOOutput[] }) {
+  const lastTransactions = data.slice(-10).reverse();
 
   return (
     <div className={styles.recentTransaction}>

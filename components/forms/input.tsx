@@ -1,5 +1,5 @@
 
-import React, { FC } from 'react'
+import React from 'react'
 
 import styles from "../../styles/components/forms/input.module.scss"
 
@@ -8,7 +8,7 @@ type InputProps = React.ComponentProps<"input"> & {
   id: string;
 }
 
-export const Input: FC<InputProps> = ({ label, id, ...props}) => {
+export default function Input({ label, id, ...props}: InputProps) {
   return (
     <div className={styles.form_control}>
       <label htmlFor={id}>{label}</label>

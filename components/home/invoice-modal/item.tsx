@@ -1,8 +1,16 @@
 import React from 'react'
 
 import styles from "../../../styles/components/modal/invoice-modal.module.scss"
+import { Bill, BillDTOInputByDateAndCard } from '@/dto/billDTO';
 
-import { BillByCard, Invoice } from '@/dto/billDTO'
+type ItemProps = {
+  data: BillDTOInputByDateAndCard[];
+  setShowModalAction: React.Dispatch<React.SetStateAction<ModalActionType>>;
+}
+
+type Invoice = Bill & {
+  _id: string;
+}
 
 type ModalActionType = {
   show: boolean;
@@ -10,13 +18,8 @@ type ModalActionType = {
   item: Invoice | null;
 }
 
-export default function Item({ data, setShowModalAction }: { data: BillByCard[], setShowModalAction: React.Dispatch<React.SetStateAction<ModalActionType>> }) {
-
-  if (!data || data.length === 0) {
-    return (
-      <p className={`empty ${styles.empty}`}>Nada para mostrar</p>
-    );
-  }
+export default function Item({ data, setShowModalAction }: ItemProps) {
+  if (!data || data.length === 0) return null;
 
   const { invoices } = data[0];
 

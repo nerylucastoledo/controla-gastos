@@ -3,13 +3,12 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearSca
 import { Bar } from 'react-chartjs-2';
 import { TooltipItem } from 'chart.js';
 
-import { bill } from '@/actions/bill';
-
 import styles from "../../../styles/components/chart/chart.module.scss";
 
+import { billGet } from '@/actions/bill';
 import { useDate } from '@/context/date-context';
 import { formatToCurrencyBRL } from '@/utils';
-import { BillByYear } from '@/dto/billDTO';
+import { BillDTOOutputByYear } from '@/dto/billDTO';
 
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -27,12 +26,12 @@ const handleTooltip = (value: number) => {
 }
 
 export default function ExpenseByMonth() {
-  const [data, setData] = useState<BillByYear[] | null>(null);
+  const [data, setData] = useState<BillDTOOutputByYear[] | null>(null);
 
   const { date } = useDate();
   useEffect(() => {
     const getData = async () => {
-      const result = await bill(`expenses/year/${date.year}`);
+      const result = await billGet(`expenses/year/${date.year}`);
       setData(result);
     };
 

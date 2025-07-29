@@ -2,7 +2,6 @@
 
 import { cookies } from "next/headers";
 import { LoginInput, RegisterInput } from "../dto/authDTO";
-import { EditInvoiceInput } from "@/dto/invoiceDTO";
 
 export async function TOKEN_POST(url: string, body: LoginInput | RegisterInput ) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${url}`, {
@@ -45,7 +44,7 @@ export async function FETCH_GET(url: string, tags: string[] = []) {
   return response;
 }
 
-export async function FETCH_EDIT(url: string, body: EditInvoiceInput) {
+export async function FETCH_EDIT<T>(url: string, body: T) {
   const cookieStore = await cookies();
   const token = cookieStore.get('token');
 

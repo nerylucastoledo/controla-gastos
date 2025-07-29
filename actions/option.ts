@@ -7,19 +7,16 @@ import { CardDTOInput } from "@/dto/cardDTO";
 
 export async function optionPost(state: {}, formData: FormData) {
   const name = formData.get("name") as string;
-  const color = formData.get("color") as string;
+  const color = formData.get("color") as string | null;
 
   try {
-    let response;
+    const body = color 
+      ? { name, color } as CardDTOInput 
+      : { name } as PeopleDTOInput;
 
-    if (color) {
-      const body: CardDTOInput = { name, color };
-      response = await FETCH_POST("cards", body);
-    } else {
-      const body: PeopleDTOInput = { name };
-      response = await FETCH_POST("peoples", body);
-    }
+    const endpoint = color ? "cards" : "peoples";
 
+    const response = await FETCH_POST(endpoint, body);
     const data = await response.json();
 
     if (!response.ok) {

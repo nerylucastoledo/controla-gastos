@@ -2,7 +2,9 @@ import { Metadata } from 'next'
 import React from 'react'
 
 import styles from "../../../styles/components/new-expense/new-expense.module.scss"
-import NewExpenseForm from '@/components/new-expense/newExpenseForm';
+
+import NewExpenseForm from '@/components/new-expense-form/newExpenseForm';
+
 import transaction from '@/actions/transactions';
 
 export const metadata: Metadata = {

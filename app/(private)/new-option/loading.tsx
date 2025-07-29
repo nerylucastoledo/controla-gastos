@@ -1,10 +1,10 @@
 import React from "react"
 
-import styles from "../../../styles/pages/skeleton/new-expense.module.scss";
+import styles from "../../../styles/pages/skeleton/new-option.module.scss";
 
-export default function SkeletonNewExpensePage() {
+export default function SkeletonNewOptionPage() {
   return (
-    <div className={styles.skeletonNewExpensePage}>
+    <div className={styles.skeletonNewOptionPage}>
       {/* Título 1 */}
       <div className={`${styles.skeletonTitle}`} />
 
@@ -14,28 +14,14 @@ export default function SkeletonNewExpensePage() {
         <div className={styles.skeletonSelect} />
       </div>
 
-      {/* Select 1 */}
-      <div className={`${styles.skeletonLabel}`} />
-      <div className={`${styles.skeletonInput}`} />
-
-      {/* Select 2 */}
-      <div className={`${styles.skeletonLabel}`} />
-      <div className={`${styles.skeletonInput}`} />
-
-      {/* Select 3 */}
-      <div className={`${styles.skeletonLabel}`} />
-      <div className={`${styles.skeletonInput}`} />
-
       {/* Input 1 */}
       <div className={`${styles.skeletonLabel}`} />
       <div className={`${styles.skeletonInput}`} />
 
       {/* Input 2 */}
       <div className={`${styles.skeletonLabel}`} />
-      <div className={`${styles.skeletonInput}`} />
+      <div className={`${styles.skeletonInput} ${styles.skeletonInputCard}`} />
 
-      {/* Botao */}
-      <div className={`${styles.skeletonLabel}`} />
       <div className={`${styles.skeletonButton}`} />
     </div>
   )

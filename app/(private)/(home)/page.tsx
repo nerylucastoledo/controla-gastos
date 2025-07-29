@@ -5,7 +5,7 @@ import HomePage from '@/components/home/home';
 
 export const metadata: Metadata = {
   title: "Controla gastos | Ínicio",
-  description: "Faça o login no Controla gastos para conseguir entender para onde o seu dinheiro esta indo e ter maior controle sobre ele."
+  description: "Entre no Controla Gastos e descubra como otimizar suas finanças pessoais. Com nossa ferramenta, você poderá visualizar para onde seu dinheiro está indo e tomar decisões mais inteligentes para um melhor controle financeiro."
 }
 
 export default async function Home() {

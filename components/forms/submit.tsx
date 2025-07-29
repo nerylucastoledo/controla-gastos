@@ -6,17 +6,18 @@ import { useFormStatus } from 'react-dom';
 import styles from "../../styles/components/forms/submit.module.scss";
 
 type SubmitProps = {
+  message: string;
   children: ReactNode;
 }
 
-export const Submit = ({ children }: SubmitProps) => {
+export default function Submit({ message, children }: SubmitProps) {
   const { pending } = useFormStatus();
 
   return (
     <button type="submit" disabled={pending} className={styles.button}>
       {pending ? (
         <>
-          Acessando...
+          {message}
           <VscLoading className="animate-spin mr-2" />
         </>
       ) : (

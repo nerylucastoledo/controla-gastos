@@ -3,8 +3,8 @@
 import { useActionState, useEffect } from 'react';
 import { redirect } from 'next/navigation';
 
-import { Input } from '@/components/forms/input';
-import { Submit } from '@/components/forms/submit';
+import Input from '@/components/forms/input';
+import Submit from '@/components/forms/submit';
 import ErrorMessage from '@/components/forms/error-message';
 
 import register from '@/actions/register';
@@ -16,11 +16,11 @@ export default function CreateAccountForm() {
   const [state, action] = useActionState(register, { ok: false, error: '', data: null})
 
   useEffect(() => {
-      if (state.ok) {
-        localStorage.setItem("salary", state.data.salary.toString());
-        redirect("/");
-      }
-    }, [state]);
+    if (state.ok) {
+      localStorage.setItem("salary", state.data.salary.toString());
+      redirect("/");
+    }
+  }, [state]);
 
   const handleSalary = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -72,7 +72,7 @@ export default function CreateAccountForm() {
 
       <ErrorMessage error={state.error} />
 
-      <Submit>Criar conta</Submit>
+      <Submit message='Criando...'>Criar conta</Submit>
     </form>
   )
 }

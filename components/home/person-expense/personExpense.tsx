@@ -2,15 +2,15 @@ import React, { useMemo } from 'react'
 
 import styles from "../../../styles/components/person-expense/person-expense.module.scss"
 
-import { BillOutput } from '@/dto/billDTO'
 import { formatToCurrencyBRL, parseCurrencyString } from '@/utils';
+import { BillDTOOutput } from '@/dto/billDTO';
 
 type InvoicePeople = {
   name: string;
   total: number;
 }
 
-const invoiceByPeople = (expenses: BillOutput[]) => {
+const invoiceByPeople = (expenses: BillDTOOutput[]) => {
   const invoice = expenses.reduce((acc, expense) => {
     if (!acc[expense.people]) {
       acc[expense.people] = { 
@@ -28,7 +28,7 @@ const invoiceByPeople = (expenses: BillOutput[]) => {
   return Object.values(invoice);
 };
 
-export default function PersonExpense({ data }: { data: BillOutput[] }) {
+export default function PersonExpense({ data }: { data: BillDTOOutput[] }) {
   
   const invoices = useMemo(() => invoiceByPeople(data), [data]);
 

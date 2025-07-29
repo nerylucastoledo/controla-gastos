@@ -7,15 +7,19 @@ import styles from "../../../styles/components/modal/invoice-modal.module.scss"
 
 import People from './people';
 import Item from './item';
-import ModalEdit from '../modal-action/modalEdit';
-import ModalDelete from '../modal-action/modalDelete';
 
-import { BillByCard, Invoice } from '@/dto/billDTO'
 import { formatToCurrencyBRL } from '@/utils';
+import { Bill, BillDTOInputByDateAndCard } from '@/dto/billDTO';
+import ModalEditInvoice from './modalEditInvoice';
+import ModalDeleteInvoice from './modalDeleteInvoice';
 
 type InvoiceModalProps = {
-  data: BillByCard[];
+  data: BillDTOInputByDateAndCard[];
   card: string;
+}
+
+type Invoice = Bill & {
+  _id: string;
 }
 
 type ModalActionType = {
@@ -79,17 +83,17 @@ export default function InvoiceModal({ data, card }: InvoiceModalProps) {
         </div>
       </div>
 
-      {modalAction.show && modalAction.type === "edit" && (
-        <ModalEdit
+      {modalAction.show && modalAction.type === "edit" && modalAction.item && (
+        <ModalEditInvoice
           handleCloseModal={handleCloseModalAction}
-          modalAction={modalAction.item}
+          invoice={modalAction.item}
         />
       )}
 
-      {modalAction.show && modalAction.type === "delete" && (
-        <ModalDelete
+      {modalAction.show && modalAction.type === "delete" && modalAction.item && (
+        <ModalDeleteInvoice
           handleCloseModal={handleCloseModalAction}
-          modalAction={modalAction.item}
+          invoice={modalAction.item}
         />
       )}
     </div>
