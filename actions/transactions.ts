@@ -9,7 +9,10 @@ export default async function transaction(url: string) {
     if (!response.ok) {
       throw new Error(data.message);
     }
-    
+
+    // atrasar o resultado
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
     return data.data;
   } catch (error: unknown) {
     return apiError(error);

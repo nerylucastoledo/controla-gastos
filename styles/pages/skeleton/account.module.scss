@@ -1,0 +1,67 @@
+.skeletonAccountPage {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: pulse 1.5s infinite ease-in-out;
+
+  .skeletonTitle {
+    max-width: 100px;
+    width: 100%;
+    height: 24px;
+    background-color: #e0e0e0;
+    border-radius: 12px;
+  }
+
+  .skeletonRow {
+    display: flex;
+    max-width: 600px;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  
+  .skeletonSelect {
+    max-width: 600px;
+    width: 100%;
+    height: 56px;
+    background-color: #e0e0e0;
+    border-radius: 12px;
+  }
+
+  .skeletonButton {
+    max-width: 160px;
+    height: 56px;
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 12px;
+  }
+
+  .skeletonLabel {
+    max-width: 100px;
+    width: 100%;
+    height: 24px;
+    background-color: #e0e0e0;
+    border-radius: 12px;
+    margin-top: 16px;
+  }
+
+  .skeletonCard {
+    max-width: 600px;
+    width: 100%;
+    height: 40px;
+    background-color: #e0e0e0;
+    border-radius: 12px;
+  }
+}
+
+/* Animação Pulse */
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+  100% {
+    opacity: 1;
+  }
+}

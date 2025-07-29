@@ -57,7 +57,7 @@ export default function Account({ cards, peoples }: AccountProps) {
   }, [state, salary]);
   
   const handleCloseModalAction = useCallback(() => {
-    setModalAction({ show: false, type: null,  item: null });
+    setModalAction({ show: false, type: null, item: null });
   }, []);
 
   const handleSalary = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {

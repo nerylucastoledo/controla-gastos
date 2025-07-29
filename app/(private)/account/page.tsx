@@ -4,6 +4,7 @@ import React, { Suspense } from 'react'
 import styles from "../../../styles/components/account/account.module.scss"
 import transaction from '@/actions/transactions';
 import Account from '@/components/account/account';
+import SkeletonAccountPage from './loading';
 
 export const metadata: Metadata = {
   title: "Controla gastos | Suas informações",
@@ -18,7 +19,7 @@ export default async function Page() {
     <section className={styles.newCardPeople}>
       <h1 className='title'>Informações</h1>
       
-      <Suspense fallback={<div className='loading'>Carregando...</div>}>
+      <Suspense fallback={<SkeletonAccountPage />}>
         <Account cards={cards} peoples={peoples} />
       </Suspense>
     </section>
