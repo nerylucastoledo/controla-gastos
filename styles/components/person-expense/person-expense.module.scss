@@ -1,5 +1,72 @@
 .personExpense {
-  h1 {
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .title {
+    font-size: 20px;
+    font-weight: normal;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: auto;
+    max-height: 350px;
+    display: block;
+    border: 1px solid var(--gray-3);
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    &::-webkit-scrollbar {
+      width: 0px;
+    }
+
+    thead, tbody {
+      display: block;
+
+      tr {
+        display: flex;
+      }
+    }
+
+    thead {
+      background-color: var(--gray-2);
+
+      tr {
+        border-bottom: 1px solid var(--gray);
+
+        th {
+          padding: 16px;
+          color: var(--black);
+          font-weight: normal;
+          text-align: left;
+          flex: 1;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        &:not(:last-child) {
+          border-bottom: 1px solid var(--gray-3);
+        }
+
+        td {
+          padding: 16px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          color: var(--gray);
+          text-align: left;
+          flex: 1;
+
+          svg {
+            width: 20px;
+            height: 20px;
+          }
+        }
+      }
+    }
   }
 }

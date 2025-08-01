@@ -1,68 +1,94 @@
-
 .recentTransaction {
-  h1 {
-    margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: 400px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 0px;
   }
 
-  .container {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    max-height: 300px;
-    overflow: auto;
+  .title {
+    font-size: 20px;
+    font-weight: normal;
+  }
 
-    &::-webkit-scrollbar {
-      width: 0px;
+  .container .item {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    padding: 12px 0;
+    
+    &:not(:last-child) {
+      border-bottom: 1px solid var(--gray-2);
     }
 
-    .item {
+    .icon {
+      background-color: var(--gray-2);
+      padding: 8px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
+      justify-content: center;
+    }
+
+    .content {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       gap: 16px;
-      border-radius: 12px;
-      background-color: #2B3640;
-      padding: 8px;
 
-      svg {
-        min-width: 30px;
-        min-height: 30px;
-        padding: 4px;
-        border-radius: 12px;
-      }
-
-      div {
+      .details {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: 8px;
 
         h2 {
-          margin: 0;
           font-size: 16px;
-          color: #fff;
+          font-weight: normal;
+          color: var(--black);
         }
 
-        p {
-          margin: 0;
-          font-size: 14px;
-          color: #9EADBF;
+        div {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+
+          .people {
+            font-size: 14px;
+            color: var(--gray);
+          }
+
+          .category {
+            padding: 4px 8px;
+            border-radius: 12px;
+            background-color: var(--yellow);
+            color: var(--orange);
+            text-align: center;
+            font-size: 12px;
+            width: max-content;
+            font-weight: bold;
+          }
         }
       }
-    }
-  }
 
-  table {
-    display: none;
+      .value {
+        font-size: 14px;
+        font-weight: bold;
+        color: var(--red-dark);
+        white-space: nowrap;
+      }
+    }
   }
 }
 
 @media (min-width: 988px) {
-  .recentTransaction {
-    .container {
-      display: none;
-    }
-
-    table {
-      display: block;
-    }
+  .recentTransaction .container .item .content .details div {
+    flex-direction: row;
   }
 }

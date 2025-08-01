@@ -43,7 +43,7 @@ export default function ExpenseByMonth() {
     datasets: [{
       label: "",
       data: data?.map(item => item.value),
-      backgroundColor: "#293038",
+      backgroundColor: "#717182",
       borderColor: "#75757",
       borderWidth: 1,
       categoryPercentage: 0.8,
@@ -60,12 +60,12 @@ export default function ExpenseByMonth() {
           callback: function(value: number | string) {
             return formatToCurrencyBRL(Number(value));
           },
-          color: "#9CABBA"
+          color: "#717182"
         },
       },
       x: {
         ticks: {
-          color: "#9CABBA"
+          color: "#717182"
         },
       },
     },
@@ -89,7 +89,7 @@ export default function ExpenseByMonth() {
   return (
     <div className={styles.chart}>
       <div className={styles.container}>
-        <h1 className='title'>Gasto por mês</h1>
+        <h1 className={styles.title}>Gasto por mês</h1>
 
         {!data || !data.length ? (
           <div className="empty">

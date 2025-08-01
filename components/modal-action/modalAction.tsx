@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import { IoIosCloseCircle } from "react-icons/io";
+import { IoIosClose } from "react-icons/io";
 
 import styles from "../../styles/components/modal/modal-action.module.scss"
 
@@ -18,7 +18,7 @@ export default function ModalAction({ handleCloseModal, title, subtitle, childre
     <div className={`modal ${styles.modalAction}`}>
       <div className={`container ${styles.container}`}>
         <button className={styles.closeButton} onClick={handleCloseModal}>
-          <IoIosCloseCircle size={30} />
+          <IoIosClose size={30} />
         </button>
 
         {(title || subtitle) && (

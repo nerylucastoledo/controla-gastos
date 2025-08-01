@@ -18,19 +18,29 @@
 
     button {
       max-width: 160px;
-      height: 56px;
+      height: 45px;
     }
   }
   
   h2 {
-    font-size: 20px;
-    color: #fff;
     margin-bottom: 16px;
+    font-size: 20px;
+    font-weight: normal;
   }
   
   .cards {
     display: flex;
     gap: 24px;
     flex-direction: column;
+  }
+}
+
+@media (min-width: 988px) {
+  .account {
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
   }
 }

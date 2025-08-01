@@ -6,6 +6,8 @@ import Select from '../../forms/select'
 
 import styles from "../../../styles/components/filter/filter.module.scss";
 
+import { CiCalendar } from "react-icons/ci";
+
 import { months, years } from '@/utils';
 import { useDate } from '@/context/date-context';
 
@@ -22,9 +24,10 @@ export default function Filter() {
 
   return (
     <div className={styles.filter}>
+      <CiCalendar size={20} color='var(--black)' />
+
       <Select
         id="month"
-        label="Mês"
         options={months}
         defaultValue={date?.month}
         handleChange={handleChangeMonth}
@@ -32,7 +35,6 @@ export default function Filter() {
 
       <Select
         id="year"
-        label="Ano"
         options={years}
         defaultValue={date?.year}
         handleChange={handleChangeYear} 

@@ -11,7 +11,7 @@ export async function billGet(url: string) {
   try {
     const response = await FETCH_GET(url, ["collection"]);
     const data = await response.json();
-    
+
     if (!response.ok) {
       throw new Error(data.message);
     }

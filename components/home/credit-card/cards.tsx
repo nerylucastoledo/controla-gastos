@@ -49,7 +49,7 @@ export default function Cards({ data, date }: { data: DataDTO, date: { month: st
 
   return (
     <div className={styles.card}>
-      <h1 className='title'>Cartões</h1>
+      <h1 className={styles.title}>Cartões cadastrados</h1>
 
       {!cards.length ? (
         <div className="empty">

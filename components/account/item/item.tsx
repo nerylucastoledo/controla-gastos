@@ -35,13 +35,13 @@ export default function Item({ icon, item, setModalAction }: ItemProps) {
           className={styles.edit} 
           onClick={() => setModalAction({ show: true, type: "edit", item })}
         >
-          <MdModeEditOutline size={20} color='#fff' />
+          <MdModeEditOutline size={20} color='var(--black)' />
         </button>
         <button 
           className={styles.delete}
           onClick={() => setModalAction({ show: true, type: "delete", item })}
         >
-          <MdDeleteForever size={20} color='#fff' />
+          <MdDeleteForever size={20} color='var(--black)' />
         </button>
       </div>
     </div>

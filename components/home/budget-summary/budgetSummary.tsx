@@ -1,11 +1,16 @@
 "use client";
 
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 
 import styles from "../../../styles/components/budget-summary/budget-summary.module.scss"
 
 import { formatToCurrencyBRL, parseCurrencyString } from '@/utils';
 import { BillDTOOutput } from '@/dto/billDTO';
+
+import { FaArrowTrendDown } from "react-icons/fa6";
+import { FaArrowTrendUp } from "react-icons/fa6";
+import { LuWallet } from "react-icons/lu";
+
 
 const totalInvoice = (expenses: BillDTOOutput[] | null) => {
   if (!expenses) return 0;
@@ -23,31 +28,44 @@ const totalInvoice = (expenses: BillDTOOutput[] | null) => {
 };
 
 export default function BudgetSummary({ data }: { data: BillDTOOutput[] | null }) {
-  const salary = Number(localStorage.getItem("salary") ?? 0);
+  const [salary, setSalary] = React.useState(0);
   const total = useMemo(() => totalInvoice(data), [data]);
   const remaining = salary - total;
+
+  useEffect(() => {
+      const storedSalary = localStorage.getItem('salary');
+  
+      if (storedSalary) {
+        setSalary(Number(storedSalary));
+      }
+    }, []);
   
   return (
     <div className={styles.budget}>
-      <h1 className='title'>Resumo</h1>
-      
       <div className={styles.container}>
         <div className={styles.item}>
-          <h2>Sálario</h2>
-          <p>{formatToCurrencyBRL(salary)}</p>
-        </div>
-
-        <div className={styles.item}>
-          <h2>Gastos</h2>
-          <p className={styles.negative}>
-            {formatToCurrencyBRL(total)}
+          <p className={styles.title}>Receita</p>
+          <p className={`${styles.value} ${styles.positive}`}>
+            {formatToCurrencyBRL(salary)}
+            <span><FaArrowTrendUp size={24} color='var(--green-dark)' /></span>
           </p>
         </div>
 
         <div className={styles.item}>
-          <h2>Valor restante</h2>
-          <p className={remaining > 0 ? styles.positive : styles.negative}>
+          <p className={styles.title}>Despesas</p>
+          <p className={`${styles.value} ${styles.negative}`}>
+            {formatToCurrencyBRL(total)}
+            <span><FaArrowTrendDown size={24} color='var(--red-dark)' /></span>
+          </p>
+        </div>
+
+        <div className={styles.item}>
+          <p className={styles.title}>Saldo</p>
+          <p className={`${styles.value} ${remaining > 0 ? styles.positive : styles.negative}`}>
             {formatToCurrencyBRL(remaining)}
+            <span>
+              <LuWallet size={24} color={remaining > 0 ? "var(--green-dark)" : "var(--red-dark)"} />
+            </span>
           </p>
         </div>
       </div>

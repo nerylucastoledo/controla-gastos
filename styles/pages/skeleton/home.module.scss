@@ -7,7 +7,16 @@
 
 .skeletonRow {
   display: flex;
+  align-items: center;
+  flex-wrap: wrap;
   gap: 16px;
+}
+
+.skeletonIcon {
+  width: 32px;
+  height: 32px;
+  background-color: #e0e0e0;
+  border-radius: 50%;
 }
 
 .skeletonSelect {
@@ -18,31 +27,57 @@
 }
 
 .skeletonBox {
+  max-width: 400px;
+  min-width: 312px;
+  width: 100%;
+  height: 106px;
   background-color: #e0e0e0;
-  border-radius: 8px;
+  border-radius: 12px;
 }
 
-.title {
-  width: 25%;
-  height: 24px;
+.skeletonTitle {
+  width: 200px;
+  height: 30px;
+  background-color: #e0e0e0;
+  border-radius: 12px;
+}
+
+.skeletonTransactions {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .skeletonRow {
+    flex-direction: column;
+
+    .skeletonItem {
+      width: 100%;
+      height: 75px;
+      background-color: #e0e0e0;
+      border-radius: 12px;
+    }
+  }
+
 }
 
 .cards .card {
-  width: 404px;
-  height: 104px;
-  border-radius: 16px;
+  flex: 1;
+  height: 163px;
+  border-radius: 12px;
 }
 
 .table {
   height: 400px;
   width: 100%;
-  border-radius: 16px;
+  max-width: 100%;
+  border-radius: 12px;
 }
 
 .chart {
-  height: 159px;
-  width: 100%;
-  border-radius: 16px;
+  flex: 1;
+  height: 360px;
+  border-radius: 12px;
+  background-color: #e0e0e0;
 }
 
 /* Animação Pulse */

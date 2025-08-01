@@ -6,7 +6,7 @@
   
   .info {
     display: flex;
-    gap: 16px;
+    gap: 8px;
     align-items: center;
 
     svg {
@@ -15,14 +15,15 @@
     }
 
     h3 {
-      color: #fff;
       font-size: 16px;
+      color: var(--gray);
+      font-weight: normal;
     }
   }
 
   .actions {
     display: flex;
-    gap: 16px;
+    gap: 8px;
 
     button {
       background-color: transparent;

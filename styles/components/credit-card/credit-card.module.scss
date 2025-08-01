@@ -1,6 +1,11 @@
 .card {
-  h1 {
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .title {
+    font-size: 20px;
+    font-weight: normal;
   }
 
   .container {
@@ -8,52 +13,52 @@
     gap: 16px;
     overflow: auto;
 
-    &::-webkit-scrollbar {
-      width: 0px;
-    }
-
     .item {
-      padding: 12px;
+      border: 1px solid var(--gray-3);
       border-radius: 12px;
+      padding: 16px;
+      min-width: 278px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
-      gap: 16px;
-      min-width: 230px;
-      position: relative;
-      color: #fff;
+      gap: 24px;
 
-      h2 {
-        font-size: 14px;
-      }
+      .icon {
+        display: flex;
+        gap: 8px;
+        align-items: center;
 
-      p {
-        font-size: 16px;
-      }
-    }
-  }
-}
-
-@media (min-width: 988px) {
-  .card {
-    margin-bottom: 0;
-
-    .container {
-      overflow: hidden;
-      flex-wrap: wrap;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr;
-
-      .item {
-        flex: 1;
-        padding: 16px;
-
-        h2 {
-          font-size: 16px;
+        svg {
+          min-width: 20px;
+          min-height: 20px;
         }
 
-        p {
-          font-size: 20px;
+        h2 {
+          color: var(--black-2);
+          font-size: 14px;
+          font-weight: normal;
+        }
+      }
+
+      .cardNumber {
+        color: var(--gray);
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .total {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        p:first-child {
+          color: var(--gray);
+          font-size: 12px;
+        }
+
+        p:last-child {
+          color: var(--black-2);
+          font-size: 16px;
+          font-weight: 500;
         }
       }
     }

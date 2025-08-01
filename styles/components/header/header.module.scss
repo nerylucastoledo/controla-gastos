@@ -1,19 +1,20 @@
 .header {
-  background-color: #121417;
-  border-bottom: 1px solid #1F262E;
-  z-index: 2;
+  background-color: var(--white);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   .container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 16px 24px;
+
     &_logo {
       display: flex;
-      justify-content: space-between;
-      padding: 16px 24px;
       align-items: center;
-
-      img {
-        width: 48px;
-        height: 48px;
-      }
+      justify-content: space-between;
+      gap: 8px;
+      flex: 1;
 
       p {
         display: none;
@@ -23,57 +24,65 @@
     ul {
       position: fixed;
       bottom: 0;
-      display: flex;
       width: 100%;
+      margin-left: -24px;
+      z-index: 2;
+      display: flex;
       gap: 16px;
-      padding: 12px 24px;
+      padding: 16px 24px;
       justify-content: space-between;
-      background-color: #1F262E;
-      align-items: center;
-
+      background-color: var(--white);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+      
       li {
         &.active {
           a {
-            font-weight: bold;
+            background-color: var(--gray-2);
           }
         }
-        
-        a {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          color: #fff;
-          gap: 12px;
-          font-size: 14px;
-        }
 
-        &:has(button) {
-          display: none;
+        a {
+          color: var(--black);
+          font-weight: 500;
+          padding: 8px 16px;
+          border-radius: 8px;
+          transition: background-color 0.3s;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+
+          span {
+            display: none;
+          }
+
+          &:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+          }
         }
       }
     }
 
-    a, button {
+    button {
       background-color: transparent;
-      color: #fff;
-      padding: 8px;
-      max-width: unset;
-      width: unset;
+      border: none;
+      color: var(--black);
+      padding: 8px 16px;
+      border-radius: 8px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+      }
     }
   }
 
   &.public {
-    padding: 16px 24px;
-
     .container {
-      display: flex;
       align-items: center;
-      justify-content: space-between;
-
-      a {
-        background-color: #293038;
-        padding: 16px;
-      }
+      gap: 16px;
     }
   }
 }
@@ -81,45 +90,36 @@
 @media (min-width: 988px) {
   .header {
     .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
 
       &_logo {
-        gap: 16px;
-        
+        justify-content: unset;
+
         p {
+          color: var(--black);
           display: block;
-          color: #fff;
           font-size: 20px;
         }
-  
+
         button {
           display: none;
         }
       }
 
       ul {
+        display: flex;
+        align-items: center;
+        gap: 8px;
         position: relative;
-        background-color: transparent;
-        justify-content: center;
+        box-shadow: unset;
+        border: none;
+        margin: 0;
+        padding: 0;
+        justify-content: unset;
         width: unset;
 
-        li {
-          &:has(button) {
+        li a {
+          span {
             display: block;
-          }
-
-          a {
-            flex-direction: row;
-            font-size: 16px;
-          }
-
-          &.active, &:hover {
-            background-color: #4096F5;
-            border-radius: 12px;
           }
         }
       }

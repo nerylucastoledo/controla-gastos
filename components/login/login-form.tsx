@@ -7,9 +7,9 @@ import { redirect } from 'next/navigation';
 
 import Input from '@/components/forms/input';
 import Submit from '@/components/forms/submit';
+import ErrorMessage from '@/components/forms/error-message';
 
 import styles from "../../styles/components/forms/form.module.scss";
-import ErrorMessage from '@/components/forms/error-message';
 
 export default function LoginForm() {
   const [state, action] = useActionState(login, { ok: false, error: '', data: null })

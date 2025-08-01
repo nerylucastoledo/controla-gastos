@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement, TooltipItem } from 'chart.js';
-import { Pie } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 
 import styles from "../../../styles/components/chart/chart.module.scss";
 
@@ -31,43 +31,37 @@ export default function ExpenseByMonth({ data }: { data: BillDTOOutput[]}) {
     datasets: [{
       label: "",
       data: Object.values(expenses),
-      backgroundColor: [
-        "#4A8E4A",
-        "#FFD700",
-        "#1E90FF",
-        "#FFB6C1",
-        "#A9A9A9",
-        "#98FB98",
-        "#F0E68C",
-        "#B0C4DE",
-        "#808080",
-        "#6A5ACD",
-        "#FF7F50",
-        "#20B2AA",
-        "#778899",
-        "#FFB347",
-        "#DDA0DD"
-      ],
-      borderColor: "#757575",
+      backgroundColor: ["#0a0a0a"],
+      borderColor: "#a1a1a1",
       borderWidth: 1,
     }]
   }
 
   const options = {
     responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+        ticks: {
+          callback: function(value: number | string) {
+            return formatToCurrencyBRL(Number(value));
+          },
+          color: "#717182"
+        },
+      },
+      x: {
+        ticks: {
+          color: "#717182"
+        },
+      },
+    },
     plugins: {
       legend: {
-        position: 'left' as const,
-        labels: {
-          color: "#9CABBA",
-          font: {
-            size: 12,
-          }
-        }
+        display: false,
       },
       tooltip: {
         callbacks: {
-          label: function(tooltipItem: TooltipItem<'pie'>) {
+          label: function(tooltipItem: TooltipItem<'bar'>) {
             return ` ${formatToCurrencyBRL(Number(tooltipItem.raw))}`;
           }
         }
@@ -78,14 +72,14 @@ export default function ExpenseByMonth({ data }: { data: BillDTOOutput[]}) {
   return (
     <div className={styles.chart}>
       <div className={styles.container}>
-        <h1 className='title'>Gasto por categoria</h1>
+        <h2 className={styles.title}>Despesas por categoria</h2>
 
         {!data || !data.length ? (
           <div className="empty">
             <p className='subtitle'>Gráfico indisponível.</p>
           </div>
         ) : (
-          <Pie data={dataChart} options={options} />
+          <Bar data={dataChart} options={options} />
         )}
       </div>
     </div>

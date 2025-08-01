@@ -1,55 +1,58 @@
 .budget {
-  h1 {
-    margin-bottom: 20px;
-  }
-
   .container {
     display: flex;
     gap: 16px;
     flex-wrap: wrap;
 
     .item {
-      background-color: #2B3640;
       border-radius: 12px;
-      padding: 16px;
+      padding: 24px;
       flex: 1;
 
-      h2, p {
-        color: #fff;
-      }
-
-      h2 {
+      .title {
         font-size: 14px;
-        margin-bottom: 8px;
+        color: var(--gray);
       }
 
-      p {
-        font-size: 16px;
+      .value {
+        font-size: 20px;
+        font-weight: 500;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+      }
 
-        &.positive {
-          color: #00B37E;
-        }
+      &:has(.positive) {
+        background-color: var(--green);
 
-        &.negative {
-          color: #F75A68;
+        .value {
+          color: var(--green-dark);
+
+          span {
+            background-color: var(--green-light);
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
         }
       }
-    }
-  }
-}
 
-@media (min-width: 988px) {
-  .budget {
-    .container {
-      .item {
-        padding: 24px;
-        
-        h2 {
-          font-size: 16px;
-        }
-        
-        p {
-          font-size: 20px;
+      &:has(.negative) {
+        background-color: var(--red);
+
+        .value {
+          color: var(--red-dark);
+
+          span {
+            background-color: var(--red-light);
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
         }
       }
     }

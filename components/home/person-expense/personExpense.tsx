@@ -34,7 +34,7 @@ export default function PersonExpense({ data }: { data: BillDTOOutput[] }) {
 
   return (
     <div className={styles.personExpense}>
-      <h1 className='title'>Gasto por pessoa</h1>
+      <h1 className={styles.title}>Gasto por pessoa</h1>
 
       {!invoices.length ? (
         <div className="empty">

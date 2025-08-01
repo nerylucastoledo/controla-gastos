@@ -10,7 +10,7 @@ export default function RecentTransaction({ data }: { data: BillDTOOutput[] }) {
 
   return (
     <div className={styles.recentTransaction}>
-      <h1 className='title'>Transações recentes</h1>
+      <h2 className={styles.title}>Últimas movimentações</h2>
 
       {!data || data.length === 0 ? (
         <div className="empty">
@@ -21,37 +21,27 @@ export default function RecentTransaction({ data }: { data: BillDTOOutput[] }) {
           <div className={styles.container}>
             {lastTransactions.map((transaction, index) => (
               <div key={index} className={styles.item}>
-                <Icon name={transaction.category as keyof typeof Icon} color="#9CABBA" />
-                
-                <div>
-                  <h2>{transaction.item}</h2>
-                  <p>{transaction.value}</p>
-                  <p>{transaction.people}</p>
+                <div className={styles.icon}>
+                  <Icon name={transaction.category as keyof typeof Icon} color="var(--black)" />
+                </div>
+
+                <div className={styles.content}>
+                  <div className={styles.details}>
+                    <h2>{transaction.item}</h2>
+                    
+                    <div>
+                      <p className={styles.people}>{transaction.people}</p>
+                      <p className={styles.category}>{transaction.category}</p>
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className={styles.value}>-{transaction.value}</p>
+                  </div>
                 </div>
               </div>
             ))}
           </div>
-
-          <table>
-            <thead>
-              <tr>
-                <th>Categoria</th>
-                <th>Descrição</th>
-                <th>Valor</th>
-                <th>Pessoa</th>
-              </tr>
-            </thead>
-            <tbody>
-              {lastTransactions.map((transaction, index) => (
-                <tr key={index}>
-                  <td><Icon name={transaction.category as keyof typeof Icon} color="#9CABBA" /> {transaction.category}</td>
-                  <td>{transaction.item}</td>
-                  <td>{transaction.value}</td>
-                  <td>{transaction.people}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         </>
       )}
     </div>

@@ -5,7 +5,7 @@ import styles from "../../styles/components/forms/select.module.scss";
 type SelectProps = React.ComponentProps<"select"> & {
   options: string[] | number[];
   defaultValue?: string | number;
-  label: string;
+  label?: string;
   id: string;
   className?: string;
   handleChange: (value: string) => void;
@@ -14,9 +14,11 @@ type SelectProps = React.ComponentProps<"select"> & {
 export default function Select({ options, defaultValue, label, id, className, handleChange, ...props }: SelectProps) {
   return (
     <div className={`${styles.select} ${className}`}>
-      <label htmlFor={id} className={styles.label}>
-        {label}
-      </label>
+      {label && (
+        <label htmlFor={id} className={styles.label}>
+          {label}
+        </label>
+      )}
       <select
         id={id}      
         onChange={(event) => handleChange(event.target.value)} 

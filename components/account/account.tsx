@@ -95,7 +95,7 @@ export default function Account({ cards, peoples }: AccountProps) {
                 {peoples.map(person => (
                   <Item
                     key={person._id}
-                    icon={<MdOutlineEmojiPeople size={40} color='#fff' />}
+                    icon={<MdOutlineEmojiPeople size={40} color='' />}
                     item={person}
                     setModalAction={setModalAction}
                   />

@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <>
-      <h1 className="title">Bem-vindo de volta</h1>
-      <p className="subtitle">Por favor, faça login na sua conta.</p>
+      <h1 className="title">Controla gastos</h1>
+      <p className="subtitle">Gerencie suas finanças com inteligência</p>
 
       <LoginForm />
     </>

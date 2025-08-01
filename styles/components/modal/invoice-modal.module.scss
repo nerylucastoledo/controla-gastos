@@ -6,9 +6,9 @@
     
     h2, p {
       font-size: 16px;
-      color: #fff;
+      color: var(--black-2);
       margin-bottom: 24px;
-      font-weight: bold;
+      font-weight: normal;
     }
   }
   
@@ -28,18 +28,20 @@
       }
 
       button {
-        padding: 12px;
-        background-color: #2B3641;
-        color: white;
+        padding: 8px;
         min-width: 100px;
-
+        background-color: transparent;
+        color: var(--black);
+        border: 1px solid var(--gray);
+        
         &.active {
-          background-color: #3B4754;
-          border: 1px solid #fff;
+          background-color: var(--black);
+          color: var(--white);
         }
 
         &:hover {
-          background-color: #3B4754;
+          background-color: var(--black);
+          color: var(--white);
         }
       }
     }
@@ -58,6 +60,8 @@
       flex-direction: column;
       gap: 16px;
       overflow: auto;
+      background-color: var(--gray-4);
+      padding: 8px;
 
       &::-webkit-scrollbar {
         width: 0px;
@@ -68,16 +72,15 @@
         padding: 8px;
         display: flex;
         flex-direction: column;
-        background-color: #1b2026;
-        border: 1px solid #3B4754;
-        gap: 24px;
+        border: 1px solid var(--gray-3);
+        gap: 16px;
 
         .info {
           display: flex;
           align-items: center;
           justify-content: space-between;
           gap: 16px;
-          color: #fff;
+          color: var(--black);
 
           p {
             font-size: 12px;
@@ -95,9 +98,10 @@
           gap: 16px;
 
           button {
-            background-color: #3B4754;
             padding: 8px;
-            color: #fff;
+            color: var(--white);
+            max-width: 240px;
+            width: 100%;
 
             &:first-child {
               background-color: #4caf50;

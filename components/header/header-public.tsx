@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import React from 'react'
 import Image from 'next/image';
@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import styles from "../../styles/components/header/header.module.scss";
-import stylesButton from "../../styles/components/button/button.module.scss";
 
 import logo from "../../images/logo.webp";
 
@@ -24,20 +23,18 @@ export const HeaderPublic = () => {
     <header className={`${styles.header} ${styles.public}`}>
       <nav className={styles.container}>
         <div className={styles.container_logo}>
-          <Link href="/">
-            <Image 
-              width={64}
-              height={64}
-              src={logo.src} 
-              alt='Logo'
-              priority
-            />
-          </Link>
+          <Image 
+            width={64}
+            height={64}
+            src={logo.src} 
+            alt='Logo'
+            priority
+          />
           
           <p>Controla Gastos</p>
         </div>
 
-        <Link className={stylesButton.linkAsButton} href={buttonLink}>
+        <Link className="link-as-button" href={buttonLink}>
           {buttonText}
         </Link>
       </nav>

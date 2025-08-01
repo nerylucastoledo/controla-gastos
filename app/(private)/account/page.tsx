@@ -2,6 +2,7 @@ import { Metadata } from 'next'
 import React, { Suspense } from 'react'
 
 import styles from "../../../styles/components/account/account.module.scss"
+
 import transaction from '@/actions/transactions';
 import Account from '@/components/account/account';
 import SkeletonAccountPage from './loading';
@@ -17,9 +18,9 @@ export default async function Page() {
 
   return (
     <section className={styles.newCardPeople}>
-      <h1 className='title'>Informações</h1>
-      
       <Suspense fallback={<SkeletonAccountPage />}>
+        <h1 className='title'>Informações</h1>
+        
         <Account cards={cards} peoples={peoples} />
       </Suspense>
     </section>

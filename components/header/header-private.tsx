@@ -36,7 +36,7 @@ export const HeaderPrivate = () => {
     <header className={`${styles.header} ${styles.private}`}>
       <nav className={styles.container}>
         <div className={styles.container_logo}>
-          <Link href="/">
+          <Link href="/" as={"image"}>
             <Image 
               src={logo.src} 
               alt="Controla Gastos" 
