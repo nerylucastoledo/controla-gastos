@@ -4,7 +4,7 @@ import styles from "../../../styles/components/credit-card/credit-card.module.sc
 
 import { CiCreditCard1 } from "react-icons/ci";
 
-import {  formatToCurrencyBRL } from '@/utils';
+import { formatToCurrencyBRL } from '@/utils';
 
 type InvoiceCard = {
   name: string;
@@ -15,6 +15,7 @@ type InvoiceCard = {
 export default function Card({ name, color, total }: InvoiceCard) {
   return (
     <div 
+      data-testid="card-component"
       className={styles.item} 
       style={{ backgroundColor: color }}
     >
@@ -27,7 +28,7 @@ export default function Card({ name, color, total }: InvoiceCard) {
 
       <div className={styles.total}>
         <p>Fatura atual</p>
-        <p>{formatToCurrencyBRL(total)}</p>
+        <p data-testid="card-total">{formatToCurrencyBRL(total)}</p>
       </div>
     </div>
   )

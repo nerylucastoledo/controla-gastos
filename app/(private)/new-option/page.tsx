@@ -8,10 +8,11 @@ import styles from "../../../styles/components/new-option/new-option.module.scss
 
 import { optionPost } from '@/actions/option'
 import toast from 'react-hot-toast';
+import Submit from '@/components/forms/submit';
 
 export default function Page() {
   const [type, setType] = useState<"people" | "card">("people");
-  const [color, setColor] = useState<string>("#222");
+  const [color, setColor] = useState<string>("#222222");
 
   const [state, action] = useActionState(optionPost, { ok: false, error: '', data: null });
 
@@ -67,7 +68,7 @@ export default function Page() {
           />
         )}
 
-        <button type="submit">Adicionar</button>
+        <Submit message="Adicionando...">Adicionar</Submit>
       </form>
     </section>
   )

@@ -31,6 +31,7 @@ export default function Filter() {
         options={months}
         defaultValue={date?.month}
         handleChange={handleChangeMonth}
+        aria-label='Mês'
       />
 
       <Select
@@ -38,6 +39,7 @@ export default function Filter() {
         options={years}
         defaultValue={date?.year}
         handleChange={handleChangeYear} 
+        aria-label='Ano'
       />
     </div>
   )

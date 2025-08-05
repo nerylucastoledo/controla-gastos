@@ -18,6 +18,7 @@ export default async function Page() {
 
   return (
     <section className={styles.newCardPeople}>
+      
       <Suspense fallback={<SkeletonAccountPage />}>
         <h1 className='title'>Informações</h1>
         

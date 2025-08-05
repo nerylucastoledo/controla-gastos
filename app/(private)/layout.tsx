@@ -4,23 +4,25 @@ import { DateContextProvider } from "@/context/date-context";
 
 import styles from "../../styles/pages/private.module.scss";
 
+import { Toaster } from "react-hot-toast";
+
 export default function PrivateLayout({ children, modal }: Readonly<{ children: React.ReactNode; modal: React.ReactNode; }>) {
   return (
-    <html lang="en">
-      <body>
-        <DateContextProvider>
-          <>
-            <HeaderPrivate />
+    <>
+      <Toaster position="top-center" />
 
-            <main className={styles.private}>
-              { children }
-            </main>
-            <div>
-              { modal }
-            </div>
-          </>
-        </DateContextProvider>
-      </body>
-    </html>
+      <DateContextProvider>
+        <>
+          <HeaderPrivate />
+
+          <main className={styles.private}>
+            { children }
+          </main>
+          <div>
+            { modal }
+          </div>
+        </>
+      </DateContextProvider>
+    </>
   );
 }

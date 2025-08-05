@@ -11,7 +11,6 @@ import { FaArrowTrendDown } from "react-icons/fa6";
 import { FaArrowTrendUp } from "react-icons/fa6";
 import { LuWallet } from "react-icons/lu";
 
-
 const totalInvoice = (expenses: BillDTOOutput[] | null) => {
   if (!expenses) return 0;
 
@@ -45,7 +44,7 @@ export default function BudgetSummary({ data }: { data: BillDTOOutput[] | null }
       <div className={styles.container}>
         <div className={styles.item}>
           <p className={styles.title}>Receita</p>
-          <p className={`${styles.value} ${styles.positive}`}>
+          <p data-testid="salary" className={`${styles.value} ${styles.positive}`}>
             {formatToCurrencyBRL(salary)}
             <span><FaArrowTrendUp size={24} color='var(--green-dark)' /></span>
           </p>
@@ -53,7 +52,7 @@ export default function BudgetSummary({ data }: { data: BillDTOOutput[] | null }
 
         <div className={styles.item}>
           <p className={styles.title}>Despesas</p>
-          <p className={`${styles.value} ${styles.negative}`}>
+          <p data-testid="expenses" className={`${styles.value} ${styles.negative}`}>
             {formatToCurrencyBRL(total)}
             <span><FaArrowTrendDown size={24} color='var(--red-dark)' /></span>
           </p>
@@ -61,7 +60,7 @@ export default function BudgetSummary({ data }: { data: BillDTOOutput[] | null }
 
         <div className={styles.item}>
           <p className={styles.title}>Saldo</p>
-          <p className={`${styles.value} ${remaining > 0 ? styles.positive : styles.negative}`}>
+          <p data-testid="balance" className={`${styles.value} ${remaining > 0 ? styles.positive : styles.negative}`}>
             {formatToCurrencyBRL(remaining)}
             <span>
               <LuWallet size={24} color={remaining > 0 ? "var(--green-dark)" : "var(--red-dark)"} />

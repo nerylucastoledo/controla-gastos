@@ -20,7 +20,7 @@ export default function RecentTransaction({ data }: { data: BillDTOOutput[] }) {
         <>
           <div className={styles.container}>
             {lastTransactions.map((transaction, index) => (
-              <div key={index} className={styles.item}>
+              <div key={index} className={styles.item} data-testid="transaction-item">
                 <div className={styles.icon}>
                   <Icon name={transaction.category as keyof typeof Icon} color="var(--black)" />
                 </div>
@@ -30,13 +30,13 @@ export default function RecentTransaction({ data }: { data: BillDTOOutput[] }) {
                     <h2>{transaction.item}</h2>
                     
                     <div>
-                      <p className={styles.people}>{transaction.people}</p>
-                      <p className={styles.category}>{transaction.category}</p>
+                      <p data-testid="transaction-people" className={styles.people}>{transaction.people}</p>
+                      <p data-testid="transaction-category" className={styles.category}>{transaction.category}</p>
                     </div>
                   </div>
 
                   <div>
-                    <p className={styles.value}>-{transaction.value}</p>
+                    <p data-testid="transaction-value" className={styles.value}>-{transaction.value}</p>
                   </div>
                 </div>
               </div>

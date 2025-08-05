@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react'
+import React, { useState } from 'react'
 import toast from 'react-hot-toast';
 
 import styles from "../../../styles/components/modal/modal-action.module.scss"
@@ -16,11 +16,16 @@ type ModalDeleteProps = {
 }
 
 export default function ModalDelete({ handleCloseModal, item }: ModalDeleteProps) {
+  const [loading, setLoading] = useState(false);
+
   if (!item) return null;
 
   const handleDelete = async () => {
+    setLoading(true)
     const endpoint = 'color' in item ? 'cards' : 'peoples';
     const state = await deletePeopleOrCard(`/${endpoint}/${item._id}`);
+
+    setLoading(false);
 
     const error = !state.ok && state.data !== null;
 
@@ -43,7 +48,9 @@ export default function ModalDelete({ handleCloseModal, item }: ModalDeleteProps
     >
       <div className={styles.actions}>
         <button onClick={handleCloseModal}>Cancelar</button>
-        <button className={styles.delete} onClick={handleDelete}>Apagar</button>
+        <button className={styles.delete} onClick={handleDelete} disabled={loading}>
+          {loading ? "Apagando..." : "Apagar"}
+        </button>
       </div>
     </ModalAction>
   )

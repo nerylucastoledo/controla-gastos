@@ -31,7 +31,7 @@ const Icon = ({ name, color = "#fff" }: { name: IconName, color?: string }) => {
   const IconComponent = iconMap[name];
 
   if (IconComponent) {
-    return <IconComponent data-testid="icon" color={color} size={20} />
+    return <IconComponent color={color} size={20} data-testid={`icon-${name}`} />
   }
 
   return <FaQuestion data-testid="icon" color={color} size={20} />

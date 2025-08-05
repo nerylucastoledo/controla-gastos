@@ -1,18 +1,17 @@
 "use client"
 
 import React, { useActionState, useEffect, useState } from 'react'
-import { mutate } from 'swr'
 import toast from 'react-hot-toast';
 
 import styles from "../../../styles/components/modal/modal-action.module.scss"
 
 import Input from '@/components/forms/input';
 
-import { useDate } from '@/context/date-context';
 import ModalAction from '@/components/modal-action/modalAction';
 import { CardDTOOutput } from '@/dto/cardDTO';
 import { PeopleDTOOutput } from '@/dto/peopleDTO';
 import { editPeopleOrCard } from '@/actions/account';
+import Submit from '@/components/forms/submit';
 
 type ModalEditProps = {
   handleCloseModal: () => void;
@@ -20,8 +19,6 @@ type ModalEditProps = {
 }
 
 export default function ModalEdit({ handleCloseModal, item }: ModalEditProps) {
-  const { date } = useDate();
-
   const [color, setColor] = useState<string>("color" in item ? item.color : "#222");
 
   const [state, actionForm] = useActionState(editPeopleOrCard, { ok: false, error: '', data: null });
@@ -37,10 +34,9 @@ export default function ModalEdit({ handleCloseModal, item }: ModalEditProps) {
     if (state.ok) {
       toast.success("Editado com sucesso!");
       handleCloseModal();
-      mutate(`expenses/${date.month}${date.year}`);
     }
 
-  }, [date, state, handleCloseModal]);
+  }, [state, handleCloseModal]);
 
   if (!item) return null;
 
@@ -79,7 +75,7 @@ export default function ModalEdit({ handleCloseModal, item }: ModalEditProps) {
 
         <div className={styles.actions}>
           <button type='button' onClick={handleCloseModal}>Cancelar</button>
-          <button type='submit' className={styles.edit}>Salvar</button>
+          <Submit message="Salvando">Salvar</Submit>
         </div>
       </form>
     </ModalAction>

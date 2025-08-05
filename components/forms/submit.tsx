@@ -16,7 +16,7 @@ export default function Submit({ message, children }: SubmitProps) {
       {pending ? (
         <>
           {message}
-          <VscLoading className="animate-spin mr-2" />
+          <VscLoading className="animate-spin mr-2" data-testid="loading-icon" />
         </>
       ) : (
         children

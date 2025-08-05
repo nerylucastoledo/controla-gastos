@@ -45,16 +45,21 @@ export default function Account({ cards, peoples }: AccountProps) {
   }, []);
 
   useEffect(() => {
+    const error = !state.ok && state.data !== null;
+
+    if (error) {
+      toast.error(state.error || "Erro ao atualizar. Tente novamente!");
+      return;
+    };
+
     if (state.ok) {
       localStorage.setItem('salary', parseCurrencyString(salary).toString());
 
       setModalAction({ show: false, type: null, item: null });
       
       toast.success(state.data.message || "Salário atualizado com sucesso!");
-    } else if (state.error) {
-      toast.error(state.error || "Erro ao atualizar. Tente novamente!");
     }
-  }, [state, salary]);
+  }, [state]);
   
   const handleCloseModalAction = useCallback(() => {
     setModalAction({ show: false, type: null, item: null });
