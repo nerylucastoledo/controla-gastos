@@ -32,12 +32,14 @@ export default function Item({ icon, item, setModalAction }: ItemProps) {
 
       <div className={styles.actions}>
         <button
+          data-testid="edit-button"
           className={styles.edit} 
           onClick={() => setModalAction({ show: true, type: "edit", item })}
         >
           <MdModeEditOutline size={20} color='var(--black)' />
         </button>
-        <button 
+        <button
+          data-testid="delete-button"
           className={styles.delete}
           onClick={() => setModalAction({ show: true, type: "delete", item })}
         >

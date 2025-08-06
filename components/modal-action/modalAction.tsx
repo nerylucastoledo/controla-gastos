@@ -17,7 +17,7 @@ export default function ModalAction({ handleCloseModal, title, subtitle, childre
   return (
     <div className={`modal ${styles.modalAction}`}>
       <div className={`container ${styles.container}`}>
-        <button className={styles.closeButton} onClick={handleCloseModal}>
+        <button data-testid="close-button" className={styles.closeButton} onClick={handleCloseModal}>
           <IoIosClose size={30} />
         </button>
 

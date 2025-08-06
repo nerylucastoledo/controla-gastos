@@ -13,7 +13,7 @@ import styles from "../../styles/components/new-expense/new-expense.module.scss"
 import { useDate } from '@/context/date-context'
 import { billPost } from '@/actions/bill'
 
-import { toast } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { CardDTOOutput } from '@/dto/cardDTO'
 
 type NewExpenseFormProps = {
@@ -29,10 +29,15 @@ export default function NewExpenseForm({ peoples, cards }: NewExpenseFormProps) 
   const [state, action] = useActionState(billPost, { ok: false, error: '', data: null });
 
   useEffect(() => {
+    const error = !state.ok && state.data !== null;
+    
+    if (error) {
+      toast.error("Erro ao adicionar despesa. Tente novamente!");
+      return;
+    }
+    
     if (state.ok) {
       toast.success("Despesa adicionada com sucesso!");
-    } else if (state.error) {
-      toast.error("Erro ao adicionar despesa. Tente novamente!");
     }
   }, [state]);
 
@@ -146,7 +151,7 @@ export default function NewExpenseForm({ peoples, cards }: NewExpenseFormProps) 
         />
       )}
 
-      <button type="submit">Adicionar</button>
+      <button data-testid="submit-button" type="submit">Adicionar</button>
     </form>
   )
 }

@@ -48,7 +48,7 @@ export default function ModalDeleteInvoice({ handleCloseModal, invoice }: ModalD
     >
       <div className={styles.actions}>
         <button onClick={handleCloseModal}>Cancelar</button>
-        <button className={styles.delete} onClick={handleDelete}>Apagar</button>
+        <button data-testid="delete-button" className={styles.delete} onClick={handleDelete}>Apagar</button>
       </div>
     </ModalAction>
   )

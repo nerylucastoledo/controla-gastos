@@ -38,8 +38,6 @@ export default function ModalEdit({ handleCloseModal, item }: ModalEditProps) {
 
   }, [state, handleCloseModal]);
 
-  if (!item) return null;
-
   return (
     <ModalAction
       handleCloseModal={handleCloseModal}

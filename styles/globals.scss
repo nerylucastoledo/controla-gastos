@@ -80,11 +80,13 @@ button, .link-as-button {
 }
 
 .empty {
-	background-color: #1C2126;
+	background-color: var(--gray-2);
 	padding: 24px;
 	border-radius: 12px;
-	color: #B0B0B0;
+	color: var(--gray);
 	flex: 1;
+	grid-column-start: 1;
+	grid-column-end: 3;
 
 	p {
 		margin-bottom: 0;

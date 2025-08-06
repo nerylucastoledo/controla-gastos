@@ -51,9 +51,9 @@ export default function Cards({ data, date }: { data: DataDTO, date: { month: st
     <div className={styles.card}>
       <h1 className={styles.title}>Cartões cadastrados</h1>
 
-      {!cards.length ? (
+      {!invoices.length || !cards.length ? (
         <div className="empty">
-          <p className='subtitle'>Nenhum cartão encontrado.</p>
+          <p className='subtitle'>Nenhuma transação encontrada.</p>
         </div>
       ) : (
         <div className={styles.container}>

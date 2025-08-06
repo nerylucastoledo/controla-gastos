@@ -18,8 +18,6 @@ type ModalDeleteProps = {
 export default function ModalDelete({ handleCloseModal, item }: ModalDeleteProps) {
   const [loading, setLoading] = useState(false);
 
-  if (!item) return null;
-
   const handleDelete = async () => {
     setLoading(true)
     const endpoint = 'color' in item ? 'cards' : 'peoples';
@@ -48,7 +46,7 @@ export default function ModalDelete({ handleCloseModal, item }: ModalDeleteProps
     >
       <div className={styles.actions}>
         <button onClick={handleCloseModal}>Cancelar</button>
-        <button className={styles.delete} onClick={handleDelete} disabled={loading}>
+        <button data-testid="delete-button" className={styles.delete} onClick={handleDelete} disabled={loading}>
           {loading ? "Apagando..." : "Apagar"}
         </button>
       </div>

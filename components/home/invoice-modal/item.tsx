@@ -41,8 +41,8 @@ export default function Item({ data, setShowModalAction }: ItemProps) {
           </div>
 
           <div className={styles.actions}>
-            <button onClick={() => handleEdit(item)}>Editar</button>
-            <button onClick={() => handleDelete(item)}>Deletar</button>
+            <button data-testid="edit-button" onClick={() => handleEdit(item)}>Editar</button>
+            <button data-testid="delete-button" onClick={() => handleDelete(item)}>Deletar</button>
           </div>
         </div>
       ))}
