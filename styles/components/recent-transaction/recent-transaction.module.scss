@@ -74,6 +74,17 @@
             width: max-content;
             font-weight: bold;
           }
+
+          .card {
+            padding: 4px 8px;
+            border-radius: 12px;
+            background-color: var(--gray-2);
+            color: var(--gray);
+            text-align: center;
+            font-size: 12px;
+            width: max-content;
+            font-weight: bold;
+          }
         }
       }
 
