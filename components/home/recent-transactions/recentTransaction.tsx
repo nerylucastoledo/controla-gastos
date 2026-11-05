@@ -32,6 +32,9 @@ export default function RecentTransaction({ data }: { data: BillDTOOutput[] }) {
                     <div>
                       <p data-testid="transaction-people" className={styles.people}>{transaction.people}</p>
                       <p data-testid="transaction-category" className={styles.category}>{transaction.category}</p>
+                      {transaction.card && (
+                        <p data-testid="transaction-card" className={styles.card}>{transaction.card}</p>
+                      )}
                     </div>
                   </div>
 
