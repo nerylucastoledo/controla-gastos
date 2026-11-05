@@ -22,6 +22,7 @@ export interface BillDTOOutput extends Bill {
   date: string;
   people: string;
   card: string;
+  installment: boolean;
 }
 
 export interface BillDTOOutputByYear {
