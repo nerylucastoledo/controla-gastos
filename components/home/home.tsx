@@ -8,6 +8,7 @@ import BudgetSummary from './budget-summary/budgetSummary';
 import RecentTransaction from './recent-transactions/recentTransaction';
 import Cards from './credit-card/cards';
 import PersonExpense from './person-expense/personExpense';
+import InstallmentsByPerson from './installments-by-person/installmentsByPerson';
 import ExpenseByMonth from './chart/expenseByMonth';
 import ExpenseByCategory from './chart/expenseByCategory';
 import ErrorScreen from '../../components/error/error';
@@ -39,6 +40,7 @@ export default function HomePage() {
       <RecentTransaction data={data.expenses} />
       <Cards data={data} date={date} />
       <PersonExpense data={data.expenses} />
+      <InstallmentsByPerson data={data.expenses} />
 
       <section className='charts'>
         <ExpenseByCategory data={data.expenses} />
