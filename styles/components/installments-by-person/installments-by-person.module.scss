@@ -1,0 +1,62 @@
+.installmentsByPerson {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .title {
+    font-size: 20px;
+    font-weight: normal;
+  }
+
+  .list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .person {
+    border: 1px solid var(--gray-3);
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      background-color: var(--gray-2);
+      border-bottom: 1px solid var(--gray);
+
+      .name {
+        color: var(--black);
+      }
+
+      .total {
+        color: var(--black);
+        font-weight: bold;
+      }
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+
+      tr {
+        &:not(:last-child) {
+          border-bottom: 1px solid var(--gray-3);
+        }
+
+        td {
+          padding: 16px;
+          color: var(--gray);
+          text-align: left;
+
+          &:last-child {
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+}
